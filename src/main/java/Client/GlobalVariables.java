@@ -1,3 +1,5 @@
+package Client;
+
 import java.util.Map;
 
 public class GlobalVariables {
