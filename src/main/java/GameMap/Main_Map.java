@@ -1,23 +1,24 @@
 package GameMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+
+import static Client.GlobalVariables.*;
 
 public class Main_Map {
 
     private static final int DEFAULT_X = 3;
     private static final int DEFAULT_Y = 3;
 
-    public static ArrayList<SubArea>[] Game_Map;
+    //public static ArrayList<SubArea>[] Game_Map;
 
-    private int position = 0;
+    public HashMap<Integer, ArrayList<SubArea>> Game_Maps = new HashMap<>();
+
+    private int position = 1;
 
     private final int dimensionX;
     private final int dimensionY;
-
-    public ArrayList<SubArea>[] getGame_Map() {
-        return Game_Map;
-    }
 
 //    public void setGame_Map(ArrayList<SubArea>[] game_Map) {
 //        Game_Map = game_Map;
@@ -37,27 +38,34 @@ public class Main_Map {
     }
 
     public Main_Map(int x, int y) {
+        if(x< DEFAULT_X) {
+            x = DEFAULT_X;
+        }
+        if(y<DEFAULT_Y) {
+            y = DEFAULT_Y;
+        }
+
         this.dimensionY = y;
         this.dimensionX = x;
     }
 
     public void initial_map() {
-        Game_Map = new ArrayList[this.dimensionX * this.dimensionY];
+        //Game_Map = new ArrayList[this.dimensionX * this.dimensionY];
 
         Random rg = new Random();
 
-        for(int i=0; i< this.dimensionX*this.dimensionY; i++) {
-            int subAreaNumbers = rg.nextInt(3) +2;
+        for(int i=1; i<= this.dimensionX*this.dimensionY; i++) {
+            int subAreaNumbers = rg.nextInt(3) +1;
 
             ArrayList<SubArea> mapBlock = new ArrayList<>();
 
             for (int j = 0; j< subAreaNumbers; j++) {
                 SubArea subArea = new SubArea();
-                subArea.initialization();
+                subArea.initialization(subAreaNameList, enemies);
 
                 mapBlock.add(subArea);
             }
-            Game_Map[i] = mapBlock;
+            Game_Maps.put(i, mapBlock);
         }
     }
 
@@ -79,7 +87,7 @@ public class Main_Map {
         }
     }
 
-    public void go_West() {
+    public void go_East() {
         if ((this.position+1)%dimensionX == 0) {
             System.out.println("Can't across the border of this place");
         } else {
@@ -88,7 +96,7 @@ public class Main_Map {
         }
     }
 
-    public void go_East() {
+    public void go_West() {
         if ((this.position)%dimensionX == 0) {
             System.out.println("Can't across the border of this place");
         } else {

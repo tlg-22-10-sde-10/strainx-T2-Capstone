@@ -1,45 +1,41 @@
 package Client;
 
-import CombatEngine.combat_environment;
-import CombatEngine.engage;
-import Contents.Enemy;
-import Team_Member.Crew_Member;
-import UI.UI_main_screen;
 
-import java.util.ArrayList;
+import CombatEngine.engage_enemy;
+
 import java.util.Scanner;
 
-import static UI.UI_mission_accomplish.*;
+import static Client.GlobalVariables.*;
 
 
 public class StrainX_Main {
 
     public static void main(String[] args) {
 
-        GlobalVariables.gameInitialization();
+        gameInitialization();
         Scanner userInput = new Scanner(System.in);
 
         //UI_main_screen.load_main_screen();
 
-        var map = GlobalVariables.gameMap.getGame_Map();
-
-        ArrayList<Crew_Member> mySquad = new ArrayList<>();
-        ArrayList<Enemy> enemySquad = new ArrayList<>();
-
-        combat_environment.squad_initialization(mySquad, enemySquad);
+        var map = gameMap.Game_Maps;
 
 
+        //combat_environment.squad_initialization(mySquad, enemySquad);
+
+        test();
+
+//########demo part
         while (true) {
             System.out.println("------------------");
             System.out.println("Keep going!");
 
-            int position = GlobalVariables.gameMap.getPosition();
+            int position = gameMap.getPosition();
 
             System.out.println("You are now in Area" + position);
             System.out.println("There are several places you can explore:\n");
 
-            for (int i = 0; i< map[position].size(); i++) {
-                System.out.println((i+1)+". "+ map[position].get(i).getName());
+            for (int i = 0; i< map.get(position).size(); i++) {
+                System.out.println((i+1)+". "+ map.get(position).get(i).getName());
             }
 
             System.out.println("\nselect what you trying to do:");
@@ -50,40 +46,48 @@ public class StrainX_Main {
                 break;
             }
             if (choice == 6) {
-                GlobalVariables.gameMap.go_North();
+                gameMap.go_North();
             }
             if (choice == 7) {
-                GlobalVariables.gameMap.go_South();
+                gameMap.go_South();
             }
             if (choice == 8) {
-                GlobalVariables.gameMap.go_West();
+                gameMap.go_West();
             }
             if (choice == 9) {
-                GlobalVariables.gameMap.go_East();
+                gameMap.go_East();
             }
 
-            if (choice >0 && choice < map[position].size()+1) {
-                enemySquad = map[position].get(choice-1).getContents().enemies;
+            if (choice >0 && choice < map.get(position).size()+1) {
+                enemySquad = map.get(position).get(choice-1).getContents().enemies;
 
-                System.out.println("You find a group of enemies");
+                if (enemySquad.size() > 0) {
+                    System.out.println("You find a group of enemies");
+                } else {
+                    System.out.println("You have cleared " + map.get(position).get(choice-1).getName());
+                }
 
-                engage.gameEnginePrototype(mySquad, enemySquad);
-                if(mySquad.size() == 0) {
+                engage_enemy.gameEnginePrototype();
+
+                if(mySquad.get(0).getHP() <= 0) {
                     break;
                 }
             }
         }
+
         //UI.UI_game_over.load_game_over();
 
-
         //load_mission_accomplish();
-
-
 
         //System.out.println("\033[1;41mThis text is highlighted!\033[0m");
 
 
         //engage.gameEnginePrototype();
+
+
+    }
+
+    static void test() {
 
     }
 }

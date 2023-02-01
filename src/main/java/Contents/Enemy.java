@@ -6,6 +6,7 @@ public class Enemy {
     private String name;
     private String enemy_type;
     private int HP;
+    private int maxHP;
     private int attack;
     private String special_power;
 
@@ -13,6 +14,7 @@ public class Enemy {
         this.name = name;
         this.enemy_type = enemy_type;
         this.HP = HP;
+        this.maxHP = HP;
         this.attack = attack;
         this.special_power = special_power;
     }
@@ -39,6 +41,14 @@ public class Enemy {
 
     public void setHP(int HP) {
         this.HP = HP;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
     }
 
     public int getAttack() {
