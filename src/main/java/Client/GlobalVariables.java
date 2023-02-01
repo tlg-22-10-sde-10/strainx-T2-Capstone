@@ -1,19 +1,16 @@
+package Client;
+
+import GameMap.Main_Map;
+
 import java.util.Map;
 
 public class GlobalVariables {
 
-    private int exit_code = 0;
+    public static int exit_code = 0;
 
-    public int getExitCode() {
-        return exit_code;
-    }
-
-    public void setExitCode(int exit_code) {
-        this.exit_code = exit_code;
-    }
+    public static Main_Map gameMap = new Main_Map(3,3);
 
     public static void gameInitialization() {
-
-
+        gameMap.initial_map();
     }
 }
