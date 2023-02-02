@@ -1,4 +1,4 @@
-package Game_Map;
+package GameMap;
 
 import Contents.Enemy;
 import Contents.Event;

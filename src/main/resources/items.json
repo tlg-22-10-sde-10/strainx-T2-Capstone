@@ -1,0 +1,61 @@
+{
+  "items" : {
+      "weapons":
+      [
+        {
+          "name": "tire iron",
+          "damage": 10,
+          "rarity": "common"
+        },
+        {
+          "name": "axe",
+          "damage": 20,
+          "rarity": "common"
+        },
+        {
+          "name": "handgun",
+          "damage": 40,
+          "rarity": "uncommon"
+        },
+        {
+          "name": "AR-15",
+          "damage": 75,
+          "rarity": "rare"
+        },
+        {
+          "name": "M249",
+          "damage": 150,
+          "rarity": "epic"
+        },
+        {
+          "name": "Big Bertha",
+          "damage": 500,
+          "rarity": "unique"
+        }
+      ],
+      "medical": [
+        {
+          "name": "bandage",
+          "value": 20
+        },
+        {
+          "name": "antibiotics",
+          "value": 40
+        }
+      ],
+      "key_items" : [
+        {
+          "name" : "sample extraction kit"
+        },
+        {
+          "name" : "body armor",
+          "health" : 100
+        },
+        {
+          "name" : "squad equipment upgrades",
+          "health" : 50,
+          "damage" : 25
+        }
+      ]
+  }
+}

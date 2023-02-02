@@ -1,4 +1,4 @@
-package Game_Map;
+package GameMap;
 
 public class SubArea {
 

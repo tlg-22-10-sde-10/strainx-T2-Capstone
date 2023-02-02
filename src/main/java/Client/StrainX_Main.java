@@ -1,3 +1,5 @@
+package Client;
+
 import UI.UI_main_screen;
 
 import java.util.Scanner;

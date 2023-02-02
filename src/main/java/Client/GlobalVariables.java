@@ -1,8 +1,12 @@
+package Client;
+
 import java.util.Map;
 
 public class GlobalVariables {
 
     private int exit_code = 0;
+
+
 
     public int getExitCode() {
         return exit_code;
