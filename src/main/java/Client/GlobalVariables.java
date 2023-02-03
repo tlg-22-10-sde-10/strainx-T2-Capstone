@@ -2,8 +2,10 @@ package Client;
 
 import Contents.Enemy;
 import GameMap.Main_Map;
+import GameMap.SubArea;
 import Team_Member.Crew_Member;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,10 +23,14 @@ public class GlobalVariables {
         System.out.println("Examples: go north or use shotgun");
     }
 
-  
-
     public static int exit_code = 0;
     public static int enemySquadInitiative = 0;
+    public static final int ENEMY_SQUAD_SIZE_CAP = 6;
+
+    public static HashMap<String, Integer> DROP_RATE_MAP = new HashMap<>();
+
+    //public static int current_position = 0;
+    public static SubArea current_subArea = new SubArea();
 
     public static Main_Map gameMap = new Main_Map(3,3);
 
@@ -40,7 +46,7 @@ public class GlobalVariables {
     public static HashMap<String, String> combatCommandDescription = new HashMap<>();
     public static HashMap<String, Integer> combatCommandCode = new HashMap<>();
 
-    public static void gameInitialization() {
+    public static void gameInitialization() throws IOException {
         sub_area_name_initialize();
         content_enemy_initialize();
 
@@ -48,6 +54,14 @@ public class GlobalVariables {
 
         global_squad_initialize();
         combatCommandInitialize();
+    }
+
+    public static void dropRateInitialize() {
+        DROP_RATE_MAP.put("common", 75);
+        DROP_RATE_MAP.put("uncommon", 80);
+        DROP_RATE_MAP.put("rare", 90);
+        DROP_RATE_MAP.put("epic", 95);
+        DROP_RATE_MAP.put("unique", 100);
     }
 
     private static void combatCommandInitialize() {
@@ -89,6 +103,10 @@ public class GlobalVariables {
         subAreaNameList.add("School");
         subAreaNameList.add("Library");
         subAreaNameList.add("Gas Station");
+    }
+
+    public static void sub_area_initialize() {
+
     }
 
     public static void content_enemy_initialize() {

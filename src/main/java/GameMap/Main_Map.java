@@ -1,5 +1,9 @@
 package GameMap;
 
+import Contents.Enemy;
+import Contents.Item;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -10,6 +14,8 @@ public class Main_Map {
 
     private static final int DEFAULT_X = 3;
     private static final int DEFAULT_Y = 3;
+
+    private static Random rg = new Random();
 
     //public static ArrayList<SubArea>[] Game_Map;
 
@@ -49,10 +55,8 @@ public class Main_Map {
         this.dimensionX = x;
     }
 
-    public void initial_map() {
+    public void initial_map() throws IOException {
         //Game_Map = new ArrayList[this.dimensionX * this.dimensionY];
-
-        Random rg = new Random();
 
         for(int i=1; i<= this.dimensionX*this.dimensionY; i++) {
             int subAreaNumbers = rg.nextInt(3) +1;
@@ -60,13 +64,76 @@ public class Main_Map {
             ArrayList<SubArea> mapBlock = new ArrayList<>();
 
             for (int j = 0; j< subAreaNumbers; j++) {
-                SubArea subArea = new SubArea();
-                subArea.initialization(subAreaNameList, enemies);
+                //subArea.initialization(subAreaNameList, enemies);
 
-                mapBlock.add(subArea);
+                SubArea newSubArea = newSubArea();
+                mapBlock.add(newSubArea);
+
+                //mapBlock.add(subArea);
             }
             Game_Maps.put(i, mapBlock);
         }
+    }
+
+    private SubArea newSubArea() throws IOException {
+        SubArea subArea = new SubArea();
+
+        var subAreas = SubAreaFactory.subAreaHashMap();
+
+        if (subAreas.size() > 0) {
+            var subAreasNames = subAreas.keySet().toArray();
+            String name = subAreasNames[rg.nextInt(subAreas.size())].toString();
+
+            subArea.setName(name);
+
+            String description = subAreas.get(name);
+
+            subArea.setDescription(description);
+
+            Content contents = newContent();
+            subArea.setContents(contents);
+        }
+        return subArea;
+    }
+
+    private Content newContent() {
+        Content contents = new Content();
+
+        int enemySize = 0;
+
+        if (rg.nextInt(3) > 0) {
+            enemySize = rg.nextInt(ENEMY_SQUAD_SIZE_CAP)+1;
+        }
+
+        for (int i = 0; i< enemySize; i++) {
+            Enemy newEnemy = newEnemy();
+            contents.enemies.add(newEnemy);
+        }
+
+        return contents;
+    }
+
+    private Enemy newEnemy() {
+        int enemyIndex = rg.nextInt(enemies.size());
+        var randomEnemy = enemies.get(enemyIndex);
+
+        String EnemyName = randomEnemy.getName();
+        String EnemyType = randomEnemy.getEnemy_type();
+        int EnemyHP = randomEnemy.getHP();
+        int EnemyAttack = randomEnemy.getAttack();
+        String EnemySpecialPower = randomEnemy.getSpecial_power();
+
+        Enemy newEnemy = new Enemy(EnemyName, EnemyType, EnemyHP, EnemyAttack, EnemySpecialPower);
+
+        return newEnemy;
+    }
+
+    private Item newItem() {
+        Item item = null;
+
+
+
+        return item;
     }
 
     public void go_North() {

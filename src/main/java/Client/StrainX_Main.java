@@ -1,7 +1,10 @@
 package Client;
 
 import CombatEngine.engage_enemy;
+import UI.TitlePage;
+import UI.UI_enter_subarea;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static Client.GlobalVariables.*;
@@ -9,7 +12,7 @@ import static Client.GlobalVariables.*;
 
 public class StrainX_Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         gameInitialization();
         Scanner userInput = new Scanner(System.in);
@@ -18,10 +21,11 @@ public class StrainX_Main {
 
         var map = gameMap.Game_Maps;
 
-
         //combat_environment.squad_initialization(mySquad, enemySquad);
 
         test();
+
+        TitlePage.displayTitle();
 
 //########demo part
         while (true) {
@@ -44,26 +48,33 @@ public class StrainX_Main {
             if (choice == 0) {
                 break;
             }
-            if (choice == 6) {
-                gameMap.go_North();
-            }
-            if (choice == 7) {
-                gameMap.go_South();
-            }
-            if (choice == 8) {
-                gameMap.go_West();
-            }
-            if (choice == 9) {
-                gameMap.go_East();
+
+            switch (choice){
+                case 6:
+                    gameMap.go_North();
+                    break;
+                case 7:
+                    gameMap.go_South();
+                    break;
+                case 8:
+                    gameMap.go_West();
+                    break;
+                case 9:
+                    gameMap.go_East();
+                    break;
             }
 
             if (choice >0 && choice < map.get(position).size()+1) {
-                enemySquad = map.get(position).get(choice-1).getContents().enemies;
+                current_subArea = map.get(position).get(choice-1);
+
+                UI_enter_subarea.display_subarea();
+
+                enemySquad = current_subArea.getContents().enemies;
 
                 if (enemySquad.size() > 0) {
-                    System.out.println("You find a group of enemies");
+                    System.out.println("Engaging a group of enemies");
                 } else {
-                    System.out.println("You have cleared " + map.get(position).get(choice-1).getName());
+                    System.out.println(map.get(position).get(choice-1).getName() + " is clear");
                 }
 
                 engage_enemy.gameEnginePrototype();

@@ -5,6 +5,8 @@ public class Weapon extends Item {
 
     private int damage;
 
+    private String rarity;
+
     public int getDamage() {
         return damage;
     }
@@ -13,7 +15,13 @@ public class Weapon extends Item {
         this.damage = damage;
     }
 
+    public String getRarity() {
+        return rarity;
+    }
 
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
+    }
 
     private String weapon_name;
     private int weapon_base_dmg;
