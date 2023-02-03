@@ -1,0 +1,52 @@
+{
+    "locations" : [
+        {
+            "name": "Area 19",
+            "description" : "As you step into Area 19, you are hit by the strong smell of decay and rot. The once neatly maintained military tents and equipment are now torn and scattered, and zombies wander aimlessly among the debris."
+        },
+        {
+            "name": "Barracks",
+            "description" : "The barracks is in a state of chaos. In the flickering light you can make out the shapes of overturned bunk beds and scattered supplies. The once-sturdy walls are now marred with bullet holes and blood stains. You hear the intermittent sounds of shuffling from the adjoining rooms."
+        },
+        {
+            "name": "Armory",
+            "description" : "The armory is a pilfered treasure trove of weapons and ammunition, but hopefully there's something useful here. It's clear there was a frantic struggle to arm personnel amidst the outbreak. It is a dangerous place - You see a number of figures shambling and moans can be heard coming from the shadows. Zombies lurk in the corners waiting to ambush you."
+        },
+        {
+            "name": "Schrader Lab",
+            "description" : "As you enter the once-famed Schrader Lab, a horrid stench strips your breath away as you hurry to cover your nose. The silence is only interrupted by the eerie creaking of metal and distant groans of the undead. The once pristine facility is now in shambles, with broken glass and overturned equipment scattered about. As you make your way deeper into the complex, you can't shake the ever-lingering feeling that you are being watched."
+        },
+        {
+            "name": "Airstrip",
+            "description" : "The airstrip is deserted, with abandoned planes and helicopters littering the tarmac. The control tower is still active, with flashing warning lights and the sounds of zombies echoing through the empty space."
+        },
+        {
+            "name": "Hangar 1",
+            "description" : "As you enter the hangar, you're greeted by the sight of rusted metal and dilapidated vehicles. Once bustling with activity, the place now lies abandoned, evidence of the frantic evacuation in the face of the zombie outbreak. Cobwebs cover the planes and helicopters, while broken machinery and scattered equipment litter the floor. It's clear that this place hasn't seen human life for quite some time."
+        },
+        {
+            "name": "Hangar 2",
+            "description" : "Stepping into Hangar 2, the sound of your footsteps echoes against the steel walls. The remnants of past operations scattered throughout the interior. The dusty aircraft and vehicles that once filled the space now sit motionless, serving as a haunting reminder of what once was. The musty air seems to carry the ghosts of the past, hinting at the horrors that took place here at the onset of the outbreak."
+        },
+        {
+            "name": "Commissary",
+            "description" : "The commissary is a mess, with overturned tables, broken chairs, and the pungent smell of rotting food. The once-full shelves are now a wreck, and zombies roam the room, searching for their next meal."
+        },
+        {
+            "name": "Base Gym",
+            "description" : "The musty smell of decay fills your nostrils. The once vibrant gym is now littered with torn and bloodstained workout mats, weightlifting equipment, and the remains of fallen soldiers who tried to make a stand. To your left, a zombie lies face down impaled on a barbell. The walls are pocked with bullet holes and covered in dried blood. A light flickers in the back office."
+        },
+        {
+            "name": "Base Hospital",
+            "description" : "Entering the ramshackle hospital, the deafening silence is broken only by the sounds of your footsteps echoing through the hallways. The floors covered in debris and medical equipment, scattered about as if in a hurry. Blood stains the walls and you can almost feel the desperation and fear that must have taken place here during the height of the initial outbreak. You tighten your grip on your weapon as you force yourself to venture deeper in hopes of securing vital medical supplies."
+        },
+        {
+            "name": "Fuel Depot",
+            "description" : "The fueling depot is filled with the strong smell of gasoline and oil. The once-neatly stacked fuel drums are now toppled, and zombies wander among the pumps. You wonder if there's snacks to be found in the convenience store."
+        },
+        {
+            "name": "Power Station",
+            "description" : "As you approach the military power station, you can see the tall metal fence that surrounds it is partially bent and broken in several places. The entrance gate is hanging off its hinges, creaking in the wind. Inside, the once well-lit and buzzing power station is now dark and silent, except for the shuffling of zombies roaming the grounds. The disgusting smell of decay and the sound of shuffling feet send chills down your spine."
+        }
+    ]
+}
