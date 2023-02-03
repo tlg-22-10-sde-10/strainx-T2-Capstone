@@ -10,7 +10,7 @@
    package name, and should be written entirely in lower case, with the components separated by
    periods, and without enclosing quotes.
   -->
-  <groupId>replace.me</groupId>
+  <groupId>strain-x</groupId>
 
   <!--
   TODO: Replace "project" in the <artifactId> element with a spinal-case (lower-case, with dashes
@@ -40,37 +40,38 @@
     TODO: Replace "replace.me.project.Main" with the fully qualified class name of the project's main class,
      without any quotes, as the content of the <main-class.name> element.
     -->
-    <main-class.name>replace.me.project.Main</main-class.name>
+    <main-class.name>StrainX_Main</main-class.name>
 
   </properties>
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>${junit-jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.junit.jupiter</groupId>-->
+<!--      <artifactId>junit-jupiter</artifactId>-->
+<!--      <version>${junit-jupiter.version}</version>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
 
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit-jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.13.1</version>
-          <scope>test</scope>
-      </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.junit.jupiter</groupId>-->
+<!--      <artifactId>junit-jupiter-engine</artifactId>-->
+<!--      <version>${junit-jupiter.version}</version>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
+
+<!--      <dependency>-->
+<!--          <groupId>junit</groupId>-->
+<!--          <artifactId>junit</artifactId>-->
+<!--          <version>4.13.1</version>-->
+<!--          <scope>test</scope>-->
+<!--      </dependency>-->
 
       <!--
           To use JUnit4 instead of JUnit5, comment out the previous 2 dependency elements and uncomment
           the following 2 elements.
       -->
-<!--
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -84,7 +85,7 @@
       <version>${junit-jupiter.version}</version>
       <scope>test</scope>
     </dependency>
--->
+
 
   </dependencies>
 
@@ -155,11 +156,11 @@
   <reporting>
     <plugins>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>${maven-surefire-report-plugin.version}</version>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-report-plugin</artifactId>-->
+<!--        <version>${maven-surefire-report-plugin.version}</version>-->
+<!--      </plugin>-->
 
     </plugins>
   </reporting>

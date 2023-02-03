@@ -2,8 +2,7 @@ package CombatEngine;
 
 import Contents.Enemy;
 import Team_Member.Crew_Member;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 
 import static Client.GlobalVariables.*;
 import static CombatEngine.UI_combat.*;
@@ -11,7 +10,7 @@ import static CombatEngine.UI_combat.*;
 class UI_combatTest {
 
     @Before
-    static void environmentInitialization() {
+    public static void environmentInitialization() {
         Crew_Member p1 = new Crew_Member("Player", "SGT", "none", 100, 20);
         Crew_Member p2 = new Crew_Member("james", "PV2", "none", 100, 20);
         Crew_Member p3 = new Crew_Member("john", "PFC", "none", 100, 20);
@@ -43,7 +42,6 @@ class UI_combatTest {
         enemySquad.add(f8);
 
 
-
         combatCommandDescription.put("1", "Attack Enemy");
         combatCommandDescription.put("2", "Use Items");
         combatCommandDescription.put("3", "Play Tricks");
@@ -58,14 +56,14 @@ class UI_combatTest {
     }
 
     @Test
-    void reportCombatRoundsTest() {
+    public void reportCombatRoundsTest() {
         int round = 1;
         reportCombatRounds(round);
         //System.out.println("\033[34mColor Test\033[0m");
     }
 
     @Test
-    void reportEngageStatusTest() {
+    public void reportEngageStatusTest() {
         environmentInitialization();
 
         int round = 1;
@@ -75,12 +73,12 @@ class UI_combatTest {
     }
 
     @Test
-    void reportPlayerMoveTest() {
+    public void reportPlayerMoveTest() {
         reportPlayerMove();
     }
 
     @Test
-    void reportCombatResultTest() {
+    public void reportCombatResultTest() {
         reportCombatResult(1);
     }
 }
