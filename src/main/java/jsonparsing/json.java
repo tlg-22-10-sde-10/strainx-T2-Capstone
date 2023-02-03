@@ -1,8 +1,8 @@
 package jsonparsing;
 
 import Contents.Item;
-import Contents.Weapon;
-import Contents.WeaponFactory;
+import Contents.ItemFactory;
+import GameMap.SubAreaFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,16 +29,23 @@ public class json {
 
     public static void main(String[] args) throws IOException {
 
-        ArrayList<Item> itemList = new ArrayList();
-        String[] weaponsArray = {"tire iron", "axe", "handgun", "AR-15", "m249", "big Bertha"};
-        for (String weapon : weaponsArray) {
-            Weapon weaponToPickup = WeaponFactory.createWeapon(weapon);
-            itemList.add(weaponToPickup);
-        }
-        for (int i = 0; i < itemList.size(); i++) {
-            System.out.println(itemList.get(i).getName());
-        }
+//        ArrayList<Item> itemList = new ArrayList();
+//        String[] weaponsArray = {"tire iron", "axe", "handgun", "AR-15", "m249", "big Bertha"};
+//        String[] medicalArray = {"bandages", "antibiotics"};
+//        for (String weapon : weaponsArray) {
+//            Item weaponToPickup = ItemFactory.createItem(weapon);
+//            itemList.add(weaponToPickup);
+//        }
+//        for (int i = 0; i < itemList.size(); i++) {
+//            System.out.println(itemList.get(i).getName());
+//        }
+//
+//        Item item = ItemFactory.createItem(medicalArray[0]);
+//        System.out.println(item.getName());
+//        Item body_armor = ItemFactory.createItem("body armor");
+//        System.out.println(body_armor.getName());
 
+        SubAreaFactory.createSubArea();
 
 //        Weapon pickedUpWeapon = WeaponFactory.createWeapon("tire iron");
 //        System.out.println(pickedUpWeapon.getName());

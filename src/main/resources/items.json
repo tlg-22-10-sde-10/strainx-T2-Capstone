@@ -1,61 +1,66 @@
 {
-  "items" : {
-      "weapons":
-      [
-        {
-          "name": "tire iron",
-          "damage": 10,
-          "rarity": "common"
+    "items" : {
+        "weapons" : {
+            "tire iron" : {
+                "name": "tire iron",
+                "damage" : 10,
+                "rarity" : "common"
+            },
+            "axe" : {
+                "name": "axe",
+                "damage" : 20,
+                "rarity" : "common"
+            },
+            "handgun" : {
+                "name": "handgun",
+                "damage" : 40,
+                "rarity" : "uncommon"
+            },
+            "ar-15" : {
+                "name": "AR-15",
+                "damage" : 75,
+                "rarity" : "rare"
+            },
+            "m249" : {
+                "name": "M249",
+                "damage" : 150,
+                "rarity" : "epic"
+            },
+            "big bertha" : {
+                "name": "Big Bertha",
+                "damage" : 500,
+                "rarity" : "unique"
+            }
         },
-        {
-          "name": "axe",
-          "damage": 20,
-          "rarity": "common"
+        "medical" : {
+            "bandages" : {
+                "name": "bandages",
+                "value" : 20,
+                "rarity" : "uncommon"
+            },
+            "antibiotics" : {
+                "name": "antibiotics",
+                "value" : 40,
+                "rarity" : "rare"
+            },
+            "first aid kit" : {
+                "name" : "first aid kit",
+                "value" : 100,
+                "rarity" : "epic"
+            }
         },
-        {
-          "name": "handgun",
-          "damage": 40,
-          "rarity": "uncommon"
-        },
-        {
-          "name": "AR-15",
-          "damage": 75,
-          "rarity": "rare"
-        },
-        {
-          "name": "M249",
-          "damage": 150,
-          "rarity": "epic"
-        },
-        {
-          "name": "Big Bertha",
-          "damage": 500,
-          "rarity": "unique"
+        "key items" : {
+            "body armor" : {
+                "name": "body armor",
+                "health" : 100,
+                "rarity" : "epic"
+            },
+            "squad equipment upgrades" : {
+                "name": "squad equipment upgrades",
+                "health" : 50,
+                "damage" : 25,
+                "rarity" : "unique"
+            }
         }
-      ],
-      "medical": [
-        {
-          "name": "bandage",
-          "value": 20
-        },
-        {
-          "name": "antibiotics",
-          "value": 40
-        }
-      ],
-      "key_items" : [
-        {
-          "name" : "sample extraction kit"
-        },
-        {
-          "name" : "body armor",
-          "health" : 100
-        },
-        {
-          "name" : "squad equipment upgrades",
-          "health" : 50,
-          "damage" : 25
-        }
-      ]
-  }
+    }
 }
