@@ -19,7 +19,7 @@ public class SubAreaFactory {
             subAreas.put(locationsNode.get("locations").get(i).get("name").textValue(), locationsNode.get("locations").get(i).get("description").textValue());
         }
         System.out.println(subAreas.keySet());
-        System.out.println(subAreas.get("Power Station"));
+        System.out.println(subAreas.values());
 
         return subAreas;
     }
