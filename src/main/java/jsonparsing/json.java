@@ -1,14 +1,11 @@
 package jsonparsing;
 
-import Contents.Item;
-import Contents.ItemFactory;
 import GameMap.SubAreaFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class json {
@@ -45,7 +42,7 @@ public class json {
 //        Item body_armor = ItemFactory.createItem("body armor");
 //        System.out.println(body_armor.getName());
 
-        SubAreaFactory.createSubArea();
+        SubAreaFactory.subAreaHashMap();
 
 //        Weapon pickedUpWeapon = WeaponFactory.createWeapon("tire iron");
 //        System.out.println(pickedUpWeapon.getName());

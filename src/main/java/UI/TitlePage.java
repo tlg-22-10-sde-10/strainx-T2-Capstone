@@ -1,8 +1,8 @@
 package UI;
 
 public class TitlePage {
-    public static String displayTitle() {
-        return "\n" +
+    public static void displayTitle() {
+        String title = "\n" +
                 "     ▄████████     ███        ▄████████    ▄████████  ▄█  ███▄▄▄▄   ▀████    ▐████▀ \n" +
                 "    ███    ███ ▀█████████▄   ███    ███   ███    ███ ███  ███▀▀▀██▄   ███▌   ████▀  \n" +
                 "    ███    █▀     ▀███▀▀██   ███    ███   ███    ███ ███▌ ███   ███    ███  ▐███    \n" +
@@ -12,5 +12,6 @@ public class TitlePage {
                 "     ▄█    ███     ███       ███    ███   ███    ███ ███  ███   ███  ▄███     ███▄  \n" +
                 "   ▄████████▀     ▄████▀     ███    ███   ███    █▀  █▀    ▀█   █▀  ████       ███▄ \n" +
                 "                             ███    ███                                             \n";
+        System.out.println(title);
     }
 }
