@@ -1,25 +1,17 @@
 package CombatEngine;
 
-import Client.GlobalVariables;
 import Contents.Enemy;
 import Team_Member.Crew_Member;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import static Client.GlobalVariables.*;
 import static CombatEngine.UI_combat.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UI_combatTest {
 
-    @Test
-    void testReportCombatRounds() {
-        int round = 1;
-        reportCombatRounds(round);
-        System.out.println("\033[34mColor Test\033[0m");
-    }
-
-    @Test
-    void testReportEngageStatus() {
+    @Before
+    static void environmentInitialization() {
         Crew_Member p1 = new Crew_Member("Player", "SGT", "none", 100, 20);
         Crew_Member p2 = new Crew_Member("james", "PV2", "none", 100, 20);
         Crew_Member p3 = new Crew_Member("john", "PFC", "none", 100, 20);
@@ -50,6 +42,45 @@ class UI_combatTest {
         enemySquad.add(f6);
         enemySquad.add(f8);
 
+
+
+        combatCommandDescription.put("1", "Attack Enemy");
+        combatCommandDescription.put("2", "Use Items");
+        combatCommandDescription.put("3", "Play Tricks");
+        combatCommandDescription.put("4", "Auto Combat");
+        combatCommandDescription.put("5", "Retreat");
+
+        combatCommandCode.put("1", 1);
+        combatCommandCode.put("2", 2);
+        combatCommandCode.put("3", 3);
+        combatCommandCode.put("4", 4);
+        combatCommandCode.put("5", 5);
+    }
+
+    @Test
+    void reportCombatRoundsTest() {
+        int round = 1;
+        reportCombatRounds(round);
+        //System.out.println("\033[34mColor Test\033[0m");
+    }
+
+    @Test
+    void reportEngageStatusTest() {
+        environmentInitialization();
+
+        int round = 1;
+        reportCombatRounds(round);
         reportEngageStatus();
+        reportPlayerMove();
+    }
+
+    @Test
+    void reportPlayerMoveTest() {
+        reportPlayerMove();
+    }
+
+    @Test
+    void reportCombatResultTest() {
+        reportCombatResult(1);
     }
 }

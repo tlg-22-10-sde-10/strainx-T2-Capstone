@@ -1,39 +1,40 @@
 package CombatEngine;
 
-import static Client.GlobalVariables.enemySquad;
-import static Client.GlobalVariables.mySquad;
-import static CombatEngine.engage_enemy.*;
+import static Client.GlobalVariables.*;
+import static CombatEngine.engage_enemy.KIAList;
+import static CombatEngine.engage_enemy.enemyKIAList;
 
 public class UI_combat {
 
-    static final int X_axis = 96;
+    public static final int x_axis = 96; // display column width
+
+    static StringBuilder outputString = new StringBuilder();
+    static String playerSideName = "My Squad";
+    static String enemySideName = "Enemy Squad";
 
     public static void reportCombatRounds(int round) {
-        StringBuilder outputString = new StringBuilder();
-        outputString.append("-".repeat(X_axis));
-        outputString.append("\n");
-        String combatRound = "Round: " + round;
-        int space = (X_axis - combatRound.length()) / 2;
+        drawFooter();
+
+        outputString.setLength(0);
+        String combatRound = "  Round " + round + "  ";
+        int space = (x_axis - combatRound.length()) / 2;
 
         outputString.append(" ".repeat(space));
-
         outputString.append(combatRound);
-
         outputString.append(" ".repeat(space));
-
-        outputString.append("\n");
-
-        outputString.append("-".repeat(X_axis));
 
         System.out.println(outputString);
+
+        drawFooter();
     }
 
     public static void reportInitiativeStatus(int mySquadInitiative) {
         if (mySquadInitiative > 0) {
-            System.out.println("our squad wins the initiative roll, we attack first");
+            System.out.println("Enemy looks lost, let's take them down.");
         } else {
-            System.out.println("The enemy wins the initiative roll, they attack first");
+            System.out.println("Enemy attack.");
         }
+        drawFooter();
     }
 
     public static void reportRetreatResults(boolean retreat) {
@@ -44,44 +45,52 @@ public class UI_combat {
         }
     }
 
-    public static void reportMySquadStatus() {
-        System.out.println("--------Squad Status--------");
-        for (int i = 0; i < mySquad.size(); i++) {
-            var crew = mySquad.get(i);
-            if (i == 0) {
-                System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()) + " | weapon: " + crew.getWeapon().getWeapon_name());
-            } else {
-                System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()));
-            }
+    public static void reportPlayerMove() {
+        outputString.setLength(0);
+
+        for (var key : combatCommandDescription.keySet()) {
+            String options = key + ". " + combatCommandDescription.get(key) + "     ";
+            outputString.append(options);
         }
-        System.out.println("----------------------------");
+
+        System.out.println(outputString);
+        drawFooter();
+        System.out.print("Waiting instructions >> ");
     }
 
-    public static void reportEngageStatus() {
-        StringBuilder outputString = new StringBuilder();
+    private static void reportEngageStatusHeader() {
+        outputString.setLength(0);
         //header
-        outputString.append("My Squad");
-        outputString.append(" ".repeat((X_axis - "My Squad".length() - "Enemy Squad".length()) / 2));
+        outputString.append(playerSideName);
+        outputString.append(" ".repeat((x_axis - playerSideName.length() - playerSideName.length()) / 2 - 1));
         outputString.append("VS");
-        outputString.append(" ".repeat((X_axis - "My Squad".length() - "Enemy Squad".length()) / 2 - 1));
-        outputString.append("Enemy Squad\n");
+        outputString.append(" ".repeat((x_axis - enemySideName.length() - enemySideName.length()) / 2 - 1));
+        outputString.append(enemySideName);
 
-        //header inventory
-        outputString.append("-".repeat(X_axis));
-        outputString.append("\n");
+        System.out.println(outputString);
+        drawFooter();
+
+        System.out.print("\033[2J");
+        System.out.print("\033[H");
+    }
+
+    private static void reportEngageStatusInventory() {
+        outputString.setLength(0);
 
         var weapon = mySquad.get(0).getWeapon();
         String inventory = "Weapon: " + weapon.getWeapon_name();
 
         outputString.append(inventory);
-        outputString.append("\n");
 
-        //body
-        outputString.append("-".repeat(X_axis));
-        outputString.append("\n");
+        System.out.println(outputString);
+        drawFooter();
+    }
 
+    private static void reportEngageStatusBody() {
         int lines = Math.max(mySquad.size(), enemySquad.size());
         for (int i = 0; i < lines; i++) {
+            outputString.setLength(0);
+
             String mySquadLine = "";
             String enemySquadLine = "";
 
@@ -91,7 +100,7 @@ public class UI_combat {
                 mySquadLine = crew.getRank() + " " + crew.getName() +
                         " | HP: " + crew.getHP() + "/" + crew.getMaxHP() +
                         " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg());
-                if(i == 0) {
+                if (i == 0) {
                     mySquadLine = "\033[34m" + mySquadLine + "\033[0m";
                 }
             }
@@ -103,27 +112,45 @@ public class UI_combat {
                         " | attack: " + enemy.getAttack();
             }
 
-            int space = X_axis - enemySquadLine.length() - mySquadLine.length();
+            int space = x_axis - enemySquadLine.length() - mySquadLine.length();
 
-            if(i ==0 ) {
+            if (i == 0) {
                 space += 9;
             }
 
             outputString.append(mySquadLine);
-
             outputString.append(" ".repeat(space));
-
             outputString.append(enemySquadLine);
-            outputString.append("\n");
-        }
 
-        //footer
-        outputString.append("-".repeat(X_axis));
+            System.out.println(outputString);
+        }
+        drawFooter();
+    }
+
+    private static void drawFooter() {
+        outputString.setLength(0);
+        outputString.append("-".repeat(x_axis));
         System.out.println(outputString);
     }
 
+    public static void reportEngageStatus() {
+        reportEngageStatusHeader();
+        reportEngageStatusInventory();
+        reportEngageStatusBody();
+    }
+
+    public static void reportMySquadStatus() {
+        for (int i = 0; i < mySquad.size(); i++) {
+            var crew = mySquad.get(i);
+            if (i == 0) {
+                System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()) + " | weapon: " + crew.getWeapon().getWeapon_name());
+            } else {
+                System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()));
+            }
+        }
+    }
+
     public static void reportEnemySquadStatus() {
-        System.out.println("--------Enemy Status--------");
         for (var enemy : enemySquad) {
             String output = enemy.getEnemy_type() + " " + enemy.getName() + " | HP:" + enemy.getHP() + " | attack:" + enemy.getAttack();
             for (int i = 0; i < 60; i++) {
@@ -131,16 +158,32 @@ public class UI_combat {
             }
             System.out.println(output);
         }
-        System.out.println("----------------------------");
     }
 
-    public static void reportCombatResult() {
+    public static void reportCombatResult(int mySquadInitiative) {
         String defeatedEnemy = "";
         String isAre = "is";
 
-        System.out.println("fight result:");
+        outputString.setLength(0);
+
+        String line1 = "";
+        String line2 = "";
+        if(mySquadInitiative > enemySquadInitiative) {
+            line1 = "Report: our squad is engaging enemy. ";
+        } else {
+            line2 = "Report: enemy has broken through our defenses.";
+        }
+
+        line1 = "Report: our squad is engaging enemy. ";
+
+        outputString.append(line1);
+
+        outputString.append(line2);
 
         if (enemyKIAList.size() + KIAList.size() == 0) {
+            line2 = "No one get killed in this round";
+            outputString.append(line2);
+
             System.out.println("No one get killed in this round");
         } else {
             if (enemyKIAList.size() > 1) {
@@ -150,7 +193,7 @@ public class UI_combat {
                 defeatedEnemy += en.getEnemy_type() + " " + en.getName() + ", ";
             }
             if (enemyKIAList.size() > 0) {
-                System.out.println("\033[1;46m" + defeatedEnemy + "\033[0m" + isAre + " destroyed in the fight.");
+                System.out.println("\033[31m" + defeatedEnemy + "\033[0m" + isAre + " destroyed in the fight.");
             }
             enemyKIAList.clear();
 
@@ -164,7 +207,7 @@ public class UI_combat {
                 lostSoldier += crew.getRank() + " " + crew.getName() + ", ";
             }
             if (KIAList.size() > 0) {
-                System.out.println("\033[1;41m" + lostSoldier + "\033[0m" + isAre + " killed in the fight");
+                System.out.println("\033[31m" + lostSoldier + "\033[0m" + isAre + " killed in the fight");
             }
             KIAList.clear();
         }

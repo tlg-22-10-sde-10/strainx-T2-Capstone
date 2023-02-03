@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class GlobalVariables {
 
     public static int exit_code = 0;
+    public static int enemySquadInitiative = 0;
 
     public static Main_Map gameMap = new Main_Map(3,3);
 

@@ -51,19 +51,12 @@ public class engage_enemy {
                 restOfMySquadMove();
             }
 
-            reportCombatResult();
+            reportCombatResult(mySquadInitiative);
             round += 1;
         }
     }
 
-    private static void playerMove() {
-        System.out.println("--------------------");
-        System.out.println("make a move:");
-        for (var key : combatCommandDescription.keySet()) {
-            System.out.println(key + ". " + combatCommandDescription.get(key));
-        }
-        System.out.println("--------------------");
-
+    private static Integer playerCommandParser() {
         Integer behaviour = null;
 
         while (behaviour == null) {
@@ -77,7 +70,15 @@ public class engage_enemy {
             }
         }
 
-        switch (behaviour) {
+        return behaviour;
+    }
+
+    private static void playerMove() {
+        reportPlayerMove();
+
+        Integer command = playerCommandParser();
+
+        switch (command) {
             case 1:
                 playerAttackEnemy();
                 break;
