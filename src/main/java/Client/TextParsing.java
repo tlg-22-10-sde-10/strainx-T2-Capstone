@@ -68,16 +68,15 @@ public class TextParsing {
         if(userInput.equalsIgnoreCase("")) {
             System.out.println("You must enter a valid action!");
         }
-        else {
-            wordlist = WordList(userInput);
-            if (wordlist.size() > 1) {
-                wordlist.forEach((aStr) -> System.out.println(aStr));
-                ParseCommand(wordlist);
-            }
-            else {
-                System.out.println("Try entering commands in a [verb] [direction/noun] format such as" +
-                        " [go] [north] or [use] [shotgun]");
-            }
+//         else {
+//             wordlist = WordList(userInput);
+//             if (wordlist.size() > 1) {
+//                 wordlist.forEach((aStr) -> System.out.println(aStr));
+//                 ParseCommand(wordlist);
+//             }
+//             else {
+//                 System.out.println("Try entering commands in a [verb] [direction/noun] format such as" +
+//                         " [go] [north] or [use] [shotgun]");
+//             }
         }
     }
-}
