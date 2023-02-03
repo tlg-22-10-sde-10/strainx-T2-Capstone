@@ -2,8 +2,6 @@ package Client;
 
 import CombatEngine.engage_enemy;
 
-
-
 import java.util.Scanner;
 
 import static Client.GlobalVariables.*;

@@ -1,8 +1,20 @@
 package Contents;
-
 import java.util.Random;
 
-public class Weapon {
+public class Weapon extends Item {
+
+    private int damage;
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+
+
     private String weapon_name;
     private int weapon_base_dmg;
     private int weapon_ammo_consumption;
@@ -49,6 +61,5 @@ public class Weapon {
         this.weapon_name = "Bare Hands";
         this.weapon_description = "Powerful but old fashioned weapon. How old, maybe 10,000 years, who cares";
     }
-
 
 }

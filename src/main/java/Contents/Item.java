@@ -1,8 +1,16 @@
 package Contents;
 
-public class Item {
-    private String item_name;
-    private int item_quantity;
-    private boolean is_key_item = false;
+import java.util.ArrayList;
 
+public abstract class Item {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

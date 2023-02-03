@@ -1,0 +1,57 @@
+{
+    "items" : {
+        "weapons" : {
+            "tire iron" : {
+                "name": "tire iron",
+                "damage" : 10,
+                "rarity" : "common"
+            },
+            "axe" : {
+                "name": "axe",
+                "damage" : 20,
+                "rarity" : "common"
+            },
+            "handgun" : {
+                "name": "handgun",
+                "damage" : 40,
+                "rarity" : "uncommon"
+            },
+            "ar-15" : {
+                "name": "AR-15",
+                "damage" : 75,
+                "rarity" : "rare"
+            },
+            "m249" : {
+                "name": "M249",
+                "damage" : 150,
+                "rarity" : "epic"
+            },
+            "big bertha" : {
+                "name": "Big Bertha",
+                "damage" : 500,
+                "rarity" : "unique"
+            }
+        },
+        "medical" : {
+            "bandage" : {
+                "name": "bandage",
+                "value" : 20
+            },
+            "antibiotics" : {
+                "name": "antibiotics",
+                "value" : 40
+            }
+        },
+        "key items" : {
+            "body armor" : {
+                "name": "body armor",
+                "health" : 100
+            },
+            "squad equipment upgrades" : {
+                "name": "squad equipment upgrades",
+                "health" : 50,
+                "damage" : 25
+            }
+        }
+    }
+}
