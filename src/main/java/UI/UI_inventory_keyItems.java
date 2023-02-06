@@ -1,20 +1,18 @@
 package UI;
 
-import Contents.Weapon;
+import Contents.KeyItem;
 
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static Client.GlobalVariables.InventoryMap;
-import static Client.GlobalVariables.mySquad;
 import static UI.UI_inventory.displayInventoryList;
 
 public class UI_inventory_keyItems {
     private static int x_axis_inventory_keyItem = 96;
     private static final StringBuilder outputString = new StringBuilder();
 
-    public static void displayKeyItem() {
+    public static void displayKeyItems() {
         while (true) {
             System.out.println("\n\n\n\n\n");
 
@@ -27,40 +25,24 @@ public class UI_inventory_keyItems {
 
             drawHeader();
 
-            String currentWeapon = "Current Weapon: " + mySquad.get(0).getWeapon().getName();
-            String currentWeaponDmg = "Base Damage: " + mySquad.get(0).getWeapon().getWeapon_base_dmg();
-
-
-            int line1_space = x_axis_inventory_keyItem - currentWeapon.length() - currentWeaponDmg.length();
-
-            outputString.append(currentWeapon);
-            outputString.append(" ".repeat(line1_space));
-            outputString.append(currentWeaponDmg);
-            System.out.println(outputString);
-
-            var weapons = InventoryMap.values().stream()
-                    .filter(i->i.getClass().equals(new Weapon().getClass()))
+            var keyItems = InventoryMap.values().stream()
+                    .filter(i->i.getClass().equals(KeyItem.class))
                     .collect(Collectors.toList());
 
             int i = 1;
-            HashMap<String, Weapon> weaponsMap = new HashMap<>();
 
-            for(var k : weapons) {
+            for(var k : keyItems) {
                 drawFooter();
-                Weapon weapon = (Weapon) k;
+                KeyItem keys = (KeyItem) k;
 
-                weaponsMap.put(String.valueOf(i), weapon);
+                String name = i + ". " + keys.getName() + "\n";
+                String DMGBonus = "Damage Bonus: " + keys.getDamage()+ "\n";
+                String HPBonus = "MAX HP Bonus: " + keys.getHealth()+ "\n";
 
-                String weaponName = i + ". " + weapon.getName();
-                String weaponBaseDMG = "Base Damage: " + weapon.getWeapon_base_dmg();
-
-                int line_space = (x_axis_inventory_keyItem - weaponBaseDMG.length() - weaponName.length());
-
-                outputString.append(weaponName);
-                outputString.append(" ".repeat(line_space));
-                outputString.append(weaponBaseDMG);
-                outputString.append("\n");
-                outputString.append(weapon.getWeapon_description());
+                outputString.append(name);
+                outputString.append(DMGBonus);
+                outputString.append(HPBonus);
+                outputString.append(keys.getDescription());
 
                 System.out.println(outputString);
 
@@ -68,15 +50,8 @@ public class UI_inventory_keyItems {
             }
             drawHeader();
 
-            String operation1 = "";
-
-            if(weapons.size() > 0) {
-                operation1 = "Press Weapon Number to Equip.";
-            }
-
             String operation2 = "Press 0 to Go Back";
-            int last_line_space = x_axis_inventory_keyItem -operation1.length()-operation2.length();
-            outputString.append(operation1);
+            int last_line_space = x_axis_inventory_keyItem -operation2.length();
             outputString.append(" ".repeat(last_line_space));
             outputString.append(operation2);
 
@@ -91,7 +66,7 @@ public class UI_inventory_keyItems {
             while(true) {
                 String userInput = s.nextLine();
 
-                if(weaponsMap.containsKey(userInput) || userInput.equals("0")) {
+                if(userInput.equals("0")) {
                     command = userInput;
 
                     break;
@@ -102,13 +77,8 @@ public class UI_inventory_keyItems {
 
             if(command.equals("0")) {
                 System.out.println("\n\n\n\n\n");
-                displayInventoryList();
-                break;
-            } else {
-                var newWeapon = weaponsMap.get(command);
-                mySquad.get(0).setWeapon(newWeapon);
 
-                System.out.println("\n\n\n\n\n");
+                break;
             }
         }
     }

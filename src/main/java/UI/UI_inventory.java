@@ -8,6 +8,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static Client.GlobalVariables.*;
+import static UI.UI_display_medicals.displayMedicals;
+import static UI.UI_inventory_keyItems.displayKeyItems;
 import static UI.UI_inventory_weapons.displayWeapons;
 
 public class UI_inventory {
@@ -37,11 +39,18 @@ public class UI_inventory {
 
     public static void pickUpItem(Item item) throws IOException {
         int qty= 1;
+
         if(InventoryMap.containsKey(item.getName())) {
             qty += InventoryMap.get(item.getName()).getQty();
         }
         item.setQty(qty);
+
         InventoryMap.put(item.getName(),item);
+
+        if(item.getName().equals("body armor")){
+            var key = (KeyItem) item;
+            mySquad.get(0).setMaxHP(mySquad.get(0).getMaxHP() + key.getHealth());
+        }
     }
 
     private static void drawFooter() {
@@ -169,22 +178,16 @@ public class UI_inventory {
         }
     }
 
-    public static void displayMedicals() {}
-
-    public static void displayKeyItems() {}
-
-    private static void goBackToMainMap() {
-        UI_map.displayMainMapUI();
-    }
-
     public static void useItems(String itemName) {
         if(InventoryMap.containsKey(itemName)) {
             var item = InventoryMap.get(itemName);
 
-            if(item.getClass().equals(new Weapon().getClass())) {
+            if(item.getClass().equals(Weapon.class)) {
                 mySquad.get(0).setWeapon((Weapon) item);
             }
+
             item.setQty(-1);
+
             if(item.getQty() <= 0) {
                 InventoryMap.remove(itemName);
             }

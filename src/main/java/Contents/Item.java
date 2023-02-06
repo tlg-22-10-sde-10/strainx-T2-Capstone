@@ -10,6 +10,8 @@ public abstract class Item {
 
     private int qty = 0;
 
+    private String description;
+
     public String getName() {
         return name;
     }
@@ -36,5 +38,13 @@ public abstract class Item {
         } else {
             this.qty = 1;
         }
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

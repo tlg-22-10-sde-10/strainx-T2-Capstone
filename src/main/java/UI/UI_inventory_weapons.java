@@ -100,7 +100,7 @@ public class UI_inventory_weapons {
 
             if(command.equals("0")) {
                 System.out.println("\n\n\n\n\n");
-                displayInventoryList();
+
                 break;
             } else {
                 var newWeapon = weaponsMap.get(command);

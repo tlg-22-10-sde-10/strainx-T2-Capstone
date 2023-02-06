@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import static Contents.ItemFactory.createItem;
 import static Contents.ItemFactory.createItemName;
-import static org.junit.Assert.*;
 
 public class ItemFactoryTest {
 

@@ -2,8 +2,6 @@ package Team_Member;
 
 import Contents.Weapon;
 
-import java.util.WeakHashMap;
-
 public class Crew_Member {
     public String name = "Joe";
     public String rank = "PVT";
