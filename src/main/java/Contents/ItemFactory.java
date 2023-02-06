@@ -1,9 +1,10 @@
 package Contents;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jsonparsing.json;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 import static java.lang.Integer.parseInt;
@@ -16,23 +17,25 @@ public class ItemFactory {
     private static final String keyItems = "key items";
 
     public static Item createItem(String key) throws IOException, NullPointerException {
-        String search_key = key.toLowerCase();
+        String search_key = key.toLowerCase(Locale.ROOT);
         JsonNode itemTree = json.jsonFileReader(path);
+
+        var items = itemTree.get("items");
 
         Item item = null;
 
-        for (JsonNode weapon : itemTree.get("items").get("weapons")) {
-            if (search_key.equals(weapon.get("name").textValue())) {
+        for (JsonNode weapon : items.get(weapons)) {
+            if (search_key.equalsIgnoreCase(weapon.get("name").textValue())) {
                 try {
                     Weapon weaponItem = new Weapon();
-                    weaponItem.setName(itemTree.get("items").get(weapons).get(search_key).get("name").textValue());
-                    weaponItem.setDamage(itemTree.get("items").get(weapons).get(search_key).get("damage").intValue());
-                    weaponItem.setRarity(itemTree.get("items").get(weapons).get(search_key).get("rarity").textValue());
+                    weaponItem.setName(items.get(weapons).get(search_key).get("name").textValue());
+                    weaponItem.setWeapon_base_dmg(items.get(weapons).get(search_key).get("damage").intValue());
+                    weaponItem.setRarity(items.get(weapons).get(search_key).get("rarity").textValue());
 
                     item = weaponItem;
                 } catch (Exception e) {
                     if (e.getClass().equals(NullPointerException.class)) {
-                        throw new NullPointerException("Double check spelling of provided key (" + key + ") against JSON keys");
+                        throw new NullPointerException("Double check spelling of provided key (" + search_key + ") against JSON keys");
                     } else {
                         e.printStackTrace();
                     }
@@ -40,18 +43,18 @@ public class ItemFactory {
             }
         }
 
-        for (JsonNode medicalItemNode : itemTree.get("items").get("medical")) {
-            if (search_key.equals(medicalItemNode.get("name").textValue())) {
+        for (JsonNode medicalItemNode : items.get(medical)) {
+            if (search_key.equalsIgnoreCase(medicalItemNode.get("name").textValue())) {
                 try {
                     Medical medicalItem = new Medical();
-                    medicalItem.setName(itemTree.get("items").get(medical).get(search_key).get("name").textValue());
-                    medicalItem.setValue(itemTree.get("items").get(medical).get(search_key).get("value").intValue());
-                    medicalItem.setRarity(itemTree.get("items").get(medical).get(search_key).get("rarity").textValue());
+                    medicalItem.setName(items.get(medical).get(search_key).get("name").textValue());
+                    medicalItem.setValue(items.get(medical).get(search_key).get("value").intValue());
+                    medicalItem.setRarity(items.get(medical).get(search_key).get("rarity").textValue());
 
                     item = medicalItem;
                 } catch (Exception e) {
                     if (e.getClass().equals(NullPointerException.class)) {
-                        throw new NullPointerException("Double check spelling of provided key (" + key + ") against JSON keys");
+                        throw new NullPointerException("Double check spelling of provided key (" + search_key + ") against JSON keys");
                     } else {
                         e.printStackTrace();
                     }
@@ -59,19 +62,19 @@ public class ItemFactory {
             }
         }
 
-        for (JsonNode KI : itemTree.get("items").get("key items")) {
-            if (search_key.equals(KI.get("name").textValue())) {
+        for (JsonNode KI : items.get(keyItems)) {
+            if (search_key.equalsIgnoreCase(KI.get("name").textValue())) {
                 try {
                     KeyItem keyItem = new KeyItem();
-                    keyItem.setName(itemTree.get("items").get(keyItems).get(search_key).get("name").textValue());
-                    keyItem.setHealth(itemTree.get("items").get(keyItems).get(search_key).get("health").intValue());
-                    keyItem.setDamage(itemTree.get("items").get(keyItems).get(search_key).get("damage").intValue());
-                    keyItem.setRarity(itemTree.get("items").get(keyItems).get(search_key).get("rarity").textValue());
+                    keyItem.setName(items.get(keyItems).get(search_key).get("name").textValue());
+                    keyItem.setHealth(items.get(keyItems).get(search_key).get("health").intValue());
+                    keyItem.setDamage(items.get(keyItems).get(search_key).get("damage").intValue());
+                    keyItem.setRarity(items.get(keyItems).get(search_key).get("rarity").textValue());
 
                     item = keyItem;
                 } catch (Exception e) {
                     if (e.getClass().equals(NullPointerException.class)) {
-                        throw new NullPointerException("Double check spelling of provided key (" + key + ") against JSON keys");
+                        throw new NullPointerException("Double check spelling of provided key (" + search_key + ") against JSON keys");
                     } else {
                         e.printStackTrace();
                     }
@@ -80,12 +83,10 @@ public class ItemFactory {
         }
 
         return item;
-        //throw new IllegalArgumentException("key not found: " + key);
     }
 
-    public static Item createItem() throws IOException, NullPointerException {
-        String search_key = "";
-        Item item = null;
+    public static String createItemName() throws IOException, NullPointerException {
+        String itemName = "I have no names";
 
         JsonNode itemTree = json.jsonFileReader(path);
 
@@ -95,76 +96,24 @@ public class ItemFactory {
         var medicalList = itemList.get("medical");
         var keyItemList = itemList.get("key items");
 
+        ArrayList<String> itemsNames = new ArrayList<>();
+
+        for (var weapons : weaponList) {
+            itemsNames.add(weapons.get("name").textValue());
+        }
+
+        for (var medicals : medicalList) {
+            itemsNames.add(medicals.get("name").textValue());
+        }
+
+        for (var keyItems : keyItemList) {
+            itemsNames.add(keyItems.get("name").textValue());
+        }
+
         Random rg = new Random();
-        int situation = rg.nextInt(itemList.size());
 
-        ObjectMapper mapper = new ObjectMapper();
-        var idk = mapper.readTree(String.valueOf(itemList));
+        itemName = itemsNames.get(rg.nextInt(itemsNames.size()));
 
-        var superList = itemList.get(0);
-
-        System.out.println(idk);
-
-
-//        for (JsonNode weapon : itemTree.get("items").get("weapons")) {
-//            if (search_key.equals(weapon.get("name").textValue())) {
-//                try {
-//                    Weapon weaponItem = new Weapon();
-//                    weaponItem.setName(itemTree.get("items").get(weapons).get(search_key).get("name").textValue());
-//                    weaponItem.setDamage(itemTree.get("items").get(weapons).get(search_key).get("damage").intValue());
-//                    weaponItem.setRarity(itemTree.get("items").get(weapons).get(search_key).get("rarity").textValue());
-//
-//                    item = weaponItem;
-//                } catch (Exception e) {
-//                    if (e.getClass().equals(NullPointerException.class)) {
-//                        throw new NullPointerException("Double check spelling of provided key (" + key + ") against JSON keys");
-//                    } else {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (JsonNode medicalItemNode : itemTree.get("items").get("medical")) {
-//            if (search_key.equals(medicalItemNode.get("name").textValue())) {
-//                try {
-//                    Medical medicalItem = new Medical();
-//                    medicalItem.setName(itemTree.get("items").get(medical).get(search_key).get("name").textValue());
-//                    medicalItem.setValue(itemTree.get("items").get(medical).get(search_key).get("value").intValue());
-//                    medicalItem.setRarity(itemTree.get("items").get(medical).get(search_key).get("rarity").textValue());
-//
-//                    item = medicalItem;
-//                } catch (Exception e) {
-//                    if (e.getClass().equals(NullPointerException.class)) {
-//                        throw new NullPointerException("Double check spelling of provided key (" + key + ") against JSON keys");
-//                    } else {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (JsonNode KI : itemTree.get("items").get("key items")) {
-//            if (search_key.equals(KI.get("name").textValue())) {
-//                try {
-//                    KeyItem keyItem = new KeyItem();
-//                    keyItem.setName(itemTree.get("items").get(keyItems).get(search_key).get("name").textValue());
-//                    keyItem.setHealth(itemTree.get("items").get(keyItems).get(search_key).get("health").intValue());
-//                    keyItem.setDamage(itemTree.get("items").get(keyItems).get(search_key).get("damage").intValue());
-//                    keyItem.setRarity(itemTree.get("items").get(keyItems).get(search_key).get("rarity").textValue());
-//
-//                    item = keyItem;
-//                } catch (Exception e) {
-//                    if (e.getClass().equals(NullPointerException.class)) {
-//                        throw new NullPointerException("Double check spelling of provided key (" + key + ") against JSON keys");
-//                    } else {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-
-        return item;
-        //throw new IllegalArgumentException("key not found: " + key);
+        return itemName;
     }
 }

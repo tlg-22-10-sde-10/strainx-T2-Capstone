@@ -3,15 +3,17 @@ package Contents;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static Contents.ItemFactory.createItem;
+import static Contents.ItemFactory.createItemName;
 import static org.junit.Assert.*;
 
 public class ItemFactoryTest {
 
     @Test
     public void createItemTest() throws IOException {
-        var items =  createItem("handgun");
+        var items =  createItem("M249");
 
         Weapon w1 = new Weapon();
         Medical m1 = new Medical();
@@ -31,6 +33,8 @@ public class ItemFactoryTest {
 
     @Test
     public void createItemTest2() throws IOException {
-        var items = createItem();
+        var items = createItemName();
+        System.out.println(items);
+        System.out.println("M249".toLowerCase(Locale.ROOT));
     }
 }

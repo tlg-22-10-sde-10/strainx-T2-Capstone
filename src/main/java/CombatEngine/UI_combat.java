@@ -6,7 +6,7 @@ import static CombatEngine.engage_enemy.enemyKIAList;
 
 public class UI_combat {
 
-    public static final int x_axis = 96; // display column width
+    public static int x_axis = 96; // display column width
 
     static StringBuilder outputString = new StringBuilder();
     static String playerSideName = "My Squad";
@@ -70,15 +70,15 @@ public class UI_combat {
         System.out.println(outputString);
         drawFooter();
 
-        System.out.print("\033[2J");
-        System.out.print("\033[H");
+        //System.out.print("\033[2J");
+        //System.out.print("\033[H");
     }
 
     private static void reportEngageStatusInventory() {
         outputString.setLength(0);
 
         var weapon = mySquad.get(0).getWeapon();
-        String inventory = "Weapon: " + weapon.getWeapon_name();
+        String inventory = "Weapon: " + weapon.getName();
 
         outputString.append(inventory);
 
@@ -143,7 +143,7 @@ public class UI_combat {
         for (int i = 0; i < mySquad.size(); i++) {
             var crew = mySquad.get(i);
             if (i == 0) {
-                System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()) + " | weapon: " + crew.getWeapon().getWeapon_name());
+                System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()) + " | weapon: " + crew.getWeapon().getName());
             } else {
                 System.out.println(crew.getRank() + " " + crew.getName() + " | HP:" + crew.getHP() + " | attack: " + (crew.getAttack() + crew.getWeapon().getWeapon_base_dmg()));
             }

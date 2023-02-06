@@ -53,6 +53,7 @@
             "body armor" : {
                 "name": "body armor",
                 "health" : 100,
+                "damage" : 0,
                 "rarity" : "epic"
             },
             "squad equipment upgrades" : {

@@ -1,6 +1,7 @@
 package Client;
 
 import Contents.Enemy;
+import Contents.Item;
 import GameMap.Main_Map;
 import GameMap.SubArea;
 import Team_Member.Crew_Member;
@@ -26,6 +27,7 @@ public class GlobalVariables {
     public static int exit_code = 0;
     public static int enemySquadInitiative = 0;
     public static final int ENEMY_SQUAD_SIZE_CAP = 6;
+    public static final int ITEM_QUANTITY_CAP = 6;
 
     public static HashMap<String, Integer> DROP_RATE_MAP = new HashMap<>();
 
@@ -34,6 +36,8 @@ public class GlobalVariables {
 
     public static Main_Map gameMap = new Main_Map(3,3);
 
+    public static ArrayList<Item> inventoryList = new ArrayList<>();
+    public static HashMap<String, Item> InventoryMap = new HashMap<>();
     //squads
     public static ArrayList<Crew_Member> mySquad = new ArrayList<>();
     public static ArrayList<Enemy> enemySquad = new ArrayList<>();
@@ -50,18 +54,18 @@ public class GlobalVariables {
         sub_area_name_initialize();
         content_enemy_initialize();
 
-        gameMap.initial_map();
+        gameMap.initialize_map();
 
         global_squad_initialize();
         combatCommandInitialize();
     }
 
     public static void dropRateInitialize() {
-        DROP_RATE_MAP.put("common", 75);
-        DROP_RATE_MAP.put("uncommon", 80);
-        DROP_RATE_MAP.put("rare", 90);
-        DROP_RATE_MAP.put("epic", 95);
-        DROP_RATE_MAP.put("unique", 100);
+        DROP_RATE_MAP.put("common", 50);
+        DROP_RATE_MAP.put("uncommon", 60);
+        DROP_RATE_MAP.put("rare", 70);
+        DROP_RATE_MAP.put("epic", 80);
+        DROP_RATE_MAP.put("unique", 90);
     }
 
     private static void combatCommandInitialize() {

@@ -1,7 +1,7 @@
 package Client;
 
 import CombatEngine.engage_enemy;
-import UI.TitlePage;
+import UI.UI_TitlePage;
 import UI.UI_enter_subarea;
 
 import java.io.IOException;
@@ -17,15 +17,13 @@ public class StrainX_Main {
         gameInitialization();
         Scanner userInput = new Scanner(System.in);
 
-        //UI_main_screen.load_main_screen();
+        UI_TitlePage.displayTitle();
 
         var map = gameMap.Game_Maps;
 
         //combat_environment.squad_initialization(mySquad, enemySquad);
 
         test();
-
-        TitlePage.displayTitle();
 
 //########demo part
         while (true) {
@@ -63,6 +61,9 @@ public class StrainX_Main {
                     gameMap.go_East();
                     break;
             }
+
+
+
 
             if (choice >0 && choice < map.get(position).size()+1) {
                 current_subArea = map.get(position).get(choice-1);
