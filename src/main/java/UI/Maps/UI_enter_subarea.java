@@ -16,7 +16,7 @@ public class UI_enter_subarea {
     private static final int x_axis_subArea = 96;
     private static final StringBuilder outputString = new StringBuilder();
 
-    private static Main_Map mainMap = gameMap;
+    private static final Main_Map mainMap = gameMap;
 
     private static final HashMap<String, Integer> commandMap = new HashMap<>();
 
