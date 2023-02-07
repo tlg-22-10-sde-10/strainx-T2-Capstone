@@ -27,7 +27,7 @@ public class engage_enemy {
 
             int mySquadInitiative = rg.nextInt(3);
 
-           reportEngageStatus();
+           reportEngage();
 
             retreat = false;
 

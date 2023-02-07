@@ -1,9 +1,11 @@
 package GameMap;
 
 public class SubArea {
-    private String name = "Laboratory";
+    private String name;
 
     private String description = "";
+
+    private Boolean visited = false;
 
     private Content contents = new Content();
 
@@ -29,5 +31,13 @@ public class SubArea {
 
     public void setContents(Content contents) {
         this.contents = contents;
+    }
+
+    public Boolean getVisited() {
+        return visited;
+    }
+
+    public void setVisited(Boolean visited) {
+        this.visited = visited;
     }
 }

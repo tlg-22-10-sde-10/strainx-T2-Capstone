@@ -1,6 +1,7 @@
 package Client;
 
 import Contents.Enemy;
+import Contents.Item;
 import GameMap.Main_Map;
 import GameMap.SubArea;
 import Team_Member.Crew_Member;
@@ -23,17 +24,18 @@ public class GlobalVariables {
         System.out.println("Examples: go north or use shotgun");
     }
 
-    public static int exit_code = 0;
+    //public static int exit_code = 0;
     public static int enemySquadInitiative = 0;
     public static final int ENEMY_SQUAD_SIZE_CAP = 6;
+    public static final int ITEM_QUANTITY_CAP = 6;
 
     public static HashMap<String, Integer> DROP_RATE_MAP = new HashMap<>();
 
-    //public static int current_position = 0;
     public static SubArea current_subArea = new SubArea();
 
     public static Main_Map gameMap = new Main_Map(3,3);
 
+    public static HashMap<String, Item> InventoryMap = new HashMap<>();
     //squads
     public static ArrayList<Crew_Member> mySquad = new ArrayList<>();
     public static ArrayList<Enemy> enemySquad = new ArrayList<>();
@@ -47,21 +49,20 @@ public class GlobalVariables {
     public static HashMap<String, Integer> combatCommandCode = new HashMap<>();
 
     public static void gameInitialization() throws IOException {
-        sub_area_name_initialize();
         content_enemy_initialize();
 
-        gameMap.initial_map();
+        gameMap.initialize_map();
 
         global_squad_initialize();
         combatCommandInitialize();
     }
 
     public static void dropRateInitialize() {
-        DROP_RATE_MAP.put("common", 75);
-        DROP_RATE_MAP.put("uncommon", 80);
-        DROP_RATE_MAP.put("rare", 90);
-        DROP_RATE_MAP.put("epic", 95);
-        DROP_RATE_MAP.put("unique", 100);
+        DROP_RATE_MAP.put("common", 50);
+        DROP_RATE_MAP.put("uncommon", 60);
+        DROP_RATE_MAP.put("rare", 70);
+        DROP_RATE_MAP.put("epic", 80);
+        DROP_RATE_MAP.put("unique", 90);
     }
 
     private static void combatCommandInitialize() {
@@ -90,32 +91,14 @@ public class GlobalVariables {
         mySquad.add(p4);
     }
 
-    public static void sub_area_name_initialize() {
-        subAreaNameList.add("Laboratory");
-        subAreaNameList.add("Factory");
-        subAreaNameList.add("Warehouse");
-        subAreaNameList.add("Town House");
-        subAreaNameList.add("Park");
-        subAreaNameList.add("Bank");
-        subAreaNameList.add("Gun Shop");
-        subAreaNameList.add("Town Center");
-        subAreaNameList.add("Hospital");
-        subAreaNameList.add("School");
-        subAreaNameList.add("Library");
-        subAreaNameList.add("Gas Station");
-    }
-
-    public static void sub_area_initialize() {
-
-    }
-
     public static void content_enemy_initialize() {
         var f1 = new Enemy("Soldier", "Zombie",120, 10, "none");
         //boss
         var f2 = new Enemy("Scientist", "Zombie",1000, 40, "none");
         var f3 = new Enemy("Researcher", "Zombie",110, 10, "none");
         var f4 = new Enemy("Nurse", "Zombie",130, 10, "none");
-        var f5 = new Enemy("Doctor", "Zombie",150, 10, "none");
+        //mini boss
+        var f5 = new Enemy("Doctor", "Zombie",600, 10, "none");
         var f6 = new Enemy("Big Guy", "Zombie",200, 10, "none");
         var f7 = new Enemy("Police Officer", "Zombie",140, 10, "none");
         var f8 = new Enemy("Dog", "Zombie",80, 20, "none");

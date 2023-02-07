@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class SubAreaFactory {
 
-    private static final int numberOfLocations = 12;
     private static final String path = "src/main/resources/locations.json";
 
     public static int locationsInJson = 0;

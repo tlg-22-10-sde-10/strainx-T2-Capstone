@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class jsonTest {
 
-    private String sampleJsonSource = "{ \"title\" : \"parsed from json as node\" }";
+    private final String sampleJsonSource = "{ \"title\" : \"parsed from json as node\" }";
 
     @Test
     public void jsonFileReader() throws IOException {

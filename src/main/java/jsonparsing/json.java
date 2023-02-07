@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class json {
 
-    private static ObjectMapper objectMapper = getDefaultMapper();
+    private static final ObjectMapper objectMapper = getDefaultMapper();
 
     private static ObjectMapper getDefaultMapper() {
         ObjectMapper defaultMapper = new ObjectMapper();

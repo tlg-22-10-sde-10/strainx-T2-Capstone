@@ -4,7 +4,7 @@ public class KeyItem extends Item {
 
     private int health;
     private int damage;
-    private String rarity;
+
 
     public int getHealth() {
         return health;
@@ -22,11 +22,5 @@ public class KeyItem extends Item {
         this.damage = damage;
     }
 
-    public String getRarity() {
-        return rarity;
-    }
 
-    public void setRarity(String rarity) {
-        this.rarity = rarity;
-    }
 }

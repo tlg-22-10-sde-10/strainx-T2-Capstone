@@ -1,7 +1,6 @@
 package GameMap;
 
-import Contents.Enemy;
-import Contents.Item;
+import Contents.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,13 +10,10 @@ import java.util.Random;
 import static Client.GlobalVariables.*;
 
 public class Main_Map {
-
     private static final int DEFAULT_X = 3;
     private static final int DEFAULT_Y = 3;
 
-    private static Random rg = new Random();
-
-    //public static ArrayList<SubArea>[] Game_Map;
+    private static final Random rg = new Random();
 
     public HashMap<Integer, ArrayList<SubArea>> Game_Maps = new HashMap<>();
 
@@ -25,10 +21,6 @@ public class Main_Map {
 
     private final int dimensionX;
     private final int dimensionY;
-
-//    public void setGame_Map(ArrayList<SubArea>[] game_Map) {
-//        Game_Map = game_Map;
-//    }
 
     public int getPosition() {
         return position;
@@ -55,21 +47,15 @@ public class Main_Map {
         this.dimensionX = x;
     }
 
-    public void initial_map() throws IOException {
-        //Game_Map = new ArrayList[this.dimensionX * this.dimensionY];
-
+    public void initialize_map() throws IOException {
         for(int i=1; i<= this.dimensionX*this.dimensionY; i++) {
-            int subAreaNumbers = rg.nextInt(3) +1;
+            int subAreaNumbers = rg.nextInt(3) + 1;
 
             ArrayList<SubArea> mapBlock = new ArrayList<>();
 
             for (int j = 0; j< subAreaNumbers; j++) {
-                //subArea.initialization(subAreaNameList, enemies);
-
                 SubArea newSubArea = newSubArea();
                 mapBlock.add(newSubArea);
-
-                //mapBlock.add(subArea);
             }
             Game_Maps.put(i, mapBlock);
         }
@@ -92,13 +78,15 @@ public class Main_Map {
 
             Content contents = newContent();
             subArea.setContents(contents);
+
         }
         return subArea;
     }
 
-    private Content newContent() {
+    private Content newContent() throws IOException {
         Content contents = new Content();
 
+        //create enemy list
         int enemySize = 0;
 
         if (rg.nextInt(3) > 0) {
@@ -110,6 +98,23 @@ public class Main_Map {
             contents.enemies.add(newEnemy);
         }
 
+        //create item list
+        int itemSize = 0;
+        if(rg.nextInt(3) > 0) {
+            itemSize = rg.nextInt(ITEM_QUANTITY_CAP);
+        }
+
+        dropRateInitialize();
+
+        for (int i = 0; i< itemSize; i++) {
+            Item newItem = newItem();
+
+            int roll = rg.nextInt(100) + 1;
+
+            if(DROP_RATE_MAP.get(newItem.getRarity()) < roll) {
+                contents.items.add(newItem);
+            }
+        }
         return contents;
     }
 
@@ -123,19 +128,18 @@ public class Main_Map {
         int EnemyAttack = randomEnemy.getAttack();
         String EnemySpecialPower = randomEnemy.getSpecial_power();
 
-        Enemy newEnemy = new Enemy(EnemyName, EnemyType, EnemyHP, EnemyAttack, EnemySpecialPower);
-
-        return newEnemy;
+        return new Enemy(EnemyName, EnemyType, EnemyHP, EnemyAttack, EnemySpecialPower);
     }
 
-    private Item newItem() {
-        Item item = null;
+    private Item newItem() throws IOException {
 
-
+        String itemName = ItemFactory.createItemName();
+        Item item = ItemFactory.createItem(itemName);
 
         return item;
     }
 
+    //correct
     public void go_North() {
         if (this.position < this.dimensionX) {
             System.out.println("Can't across the border of this place");
@@ -145,8 +149,9 @@ public class Main_Map {
         }
     }
 
+
     public void go_South() {
-        if (this.position > this.dimensionX * (this.dimensionY -1) -1) {
+        if (this.position > this.dimensionX * (this.dimensionY -1)) {
             System.out.println("Can't across the border of this place");
         } else {
             System.out.println("You are going south");
@@ -155,19 +160,19 @@ public class Main_Map {
     }
 
     public void go_East() {
-        if ((this.position+1)%dimensionX == 0) {
+        if ((this.position)%dimensionX == 0) {
             System.out.println("Can't across the border of this place");
         } else {
-            System.out.println("You are going west");
+            System.out.println("You are going east");
             position +=1;
         }
     }
 
     public void go_West() {
-        if ((this.position)%dimensionX == 0) {
+        if ((this.position)%dimensionX == 1) {
             System.out.println("Can't across the border of this place");
         } else {
-            System.out.println("You are going east");
+            System.out.println("You are going west");
             position -=1;
         }
     }
