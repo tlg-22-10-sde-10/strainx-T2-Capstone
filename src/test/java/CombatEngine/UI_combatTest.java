@@ -68,7 +68,7 @@ class UI_combatTest {
 
         int round = 1;
         reportCombatRounds(round);
-        reportEngageStatus();
+        reportEngage();
         reportPlayerMove();
     }
 

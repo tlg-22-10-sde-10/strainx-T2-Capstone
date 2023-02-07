@@ -49,7 +49,7 @@ public class Main_Map {
 
     public void initialize_map() throws IOException {
         for(int i=1; i<= this.dimensionX*this.dimensionY; i++) {
-            int subAreaNumbers = rg.nextInt(3) +1;
+            int subAreaNumbers = rg.nextInt(3) + 1;
 
             ArrayList<SubArea> mapBlock = new ArrayList<>();
 
@@ -78,6 +78,7 @@ public class Main_Map {
 
             Content contents = newContent();
             subArea.setContents(contents);
+
         }
         return subArea;
     }
@@ -114,7 +115,6 @@ public class Main_Map {
                 contents.items.add(newItem);
             }
         }
-
         return contents;
     }
 

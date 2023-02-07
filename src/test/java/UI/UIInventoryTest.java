@@ -3,27 +3,29 @@ package UI;
 
 import Client.GlobalVariables;
 import Contents.ItemFactory;
+import Contents.Medical;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static Client.GlobalVariables.*;
-import static UI.UI_inventory.*;
-import static UI.UI_inventory_weapons.displayWeapons;
+import static UI.Inventory.UI_inventory.*;
 
 public class UIInventoryTest {
 
     @Test
     public void pickUpItemTest() throws IOException {
-        for(int i=0; i<10; i++) {
+        for(int i=0; i<100; i++) {
             var name = ItemFactory.createItemName();
             var item = ItemFactory.createItem(name);
 
-            pickUpItem(item);
+            if(item.getClass().equals(Medical.class)) {
+                pickUpItem(item);
+            }
         }
 
-        for (var k : InventoryMap.keySet()) {
-            System.out.println(InventoryMap.get(k).getName() + " x" + InventoryMap.get(k).getQty());
+        for(var c : InventoryMap.keySet()) {
+            System.out.println(( InventoryMap.get(c)).getQty());
         }
     }
 
@@ -39,8 +41,6 @@ public class UIInventoryTest {
         }
 
         displayInventoryList();
-
-        //displayWeapons();
     }
 
     @Test

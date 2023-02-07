@@ -133,7 +133,7 @@ public class UI_combat {
         System.out.println(outputString);
     }
 
-    public static void reportEngageStatus() {
+    public static void reportEngage() {
         reportEngageStatusHeader();
         reportEngageStatusInventory();
         reportEngageStatusBody();

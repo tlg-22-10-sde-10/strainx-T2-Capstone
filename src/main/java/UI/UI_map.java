@@ -11,11 +11,11 @@ public class UI_map {
 
     static Main_Map mainMap = gameMap;
 
-    static StringBuilder outputString = new StringBuilder();
+    private static final StringBuilder outputString = new StringBuilder();
 
-    public static int x_axis_map = 95; //need to be an odd number for map display
+    public static final int x_axis_map = 95; //need to be an odd number for map display
 
-    public static int y_axis_map = 13; //need to be an odd number for map display
+    public static final int y_axis_map = 13; //need to be an odd number for map display
 
     private static final int border_width = 11;
 

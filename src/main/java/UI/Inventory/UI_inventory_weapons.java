@@ -1,4 +1,4 @@
-package UI;
+package UI.Inventory;
 
 import Contents.Weapon;
 
@@ -7,10 +7,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static Client.GlobalVariables.*;
-import static UI.UI_inventory.displayInventoryList;
 
 public class UI_inventory_weapons {
-    private static int x_axis_inventory_weapon = 96;
+    private static final int x_axis_inventory_weapon = 96;
     private static final StringBuilder outputString = new StringBuilder();
 
     public static void displayWeapons() {
@@ -37,7 +36,7 @@ public class UI_inventory_weapons {
             System.out.println(outputString);
 
             var weapons = InventoryMap.values().stream()
-                    .filter(i->i.getClass().equals(new Weapon().getClass()))
+                    .filter(i->i.getClass().equals(Weapon.class))
                     .collect(Collectors.toList());
 
             int i = 1;

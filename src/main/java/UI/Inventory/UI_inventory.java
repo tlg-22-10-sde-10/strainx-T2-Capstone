@@ -1,29 +1,22 @@
-package UI;
+package UI.Inventory;
 
 import Contents.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static Client.GlobalVariables.*;
-import static UI.UI_display_medicals.displayMedicals;
-import static UI.UI_inventory_keyItems.displayKeyItems;
-import static UI.UI_inventory_weapons.displayWeapons;
+import static UI.Inventory.UI_display_medicals.displayMedicals;
+import static UI.Inventory.UI_inventory_keyItems.displayKeyItems;
+import static UI.Inventory.UI_inventory_weapons.displayWeapons;
 
 public class UI_inventory {
 
-    private static int x_axis_inventory = 96;
-    private static StringBuilder outputString = new StringBuilder();
+    private static final int x_axis_inventory = 96;
+    private static final StringBuilder outputString = new StringBuilder();
 
-    private static HashMap<Integer, Item> inventoryMap = new HashMap<>();
-
-    private static HashMap<String, String> inventoryCommands = new HashMap();
-
-    private static HashMap<Integer, Weapon> weaponMap = new HashMap<>();
-    private static HashMap<Integer, Medical> medicalMap = new HashMap<>();
-    private static HashMap<Integer, KeyItem> keyItemMap = new HashMap<>();
+    private static final HashMap<String, String> inventoryCommands = new HashMap<>();
 
     private static final String COL_1 = "1. Weapons";
     private static final String COL_2 = "2. Medicals";
@@ -37,20 +30,30 @@ public class UI_inventory {
         inventoryCommands.put("4", "GO BACK");
     }
 
-    public static void pickUpItem(Item item) throws IOException {
+    public static void pickUpItem(Item item) {
         int qty= 1;
 
         if(InventoryMap.containsKey(item.getName())) {
             qty += InventoryMap.get(item.getName()).getQty();
-        }
-        item.setQty(qty);
-
-        InventoryMap.put(item.getName(),item);
-
-        if(item.getName().equals("body armor")){
+        } else if (item.getClass().equals(KeyItem.class)) {
             var key = (KeyItem) item;
-            mySquad.get(0).setMaxHP(mySquad.get(0).getMaxHP() + key.getHealth());
+
+            switch (item.getName()) {
+                case "body armor":
+                    mySquad.get(0).setMaxHP(mySquad.get(0).getMaxHP() + key.getHealth());
+                    break;
+                case "squad equipment upgrades":
+                    for (int i=1;i<mySquad.size();i++) {
+                        var crew = mySquad.get(i);
+                        crew.setMaxHP(crew.getMaxHP() + key.getHealth());
+                        crew.setAttack(crew.getAttack() + key.getDamage());
+                    }
+                    break;
+            }
         }
+
+        item.setQty(qty);
+        InventoryMap.put(item.getName(),item);
     }
 
     private static void drawFooter() {
@@ -75,8 +78,8 @@ public class UI_inventory {
 
         int space = (x_axis_inventory - COL_1.length() - COL_2.length() -COL_3.length()-COL_4.length())/3;
 
-        for(int i = 0; i< cols.length; i++) {
-            outputString.append(cols[i]);
+        for (var c : cols) {
+            outputString.append(c);
             outputString.append(" ".repeat(space));
         }
         outputString.append(COL_4);
@@ -88,13 +91,13 @@ public class UI_inventory {
     private static void displayBody() {
 
         var weapons = InventoryMap.values().stream()
-                .filter(i->i.getClass().equals(new Weapon().getClass()))
+                .filter(i->i.getClass().equals(Weapon.class))
                 .collect(Collectors.toList());
         var medicals = InventoryMap.values().stream()
-                .filter(i->i.getClass().equals(new Medical().getClass()))
+                .filter(i->i.getClass().equals(Medical.class))
                 .collect(Collectors.toList());
         var keys = InventoryMap.values().stream()
-                .filter(i->i.getClass().equals(new KeyItem().getClass()))
+                .filter(i->i.getClass().equals(KeyItem.class))
                 .collect(Collectors.toList());
 
         int rows = Math.max(weapons.size(), medicals.size());
@@ -137,13 +140,14 @@ public class UI_inventory {
     public static void displayInventoryList() {
         while(true) {
             Scanner s = new Scanner(System.in);
+
             inventoryCommandsInitialize();
 
             displayHeader();
 
             displayBody();
 
-            String userInput = "";
+            String userInput;
 
             while (true) {
                 System.out.println("Choose Number Options >> ");
@@ -167,11 +171,11 @@ public class UI_inventory {
                     displayWeapons();
                     break;
                 case "CHECK MEDICALS":
-                    System.out.println("\n\n\n\n\n");
+                    System.out.println("\n\n\n");
                     displayMedicals();
                     break;
                 case "CHECK KEY ITEMS":
-                    System.out.println("\n\n\n\n\n");
+                    System.out.println("\n\n\n");
                     displayKeyItems();
                     break;
             }

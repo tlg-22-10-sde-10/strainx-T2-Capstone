@@ -2,14 +2,13 @@ package UI;
 
 import Client.GlobalVariables;
 import Contents.ItemFactory;
-import org.junit.Assert;
+import UI.Inventory.UI_inventory_weapons;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static Client.GlobalVariables.InventoryMap;
-import static UI.UI_inventory.pickUpItem;
-import static org.junit.Assert.*;
+import static UI.Inventory.UI_inventory.pickUpItem;
 
 public class UI_inventory_weaponsTest {
 

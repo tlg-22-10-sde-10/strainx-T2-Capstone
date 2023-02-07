@@ -1,7 +1,5 @@
 package Contents;
 
-import java.util.ArrayList;
-
 public abstract class Item {
 
     private String name;
@@ -33,7 +31,7 @@ public abstract class Item {
     }
 
     public void setQty(int qty) {
-        if(this.getClass().equals(new Medical().getClass())) {
+        if(this.getClass().equals(Medical.class)) {
             this.qty += qty;
         } else {
             this.qty = 1;

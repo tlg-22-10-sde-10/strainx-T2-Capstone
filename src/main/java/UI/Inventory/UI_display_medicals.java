@@ -1,7 +1,6 @@
-package UI;
+package UI.Inventory;
 
 import Contents.Medical;
-import Team_Member.Crew_Member;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -9,11 +8,10 @@ import java.util.stream.Collectors;
 
 import static Client.GlobalVariables.InventoryMap;
 import static Client.GlobalVariables.mySquad;
-import static UI.UI_inventory.displayInventoryList;
-import static UI.UI_inventory.useItems;
+import static UI.Inventory.UI_inventory.useItems;
 
 public class UI_display_medicals {
-    private static int x_axis_inventory_medical = 96;
+    private static final int x_axis_inventory_medical = 96;
 
     private static final StringBuilder outputString = new StringBuilder();
 
@@ -32,7 +30,6 @@ public class UI_display_medicals {
         int rows = mySquad.size()/2 + 1;
         int spaceHolder = 16;
         int space = (x_axis_inventory_medical-spaceHolder)/2;
-
 
         for (int i = 0; i<rows; i+=2) {
             String soldierLeftName = (i+1) + ". " + mySquad.get(i).getRank() + " " + mySquad.get(i).getName();
@@ -56,7 +53,7 @@ public class UI_display_medicals {
 
             outputString.append(soldierRightName);
             outputString.append(" ".repeat(space2));
-            outputString.append(soldierLeftHP);
+            outputString.append(soldierRightHP);
 
             System.out.println(outputString);
             outputString.setLength(0);
@@ -138,7 +135,7 @@ public class UI_display_medicals {
                 }
             }
 
-            Medical newMeds = new Medical();
+            Medical newMeds;
 
             if(command1.equals("0")) {
                 System.out.println("\n\n\n\n\n");
@@ -150,7 +147,7 @@ public class UI_display_medicals {
             String command2;
 
             HashMap<String, Integer> soldierMap = new HashMap<>();
-            for(int j = 0; j<mySquad.size(); j++){
+            for(int j = 0; j < mySquad.size(); j++){
                 soldierMap.put(String.valueOf(j+1), j);
             }
 
@@ -167,8 +164,6 @@ public class UI_display_medicals {
                     System.out.println("Invalid Selection!");
                 }
             }
-
-            System.out.println(command2);
 
             if(!command2.equals("0")) {
                 var soldier = mySquad.get(soldierMap.get(command2));

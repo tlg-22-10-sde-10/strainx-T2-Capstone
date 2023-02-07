@@ -14,6 +14,5 @@ public class UI_mapTest {
         GlobalVariables.gameInitialization();
 
         displayMainMapUI();
-        displayMainMapUI();
     }
 }

@@ -3,17 +3,17 @@ package Team_Member;
 import Contents.Weapon;
 
 public class Crew_Member {
-    public String name = "Joe";
-    public String rank = "PVT";
+    public String name;
+    public String rank;
 
     public Weapon weapon = new Weapon();
 
-    public String specialty = "Hero"; //true hero never die
+    public String specialty;
 
-    public int HP = 0;
-    private int maxHP = 0;
+    public int HP;
+    private int maxHP;
 
-    public int attack = 0;
+    public int attack;
 
     public String getName() {
         return name;
