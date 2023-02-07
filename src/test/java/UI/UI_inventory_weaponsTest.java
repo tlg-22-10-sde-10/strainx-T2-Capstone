@@ -27,6 +27,6 @@ public class UI_inventory_weaponsTest {
             System.out.println(InventoryMap.get(k).getName() + " x" + InventoryMap.get(k).getQty());
         }
 
-        UI_inventory_weapons.displayWeapons();
+//        UI_inventory_weapons.displayWeapons();
     }
 }

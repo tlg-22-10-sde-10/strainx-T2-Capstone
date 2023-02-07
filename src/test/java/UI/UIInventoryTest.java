@@ -39,8 +39,6 @@ public class UIInventoryTest {
 
             pickUpItem(item);
         }
-
-        displayInventoryList();
     }
 
     @Test
