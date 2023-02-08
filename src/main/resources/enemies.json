@@ -1,0 +1,44 @@
+{
+  "zombie": [
+    {
+      "name": "soldier",
+      "maxHP": 130,
+      "attack": 10
+    },
+    {
+      "name": "scientist",
+      "maxHP": 1000,
+      "attack": 40
+    },
+    {
+      "name": "researcher",
+      "maxHP": 120,
+      "attack": 10
+    },
+    {
+      "name": "nurse",
+      "maxHP": 110,
+      "attack": 10
+    },
+    {
+      "name": "doctor",
+      "maxHP": 250,
+      "attack": 10
+    },
+    {
+      "name": "big guy",
+      "maxHP": 300,
+      "attack": 10
+    },
+    {
+      "name": "police officer",
+      "maxHP": 130,
+      "attack": 10
+    },
+    {
+      "name": "dog",
+      "maxHP": 80,
+      "attack": 20
+    }
+  ]
+}
