@@ -1,22 +1,41 @@
 package contents;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Enemy {
 
-
+    @JsonProperty("name")
     private String name;
-    private String enemy_type;
+
+    @JsonProperty("type")
+    private String enemyType;
+
     private int HP;
+
+    @JsonProperty("maxHP")
     private int maxHP;
+
+    @JsonProperty("attack")
     private int attack;
     private String special_power;
 
     public Enemy(String name, String enemy_type, int HP,int attack,  String special_power) {
         this.name = name;
-        this.enemy_type = enemy_type;
+        this.enemyType = enemy_type;
         this.HP = HP;
         this.maxHP = HP;
         this.attack = attack;
         this.special_power = special_power;
+    }
+
+    public Enemy() {}
+
+    public Enemy(String name, int maxHP, int attack, String type) {
+        this.name = name;
+        this.HP = maxHP;
+        this.attack = attack;
+        this.maxHP = maxHP;
+        this.enemyType = type;
     }
 
     public String getName() {
@@ -27,12 +46,12 @@ public class Enemy {
         this.name = name;
     }
 
-    public String getEnemy_type() {
-        return enemy_type;
+    public String getEnemyType() {
+        return enemyType;
     }
 
-    public void setEnemy_type(String enemy_type) {
-        this.enemy_type = enemy_type;
+    public void setEnemyType(String enemyType) {
+        this.enemyType = enemyType;
     }
 
     public int getHP() {
@@ -48,6 +67,7 @@ public class Enemy {
     }
 
     public void setMaxHP(int maxHP) {
+        this.HP = maxHP;
         this.maxHP = maxHP;
     }
 

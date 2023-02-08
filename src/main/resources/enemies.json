@@ -1,44 +1,74 @@
-{
-  "zombie": [
-    {
-      "name": "soldier",
-      "maxHP": 130,
-      "attack": 10
-    },
-    {
-      "name": "scientist",
-      "maxHP": 1000,
-      "attack": 40
-    },
-    {
-      "name": "researcher",
-      "maxHP": 120,
-      "attack": 10
-    },
-    {
-      "name": "nurse",
-      "maxHP": 110,
-      "attack": 10
-    },
-    {
-      "name": "doctor",
-      "maxHP": 250,
-      "attack": 10
-    },
-    {
-      "name": "big guy",
-      "maxHP": 300,
-      "attack": 10
-    },
-    {
-      "name": "police officer",
-      "maxHP": 130,
-      "attack": 10
-    },
-    {
-      "name": "dog",
-      "maxHP": 80,
-      "attack": 20
-    }
-  ]
-}
+[
+  {
+    "name": "soldier",
+    "maxHP": 130,
+    "attack": 10,
+    "type": "zombie"
+  },
+  {
+    "name": "scientist",
+    "maxHP": 1000,
+    "attack": 40,
+    "type": "zombie"
+  },
+  {
+    "name": "researcher",
+    "maxHP": 120,
+    "attack": 10,
+    "type": "zombie"
+  },
+  {
+    "name": "nurse",
+    "maxHP": 110,
+    "attack": 10,
+    "type": "zombie"
+  },
+  {
+    "name": "doctor",
+    "maxHP": 250,
+    "attack": 10,
+    "type": "zombie"
+  },
+  {
+    "name": "big guy",
+    "maxHP": 300,
+    "attack": 10,
+    "type": "zombie"
+  },
+  {
+    "name": "police officer",
+    "maxHP": 130,
+    "attack": 10,
+    "type": "zombie"
+  },
+  {
+    "name": "dog",
+    "maxHP": 80,
+    "attack": 20,
+    "type": "zombie"
+  },
+  {
+    "name": "fire fighter",
+    "maxHP": 120,
+    "attack": 20,
+    "type": "zombie"
+  },
+  {
+    "name": "pilot",
+    "maxHP": 100,
+    "attack": 15,
+    "type": "zombie"
+  },
+  {
+    "name": "guards",
+    "maxHP": 140,
+    "attack": 15,
+    "type": "zombie"
+  },
+  {
+    "name": "machine operator",
+    "maxHP": 120,
+    "attack": 15,
+    "type": "zombie"
+  }
+]

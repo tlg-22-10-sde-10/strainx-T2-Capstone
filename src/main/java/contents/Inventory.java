@@ -1,14 +1,8 @@
 package contents;
 
-import static client.GlobalVariables.inventory;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
-import jsonparsing.JsonParsing;
 
 public class Inventory {
 

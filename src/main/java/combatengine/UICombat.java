@@ -4,6 +4,9 @@ import static client.GlobalVariables.*;
 import static combatengine.EngageEnemy.KIAList;
 import static combatengine.EngageEnemy.enemyKIAList;
 
+import ui.endgame.UIDisplayGameStatus;
+import ui.endgame.UILosingPage;
+
 public class UICombat {
 
     public static int x_axis = 96; // display column width
@@ -105,7 +108,7 @@ public class UICombat {
             if (i < enemySquad.size()) {
                 var enemy = enemySquad.get(i);
 
-                enemySquadLine = enemy.getEnemy_type() + " " + enemy.getName() +
+                enemySquadLine = enemy.getEnemyType() + " " + enemy.getName() +
                         " | HP: " + enemy.getHP() + "/" + enemy.getMaxHP() +
                         " | attack: " + enemy.getAttack();
             }
@@ -150,7 +153,7 @@ public class UICombat {
 
     public static void reportEnemySquadStatus() {
         for (var enemy : enemySquad) {
-            String output = enemy.getEnemy_type() + " " + enemy.getName() + " | HP:" + enemy.getHP() + " | attack:" + enemy.getAttack();
+            String output = enemy.getEnemyType() + " " + enemy.getName() + " | HP:" + enemy.getHP() + " | attack:" + enemy.getAttack();
             for (int i = 0; i < 60; i++) {
                 output = " " + output;
             }
@@ -188,7 +191,7 @@ public class UICombat {
                 isAre = "are";
             }
             for (var en : enemyKIAList) {
-                defeatedEnemy += en.getEnemy_type() + " " + en.getName() + ", ";
+                defeatedEnemy += en.getEnemyType() + " " + en.getName() + ", ";
             }
             if (enemyKIAList.size() > 0) {
                 System.out.println("\033[31m" + defeatedEnemy + "\033[0m" + isAre + " destroyed in the fight.");
@@ -211,7 +214,8 @@ public class UICombat {
         }
 
         if (mySquad.get(0).HP <= 0) {
-            System.out.println("\033[1;41mmission fail\033[0m");
+            UIDisplayGameStatus.displayInfo(UILosingPage.display());
+
         } else if (enemySquad.size() == 0) {
             System.out.println("All enemies destroyed");
         }

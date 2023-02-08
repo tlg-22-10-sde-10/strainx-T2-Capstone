@@ -1,5 +1,6 @@
-package gamemap;
+package gamemapengine;
 
+import client.GlobalVariables;
 import contents.*;
 
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class MainMap {
         this.dimensionX = x;
     }
 
-    public void initialize_map() throws IOException {
+    public void initializeMap() throws IOException {
         for(int i=1; i<= this.dimensionX*this.dimensionY; i++) {
             int subAreaNumbers = rg.nextInt(3) + 1;
 
@@ -72,25 +73,36 @@ public class MainMap {
     private SubArea newSubArea() throws IOException {
         SubArea subArea = new SubArea();
 
-        var subAreas = SubAreaFactory.subAreaHashMap();
+        var thisSubAreas = SubAreaFactory.subAreaHashMap();
 
-        if (subAreas.size() > 0) {
-            var subAreasNames = subAreas.keySet().toArray();
-            String name = subAreasNames[rg.nextInt(subAreas.size())].toString();
+        if (thisSubAreas.size() > 0) {
+            var subAreasNames = thisSubAreas.keySet().toArray();
+            String name = subAreasNames[rg.nextInt(thisSubAreas.size())].toString();
+
+            int cap = thisSubAreas.get(name).getReUseCap();
+
+            subArea.setReUseCap(cap);
 
             subArea.setName(name);
 
-            String description = subAreas.get(name);
+            String description = thisSubAreas.get(name).getDescription();
 
             subArea.setDescription(description);
 
             Content contents = newContent();
+
             subArea.setContents(contents);
+
+            thisSubAreas.get(name).setReUseCap(cap-1);
+
+            if(thisSubAreas.get(name).getReUseCap()<1) {
+                GlobalVariables.subAreas.remove(thisSubAreas.get(name));
+            }
         }
         return subArea;
     }
 
-    private Content newContent() throws IOException {
+    private Content newContent() {
         Content contents = new Content();
 
         //create enemy list
@@ -130,7 +142,7 @@ public class MainMap {
         var randomEnemy = enemies.get(enemyIndex);
 
         String EnemyName = randomEnemy.getName();
-        String EnemyType = randomEnemy.getEnemy_type();
+        String EnemyType = randomEnemy.getEnemyType();
         int EnemyHP = randomEnemy.getHP();
         int EnemyAttack = randomEnemy.getAttack();
         String EnemySpecialPower = randomEnemy.getSpecial_power();
@@ -138,12 +150,12 @@ public class MainMap {
         return new Enemy(EnemyName, EnemyType, EnemyHP, EnemyAttack, EnemySpecialPower);
     }
 
-    private Item newItem() throws IOException {
+    private Item newItem() {
         return ItemFactory.createItem();
     }
 
     //correct
-    public void go_North() {
+    public void goNorth() {
         if (this.position < this.dimensionX) {
             System.out.println("Can't across the border of this place");
         } else {
@@ -153,7 +165,7 @@ public class MainMap {
     }
 
 
-    public void go_South() {
+    public void goSouth() {
         if (this.position > this.dimensionX * (this.dimensionY -1)) {
             System.out.println("Can't across the border of this place");
         } else {
@@ -162,7 +174,7 @@ public class MainMap {
         }
     }
 
-    public void go_East() {
+    public void goEast() {
         if ((this.position)%dimensionX == 0) {
             System.out.println("Can't across the border of this place");
         } else {
@@ -171,7 +183,7 @@ public class MainMap {
         }
     }
 
-    public void go_West() {
+    public void goWest() {
         if ((this.position)%dimensionX == 1) {
             System.out.println("Can't across the border of this place");
         } else {

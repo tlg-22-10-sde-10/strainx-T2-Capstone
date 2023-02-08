@@ -4,7 +4,7 @@ import static client.GlobalVariables.current_subArea;
 import static client.GlobalVariables.gameMap;
 import static client.GlobalVariables.mySquad;
 
-import gamemap.MainMap;
+import gamemapengine.MainMap;
 import ui.inventory.UIInventory;
 import java.io.IOException;
 import java.util.HashMap;
@@ -93,16 +93,16 @@ public class UIMainMap {
 
     switch (commandMap.get(s)) {
       case 18:
-        gameMap.go_North();
+        gameMap.goNorth();
         break;
       case 15:
-        gameMap.go_South();
+        gameMap.goSouth();
         break;
       case 14:
-        gameMap.go_West();
+        gameMap.goWest();
         break;
       case 16:
-        gameMap.go_East();
+        gameMap.goEast();
         break;
       case 11:
         UIInventory.displayInventoryList();
@@ -157,13 +157,13 @@ public class UIMainMap {
           threatLevel = "\033[34mSafe\33[0m";
         } else if (myPower * 3 / 4 >= enemyPower) {
           threatLevel = "\033[32mLow\33[0m" + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemy_type() + ")";
+              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         } else if (myPower * 5 / 4 >= enemyPower) {
           threatLevel = "\033[33mMedium\33[0m" + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemy_type() + ")";
+              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         } else if (myPower * 5 / 4 < enemyPower) {
           threatLevel = "\033[31mHigh\33[0m" + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemy_type() + ")";
+              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         }
 
         if (subMap.getContents().items.size() > 0) {

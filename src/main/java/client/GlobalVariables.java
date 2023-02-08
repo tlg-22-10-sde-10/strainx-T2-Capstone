@@ -4,9 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import contents.Enemy;
 import contents.Inventory;
 import contents.Item;
-import gamemap.MainMap;
-import gamemap.SubArea;
+import gamemapengine.MainMap;
+import gamemapengine.SubArea;
 import java.io.InputStream;
+import java.util.Random;
 import jsonparsing.JsonParsing;
 import teammember.CrewMember;
 
@@ -47,7 +48,8 @@ public class GlobalVariables {
 
     //subArea
     public static List<SubArea> subAreas = new ArrayList<>();
-    public static ArrayList<Enemy> enemies = new ArrayList<>();
+    public static List<Enemy> enemies = new ArrayList<>();
+    public static List<CrewMember> squad = new ArrayList<>();
 
     //inventory from json file
     public static Inventory inventory = new Inventory();
@@ -60,11 +62,11 @@ public class GlobalVariables {
         inventoryInitialize();
         subMapInitialize();
 
-        content_enemy_initialize();
+        contentEnemyInitialize();
 
-        gameMap.initialize_map();
+        gameMap.initializeMap();
 
-        global_squad_initialize();
+        globalSquadInitialize();
         combatCommandInitialize();
     }
 
@@ -102,37 +104,25 @@ public class GlobalVariables {
         combatCommandCode.put("5", 5);
     }
 
-    private static void global_squad_initialize() {
-        CrewMember p1 = new CrewMember("Player", "SGT", "none", 100, 20);
-        CrewMember p2 = new CrewMember("james", "PV2", "none", 100, 20);
-        CrewMember p3 = new CrewMember("john", "PFC", "none", 100, 20);
-        CrewMember p4 = new CrewMember("jill", "SPC", "none", 100, 20);
+    private static void globalSquadInitialize() throws IOException {
+        try (InputStream input = JsonParsing.openResource("crew.json")) {
+            squad = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
 
-        mySquad.add(p1);
-        mySquad.add(p2);
-        mySquad.add(p3);
-        mySquad.add(p4);
+            CrewMember p1 = new CrewMember("Player", "SGT", 100, 20);
+            mySquad.add(p1);
+
+            Random rg = new Random();
+            for(int i=0;i<3; i++) {
+                var p = squad.get(rg.nextInt(squad.size()));
+                mySquad.add(p);
+                squad.remove(p);
+            }
+        }
     }
 
-    public static void content_enemy_initialize() {
-        var f1 = new Enemy("Soldier", "Zombie",120, 10, "none");
-        //boss
-        var f2 = new Enemy("Scientist", "Zombie",1000, 40, "none");
-        var f3 = new Enemy("Researcher", "Zombie",110, 10, "none");
-        var f4 = new Enemy("Nurse", "Zombie",130, 10, "none");
-        //mini boss
-        var f5 = new Enemy("Doctor", "Zombie",600, 10, "none");
-        var f6 = new Enemy("Big Guy", "Zombie",200, 10, "none");
-        var f7 = new Enemy("Police Officer", "Zombie",140, 10, "none");
-        var f8 = new Enemy("Dog", "Zombie",80, 20, "none");
-
-        enemies.add(f1);
-        enemies.add(f2);
-        enemies.add(f3);
-        enemies.add(f4);
-        enemies.add(f5);
-        enemies.add(f6);
-        enemies.add(f7);
-        enemies.add(f8);
+    public static void contentEnemyInitialize() throws IOException {
+        try (InputStream input = JsonParsing.openResource("enemies.json")) {
+            enemies = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+        }
     }
 }

@@ -57,7 +57,7 @@ public class UIInventoryWeapons {
                 outputString.append(" ".repeat(line_space));
                 outputString.append(weaponBaseDMG);
                 outputString.append("\n");
-                outputString.append(weapon.getWeapon_description());
+                outputString.append(weapon.getDescription());
 
                 System.out.println(outputString);
 

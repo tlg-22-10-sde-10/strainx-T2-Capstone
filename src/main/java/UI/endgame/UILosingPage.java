@@ -1,6 +1,6 @@
-package UI;
+package ui.endgame;
 
-public class UI_LosingPage {
+public class UILosingPage {
     public static String display(){
         return"\n" +
                 "#  ███    ███ ██ ███████ ███████ ██  ██████  ███    ██     ███████  █████  ██ ██      ███████ ██████  ██ \n" +

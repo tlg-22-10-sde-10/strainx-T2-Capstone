@@ -1,10 +1,8 @@
-package gamemap;
+package gamemapengine;
 
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static gamemap.SubAreaFactory.subAreaHashMap;
+import static gamemapengine.SubAreaFactory.subAreaHashMap;
 
 public class SubAreaFactoryTest {
 

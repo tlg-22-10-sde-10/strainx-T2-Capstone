@@ -1,18 +1,24 @@
 package teammember;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import contents.Weapon;
 
 public class CrewMember {
+
+    @JsonProperty("name")
     public String name;
+
+    @JsonProperty("rank")
     public String rank;
 
     public Weapon weapon = new Weapon();
 
-    public String specialty;
+    public int HP = 100;
 
-    public int HP;
+    @JsonProperty("maxHP")
     private int maxHP;
 
+    @JsonProperty("attack")
     public int attack;
 
     public String getName() {
@@ -39,14 +45,6 @@ public class CrewMember {
         this.weapon = weapon;
     }
 
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
     public int getHP() {
         return HP;
     }
@@ -71,10 +69,11 @@ public class CrewMember {
         this.attack = attack;
     }
 
-    public CrewMember(String name, String rank, String specialty, int HP, int attack) {
+    public CrewMember() {}
+
+    public CrewMember(String name, String rank, int HP, int attack) {
         this.name = name;
         this.rank=rank;
-        this.specialty = specialty;
         this.HP = HP;
         this.maxHP = HP;
         this.attack = attack;
