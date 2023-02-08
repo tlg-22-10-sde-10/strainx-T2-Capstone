@@ -42,8 +42,8 @@ Reset containment field by placing flux capacitor in power core
 
 
 Game Modules:
-(A). UI
-1, enter game user interface (display start screen/exit screen -> UI)
+(A). ui
+1, enter game user interface (display start screen/exit screen -> ui)
 *. Start screen: 
 ***. New game;
 ***. Load game;
@@ -54,16 +54,16 @@ Game Modules:
 ***. >? if exit from the game: exit game;              exit_code: 0 
 ***. >? if pass the game: mission accomplished.        exit_code: 1 	
 
-2, main game user interface (display the main screen when in game -> UI)
+2, main game user interface (display the main screen when in game -> ui)
 *. Display the general information:
 ***. Display resources on hand: food, fuel, ammo…
 ***. Display map/directions to go.
 ***. Display options to interact with game (give player to choose their actions, for example, search area, move to next area, engage with enemy)
 
-3, combat user interface (display combat information -> UI)
-4, map user interface (display map -> UI)
-5, items user interface (display items -> UI)
-6, team/squad user interface (display squad members status -> UI)
+3, combat user interface (display combat information -> ui)
+4, map user interface (display map -> ui)
+5, items user interface (display items -> ui)
+6, team/squad user interface (display squad members status -> ui)
 
 (B). Game Engines
 1, map engine (generate map and export as certain data structure-> Engine)
