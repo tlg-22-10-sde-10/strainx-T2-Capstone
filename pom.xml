@@ -3,11 +3,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-
-
     <groupId>com.strainx</groupId>
 
-    <artifactId>strain-x</artifactId>
+    <artifactId>strainx</artifactId>
 
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -28,13 +26,13 @@
         <maven-surefire-report-plugin.version>3.0.0-M8</maven-surefire-report-plugin.version>
 
         <!-- Use the latest version whenever possible. -->
-        <jackson.version>2.13.4</jackson.version>
+        <jackson.version>2.14.2</jackson.version>
 
         <!--
         TODO: Replace "replace.me.project.Main" with the fully qualified class name of the project's main class,
          without any quotes, as the content of the <main-class.name> element.
         -->
-        <main-class.name>StrainX_Main</main-class.name>
+        <main-class.name>client.StrainXMain</main-class.name>
 
     </properties>
 
@@ -151,7 +149,9 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <!--suppress MavenModelInspection -->
                 <artifactId>maven-surefire-report-plugin</artifactId>
+                <!--suppress MavenModelInspection -->
                 <version>${maven-surefire-report-plugin.version}</version>
             </plugin>
 

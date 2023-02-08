@@ -1,66 +1,76 @@
 {
-    "items" : {
-        "weapons" : {
-            "tire iron" : {
-                "name": "tire iron",
-                "damage" : 10,
-                "rarity" : "common"
-            },
-            "axe" : {
-                "name": "axe",
-                "damage" : 20,
-                "rarity" : "common"
-            },
-            "handgun" : {
-                "name": "handgun",
-                "damage" : 40,
-                "rarity" : "uncommon"
-            },
-            "ar-15" : {
-                "name": "AR-15",
-                "damage" : 75,
-                "rarity" : "rare"
-            },
-            "m249" : {
-                "name": "M249",
-                "damage" : 150,
-                "rarity" : "epic"
-            },
-            "big bertha" : {
-                "name": "Big Bertha",
-                "damage" : 500,
-                "rarity" : "unique"
-            }
-        },
-        "medical" : {
-            "bandages" : {
-                "name": "bandages",
-                "value" : 20,
-                "rarity" : "uncommon"
-            },
-            "antibiotics" : {
-                "name": "antibiotics",
-                "value" : 40,
-                "rarity" : "rare"
-            },
-            "first aid kit" : {
-                "name" : "first aid kit",
-                "value" : 100,
-                "rarity" : "epic"
-            }
-        },
-        "key items" : {
-            "body armor" : {
-                "name": "body armor",
-                "health" : 100,
-                "rarity" : "epic"
-            },
-            "squad equipment upgrades" : {
-                "name": "squad equipment upgrades",
-                "health" : 50,
-                "damage" : 25,
-                "rarity" : "unique"
-            }
-        }
+  "weapons": {
+    "tire iron": {
+      "name": "tire iron",
+      "damage": 10,
+      "rarity": "common",
+      "description": "Like what you'd use to change your tire. Hefty and handy in a pinch."
+    },
+    "axe": {
+      "name": "axe",
+      "damage": 20,
+      "rarity": "common",
+      "description": "It's a two handed fireman's axe."
+    },
+    "handgun": {
+      "name": "handgun",
+      "damage": 40,
+      "rarity": "uncommon",
+      "description": "A standard issue Beretta M9 sidearm."
+    },
+    "ar-15": {
+      "name": "ar-15",
+      "damage": 75,
+      "rarity": "rare",
+      "description": "A lightweight, semi-automatic rifle."
+    },
+    "m249": {
+      "name": "m249",
+      "damage": 150,
+      "rarity": "epic",
+      "description": "A light machine gun. An elegant weapon for a more civilized age."
+    },
+    "big bertha": {
+      "name": "big bertha",
+      "damage": 500,
+      "rarity": "unique",
+      "description": "Heavy and futuristic looking... You're not exactly sure what it is. A small placard says, \"Point this end toward enemy.\" and has the words \"Ol' Reliable\" scratched into the metal."
     }
+  },
+  "medical": {
+    "bandages": {
+      "name": "bandages",
+      "value": 20,
+      "rarity": "uncommon",
+      "description": "Common bandages that only covers small wounds."
+    },
+    "antibiotics": {
+      "name": "antibiotics",
+      "value": 40,
+      "rarity": "rare",
+      "description": "Cures only bacterial infections, and cannot neutralize the zombie infection"
+    },
+    "first aid kit": {
+      "name": "first aid kit",
+      "value": 100,
+      "rarity": "epic",
+      "description": "This kit has everything you need to bring someone back to life."
+    }
+  },
+  "key items": {
+    "body armor": {
+      "name": "body armor",
+      "health": 100,
+      "damage": 0,
+      "rarity": "epic",
+      "description": "\"Your to be best friend.\", that's what they say when you first join the military."
+    },
+    "squad equipment upgrades": {
+      "name": "squad equipment upgrades",
+      "health": 50,
+      "damage": 25,
+      "rarity": "unique",
+      "description": "Epic upgrades to your squads combat capability!"
+    }
+  }
 }
