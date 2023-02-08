@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Jefferson",
+    "rank": "PFC",
+    "maxHP": 100,
+    "attack": 20
+  },
+  {
+    "name": "Ricardo",
+    "rank": "SPC",
+    "maxHP": 100,
+    "attack": 20
+  },
+  {
+    "name": "Jackson",
+    "rank": "CPL",
+    "maxHP": 100,
+    "attack": 20
+  },
+  {
+    "name": "Marcus",
+    "rank": "PV2",
+    "maxHP": 100,
+    "attack": 20
+  },
+  {
+    "name": "Roy",
+    "rank": "SPC",
+    "maxHP": 100,
+    "attack": 20
+  },
+  {
+    "name": "Steph",
+    "rank": "PFC",
+    "maxHP": 100,
+    "attack": 20
+  }
+]

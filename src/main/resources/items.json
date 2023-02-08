@@ -3,32 +3,38 @@
     "tire iron": {
       "name": "tire iron",
       "damage": 10,
-      "rarity": "common"
+      "rarity": "common",
+      "description": "Like what you'd use to change your tire. Hefty and handy in a pinch."
     },
     "axe": {
       "name": "axe",
       "damage": 20,
-      "rarity": "common"
+      "rarity": "common",
+      "description": "It's a two handed fireman's axe."
     },
     "handgun": {
       "name": "handgun",
       "damage": 40,
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "description": "A standard issue Beretta M9 sidearm."
     },
     "ar-15": {
-      "name": "AR-15",
+      "name": "ar-15",
       "damage": 75,
-      "rarity": "rare"
+      "rarity": "rare",
+      "description": "A lightweight, semi-automatic rifle."
     },
     "m249": {
-      "name": "M249",
+      "name": "m249",
       "damage": 150,
-      "rarity": "epic"
+      "rarity": "epic",
+      "description": "A light machine gun. An elegant weapon for a more civilized age."
     },
     "big bertha": {
-      "name": "Big Bertha",
+      "name": "big bertha",
       "damage": 500,
-      "rarity": "unique"
+      "rarity": "unique",
+      "description": "Heavy and futuristic looking... You're not exactly sure what it is. A small placard says, \"Point this end toward enemy.\" and has the words \"Ol' Reliable\" scratched into the metal."
     }
   },
   "medical": {
