@@ -1,4 +1,4 @@
-package gamemap;
+package gamemapengine;
 
 import static client.GlobalVariables.subAreas;
 
@@ -8,12 +8,13 @@ import ui.maps.UIEnterSubarea;
 
 public class SubAreaFactory {
 
-    public static Map<String, String> subAreaHashMap() {
-        Map<String, String> localSubAreasInstance = new HashMap<>();
+    public static Map<String, SubArea> subAreaHashMap() {
+        Map<String, SubArea> localSubAreasInstance = new HashMap<>();
 
         subAreas.forEach(a -> {
             String des = convertDescription(a.getDescription());
-            localSubAreasInstance.put(a.getName(), des);
+            a.setDescription(des);
+            localSubAreasInstance.put(a.getName(), a);
         });
 
         return localSubAreasInstance;

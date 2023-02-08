@@ -1,4 +1,4 @@
-package gamemap;
+package gamemapengine;
 
 import org.junit.Test;
 

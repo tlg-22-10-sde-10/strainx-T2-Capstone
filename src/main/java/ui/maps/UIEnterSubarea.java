@@ -2,7 +2,7 @@ package ui.maps;
 
 import combatengine.EngageEnemy;
 import contents.Item;
-import gamemap.MainMap;
+import gamemapengine.MainMap;
 import ui.inventory.UIInventory;
 
 import java.util.HashMap;
@@ -98,13 +98,14 @@ public class UIEnterSubarea {
         }
     }
 
-    private static void displaySubareaName() {
+    private static void displaySubareaName() throws InterruptedException {
         String text = "You have entered into " + current_subArea.getName();
 
 //        for(var c : text.toCharArray()) {
 //            Thread.sleep(60);
 //            System.out.print(c);
 //        }
+
         System.out.println(text);
 
         current_subArea.setVisited(true);
