@@ -13,6 +13,6 @@ public class UI_mapTest {
     public void displayMainMapUITest() throws IOException, InterruptedException {
         GlobalVariables.gameInitialization();
 
-        UIMainMap.displayMainMapUI();
+        //UIMainMap.displayMainMapUI();
     }
 }

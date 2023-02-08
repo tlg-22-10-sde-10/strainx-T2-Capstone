@@ -14,7 +14,7 @@ import static ui.inventory.UIInventory.*;
 public class UIInventoryTest {
 
     @Test
-    public void pickUpItemTest() throws IOException {
+    public void pickUpItemTest() {
         for(int i=0; i<100; i++) {
             var item = ItemFactory.createItem();
 
@@ -41,6 +41,8 @@ public class UIInventoryTest {
 
     @Test
     public void useItemsTest() throws IOException {
+        GlobalVariables.gameInitialization();
+
         var weaponName = "AR-15";
         var medicalsName = "bandages";
         var keyItemsName = "body armor";

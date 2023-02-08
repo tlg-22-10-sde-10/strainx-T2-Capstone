@@ -8,7 +8,7 @@ import java.util.Locale;
 public class ItemFactoryTest {
 
     @Test
-    public void createItemTest() throws IOException {
+    public void createItemTest() {
         var items =  ItemFactory.createItem();
 
         Weapon w1 = new Weapon();
