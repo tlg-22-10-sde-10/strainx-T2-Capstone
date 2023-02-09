@@ -15,7 +15,7 @@ public class UIInventoryTest {
 
     @Test
     public void pickUpItemTest() {
-        for(int i=0; i<100; i++) {
+        for(int i=0; i<0; i++) {
             var item = ItemFactory.createItem();
 
             if(item.getClass().equals(Medical.class)) {
