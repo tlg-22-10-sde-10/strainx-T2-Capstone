@@ -1,12 +1,12 @@
 package ui.inventory;
 
-import contents.Weapon;
+import gamecontrol.contents.Weapon;
 
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 public class UIInventoryWeapons {
     private static final int x_axis_inventory_weapon = 96;
@@ -57,7 +57,7 @@ public class UIInventoryWeapons {
                 outputString.append(" ".repeat(line_space));
                 outputString.append(weaponBaseDMG);
                 outputString.append("\n");
-                outputString.append(weapon.getWeapon_description());
+                outputString.append(weapon.getDescription());
 
                 System.out.println(outputString);
 

@@ -41,17 +41,20 @@
     "bandages": {
       "name": "bandages",
       "value": 20,
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "description": "Common bandages that only covers small wounds."
     },
     "antibiotics": {
       "name": "antibiotics",
       "value": 40,
-      "rarity": "rare"
+      "rarity": "rare",
+      "description": "Cures only bacterial infections, and cannot neutralize the zombie infection"
     },
     "first aid kit": {
       "name": "first aid kit",
       "value": 100,
-      "rarity": "epic"
+      "rarity": "epic",
+      "description": "This kit has everything you need to bring someone back to life."
     }
   },
   "key items": {
@@ -59,13 +62,15 @@
       "name": "body armor",
       "health": 100,
       "damage": 0,
-      "rarity": "epic"
+      "rarity": "epic",
+      "description": "\"Your to be best friend.\", that's what they say when you first join the military."
     },
     "squad equipment upgrades": {
       "name": "squad equipment upgrades",
       "health": 50,
       "damage": 25,
-      "rarity": "unique"
+      "rarity": "unique",
+      "description": "Epic upgrades to your squads combat capability!"
     }
   }
 }

@@ -1,11 +1,12 @@
 package client;
 
+import ui.endgame.UIDisplayGameStatus;
 import ui.maps.UIMainMap;
-import ui.UITitlePage;
+import ui.endgame.UITitlePage;
 
 import java.io.IOException;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 
 public class StrainXMain {
@@ -15,7 +16,7 @@ public class StrainXMain {
         gameInitialization();
         //Scanner userInput = new Scanner(System.in);
 
-        UITitlePage.displayTitle();
+        UIDisplayGameStatus.displayInfo(UITitlePage.displayTitle());
 
         UIMainMap.displayMainMapUI();
     }

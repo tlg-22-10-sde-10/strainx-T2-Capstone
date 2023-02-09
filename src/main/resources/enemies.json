@@ -46,5 +46,29 @@
     "maxHP": 80,
     "attack": 20,
     "type": "zombie"
+  },
+  {
+    "name": "fire fighter",
+    "maxHP": 120,
+    "attack": 20,
+    "type": "zombie"
+  },
+  {
+    "name": "pilot",
+    "maxHP": 100,
+    "attack": 15,
+    "type": "zombie"
+  },
+  {
+    "name": "guards",
+    "maxHP": 140,
+    "attack": 15,
+    "type": "zombie"
+  },
+  {
+    "name": "machine operator",
+    "maxHP": 120,
+    "attack": 15,
+    "type": "zombie"
   }
 ]

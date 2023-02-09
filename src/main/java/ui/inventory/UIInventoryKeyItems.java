@@ -1,11 +1,11 @@
 package ui.inventory;
 
-import contents.KeyItem;
+import gamecontrol.contents.KeyItem;
 
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.InventoryMap;
+import static gamecontrol.GlobalVariables.InventoryMap;
 
 public class UIInventoryKeyItems {
     private static final int x_axis_inventory_keyItem = 96;
@@ -56,7 +56,7 @@ public class UIInventoryKeyItems {
         System.out.println(outputString);
         drawHeader();
 
-        System.out.println("Press number to continue >> ");
+        System.out.println("Enter number to continue >> ");
 
         Scanner s = new Scanner(System.in);
 

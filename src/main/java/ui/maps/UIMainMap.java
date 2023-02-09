@@ -1,11 +1,19 @@
 package ui.maps;
 
-import static client.GlobalVariables.current_subArea;
-import static client.GlobalVariables.gameMap;
-import static client.GlobalVariables.mySquad;
-
-import gamemap.MainMap;
 import ui.endgame.UIIntroBlurb;
+import static gamecontrol.GlobalVariables.InventoryMap;
+import static gamecontrol.GlobalVariables.currentSubAreaContents;
+import static gamecontrol.GlobalVariables.defeatBoss;
+import static gamecontrol.GlobalVariables.inGameCommands;
+import static gamecontrol.GlobalVariables.inGameMap;
+import static gamecontrol.GlobalVariables.mySquad;
+
+import gamecontrol.contents.Weapon;
+import gamemodel.mapengine.MainMap;
+import ui.UICommandHelper;
+import ui.endgame.UIDisplayGameStatus;
+import ui.endgame.UIWinningPage;
+
 import ui.inventory.UIInventory;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,7 +21,7 @@ import java.util.Scanner;
 
 public class UIMainMap {
 
-  private static final MainMap mainMap = gameMap;
+  private static final MainMap mainMap = inGameMap;
 
   private static final StringBuilder outputString = new StringBuilder();
 
@@ -29,16 +37,17 @@ public class UIMainMap {
 
   private static boolean exit = false;
 
-  private static void commandInitialize() {
-    /* avoid give command code from 1-10 because this command map will add command codes when playing the game*/
-    commandMap.put("w", 18); //Go North
-    commandMap.put("s", 15); //Go South
-    commandMap.put("a", 14); //Go East
-    commandMap.put("d", 16); //Go West
-    commandMap.put("i", 11); //Inventory
-    commandMap.put("m", 12); //mini map
-    commandMap.put("e", -1); //exit game
-  }
+//  private static void commandInitialize() {
+//    /* avoid give command code from 1-10 because this command map will add command codes when playing the game*/
+//    commandMap.put("w", 18); //Go North
+//    commandMap.put("s", 15); //Go South
+//    commandMap.put("a", 14); //Go East
+//    commandMap.put("d", 16); //Go West
+//    commandMap.put("i", 11); //Inventory
+//    commandMap.put("m", 12); //mini map
+//    commandMap.put("e", -1); //exit game
+//    commandMap.put("cheat", -2); //ar
+//  }
 
   private static void threatLvlMapInitialize() {
     threatLvlMap.put(3, "\033[31mHigh\33[0m");
@@ -55,8 +64,9 @@ public class UIMainMap {
   }
 
   public static void displayMainMapUI() throws IOException, InterruptedException {
+
     UIIntroBlurb.displayIntro();
-    commandInitialize();
+
     threatLvlMapInitialize();
 
     while (mySquad.get(0).getHP() > 0) {
@@ -64,9 +74,13 @@ public class UIMainMap {
       displayMapTitle();
 
       displayMapBody();
-      if (exit) {
+      if (exit || defeatBoss) {
         break;
       }
+    }
+
+    if (defeatBoss) {
+      UIDisplayGameStatus.displayInfo(UIWinningPage.displayWinning());
     }
   }
 
@@ -75,7 +89,7 @@ public class UIMainMap {
 
     int position = mainMap.getPosition();
 
-    var subMaps = mainMap.Game_Maps.get(position);
+    var subMaps = mainMap.gameMaps.get(position);
 
     String s;
 
@@ -86,40 +100,65 @@ public class UIMainMap {
 
       s = scanner.nextLine().toLowerCase();
 
-      if (commandMap.containsKey(s)) {
+      if (inGameCommands.containsKey(s)) {
         break;
       }
 
       System.out.println("Invalid Input");
     }
 
-    switch (commandMap.get(s)) {
-      case 18:
-        gameMap.go_North();
-        break;
-      case 15:
-        gameMap.go_South();
-        break;
-      case 14:
-        gameMap.go_West();
-        break;
-      case 16:
-        gameMap.go_East();
-        break;
+    switch (inGameCommands.get(s)) {
       case 11:
-        UIInventory.displayInventoryList();
-        break;
-      case -1:
-        exit = true;
+        inGameMap.goNorth();
         break;
       case 12:
+        inGameMap.goSouth();
+        break;
+      case 13:
+        inGameMap.goWest();
+        break;
+      case 14:
+        inGameMap.goEast();
+        break;
+      case 15:
         //display mini map
         UIMiniMap.displayMiniMap();
+        break;
+      case 16:
+        UIInventory.displayInventoryList();
+        break;
+      case 17:
+        UICommandHelper.showHelp();
+        break;
+      case 18:
+        UICommandHelper.showHelpMap();
+        break;
+      case -1:
+        while (true) {
+          System.out.println("To confirm quit, type y or n >>");
+
+          s = scanner.nextLine().toLowerCase();
+
+          if (s.equals("y")) {
+            exit = true;
+            break;
+          } else if (s.equals("n")) {
+            break;
+          } else {
+            System.out.println("Invalid entry, try again.");
+          }
+        }
+      case -2:
+        Weapon AR15 = new Weapon("ar-15", 75, "rare", "A lightweight, semi-automatic rifle.");
+        //Weapon big = new Weapon();
+        InventoryMap.put("ar-15", AR15);
+        break;
+
       default:
     }
 
-    if (commandMap.get(s) < subMaps.size() && commandMap.get(s) >= 0) {
-      current_subArea = subMaps.get(commandMap.get(s));
+    if (inGameCommands.get(s) <= subMaps.size() && inGameCommands.get(s) >= 0) {
+      currentSubAreaContents = subMaps.get(inGameCommands.get(s)-1);
 
       UIEnterSubarea.displaySubarea();
     }
@@ -130,7 +169,7 @@ public class UIMainMap {
 
     int position = mainMap.getPosition();
 
-    var subMaps = mainMap.Game_Maps.get(position);
+    var subMaps = mainMap.gameMaps.get(position);
 
     int rows = subMaps.size();
 
@@ -159,13 +198,13 @@ public class UIMainMap {
           threatLevel = "\033[34mSafe\33[0m";
         } else if (myPower * 3 / 4 >= enemyPower) {
           threatLevel = "\033[32mLow\33[0m" + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemy_type() + ")";
+              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         } else if (myPower * 5 / 4 >= enemyPower) {
           threatLevel = "\033[33mMedium\33[0m" + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemy_type() + ")";
+              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         } else if (myPower * 5 / 4 < enemyPower) {
           threatLevel = "\033[31mHigh\33[0m" + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemy_type() + ")";
+              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         }
 
         if (subMap.getContents().items.size() > 0) {
@@ -190,7 +229,7 @@ public class UIMainMap {
   private static void displayMapTitle() {
     drawFooter();
 
-    String title = "AREA " + gameMap.getPosition();
+    String title = "AREA " + inGameMap.getPosition();
     int space = (x_axis_map - title.length()) / 2;
 
     outputString.append(" ".repeat(space));
