@@ -3,11 +3,13 @@ package ui.maps;
 import static gamecontrol.GlobalVariables.InventoryMap;
 import static gamecontrol.GlobalVariables.currentSubAreaContents;
 import static gamecontrol.GlobalVariables.defeatBoss;
+import static gamecontrol.GlobalVariables.inGameCommands;
 import static gamecontrol.GlobalVariables.inGameMap;
 import static gamecontrol.GlobalVariables.mySquad;
 
 import gamecontrol.contents.Weapon;
 import gamemodel.mapengine.MainMap;
+import ui.UICommandHelper;
 import ui.endgame.UIDisplayGameStatus;
 import ui.endgame.UIWinningPage;
 import ui.inventory.UIInventory;
@@ -33,17 +35,17 @@ public class UIMainMap {
 
   private static boolean exit = false;
 
-  private static void commandInitialize() {
-    /* avoid give command code from 1-10 because this command map will add command codes when playing the game*/
-    commandMap.put("w", 18); //Go North
-    commandMap.put("s", 15); //Go South
-    commandMap.put("a", 14); //Go East
-    commandMap.put("d", 16); //Go West
-    commandMap.put("i", 11); //Inventory
-    commandMap.put("m", 12); //mini map
-    commandMap.put("e", -1); //exit game
-    commandMap.put("cheat", -2); //ar
-  }
+//  private static void commandInitialize() {
+//    /* avoid give command code from 1-10 because this command map will add command codes when playing the game*/
+//    commandMap.put("w", 18); //Go North
+//    commandMap.put("s", 15); //Go South
+//    commandMap.put("a", 14); //Go East
+//    commandMap.put("d", 16); //Go West
+//    commandMap.put("i", 11); //Inventory
+//    commandMap.put("m", 12); //mini map
+//    commandMap.put("e", -1); //exit game
+//    commandMap.put("cheat", -2); //ar
+//  }
 
   private static void threatLvlMapInitialize() {
     threatLvlMap.put(3, "\033[31mHigh\33[0m");
@@ -60,7 +62,7 @@ public class UIMainMap {
   }
 
   public static void displayMainMapUI() throws IOException, InterruptedException {
-    commandInitialize();
+//    commandInitialize();
     threatLvlMapInitialize();
 
     while (mySquad.get(0).getHP() > 0) {
@@ -94,45 +96,65 @@ public class UIMainMap {
 
       s = scanner.nextLine().toLowerCase();
 
-      if (commandMap.containsKey(s)) {
+      if (inGameCommands.containsKey(s)) {
         break;
       }
 
       System.out.println("Invalid Input");
     }
 
-    switch (commandMap.get(s)) {
-      case 18:
+    switch (inGameCommands.get(s)) {
+      case 11:
         inGameMap.goNorth();
         break;
-      case 15:
+      case 12:
         inGameMap.goSouth();
         break;
-      case 14:
+      case 13:
         inGameMap.goWest();
         break;
-      case 16:
+      case 14:
         inGameMap.goEast();
         break;
-      case 11:
+      case 15:
+        //display mini map
+        UIMiniMap.displayMiniMap();
+        break;
+      case 16:
         UIInventory.displayInventoryList();
         break;
-      case -1:
-        exit = true;
+      case 17:
+        UICommandHelper.showHelp();
         break;
+      case 18:
+        UICommandHelper.showHelpMap();
+        break;
+      case -1:
+        while (true) {
+          System.out.println("To confirm quit, type y or n >>");
+
+          s = scanner.nextLine().toLowerCase();
+
+          if (s.equals("y")) {
+            exit = true;
+            break;
+          } else if (s.equals("n")) {
+            break;
+          } else {
+            System.out.println("Invalid entry, try again.");
+          }
+        }
       case -2:
         Weapon AR15 = new Weapon("ar-15", 75, "rare", "A lightweight, semi-automatic rifle.");
         //Weapon big = new Weapon();
         InventoryMap.put("ar-15", AR15);
         break;
-      case 12:
-        //display mini map
-        UIMiniMap.displayMiniMap();
+
       default:
     }
 
-    if (commandMap.get(s) < subMaps.size() && commandMap.get(s) >= 0) {
-      currentSubAreaContents = subMaps.get(commandMap.get(s));
+    if (inGameCommands.get(s) <= subMaps.size() && inGameCommands.get(s) >= 0) {
+      currentSubAreaContents = subMaps.get(inGameCommands.get(s)-1);
 
       UIEnterSubarea.displaySubarea();
     }

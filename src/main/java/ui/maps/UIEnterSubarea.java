@@ -3,6 +3,8 @@ package ui.maps;
 import gamemodel.combatengine.EngageEnemy;
 import gamecontrol.contents.Item;
 import gamemodel.mapengine.MainMap;
+import java.io.IOException;
+import ui.UICommandHelper;
 import ui.inventory.UIInventory;
 
 import java.util.HashMap;
@@ -22,21 +24,21 @@ public class UIEnterSubarea {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static void commandMapInitialize() {
-        commandMap.put("y", 1); //engage the enemy
-        commandMap.put("", 0); //go back
-        commandMap.put("yes", 1); //engage the enemy
-        commandMap.put("n", 0);
-        commandMap.put("i", 11);
-        commandMap.put("l", 12);
-        commandMap.put("p", 12);
-        commandMap.put("pick", 12);
-        commandMap.put("pick up", 12);
-    }
+//    private static void commandMapInitialize() {
+//        commandMap.put("y", 1); //engage the enemy
+//        commandMap.put("", 0); //go back
+//        commandMap.put("yes", 1); //engage the enemy
+//        commandMap.put("n", 0);
+//        commandMap.put("i", 11);
+//        commandMap.put("l", 12);
+//        commandMap.put("p", 12);
+//        commandMap.put("pick", 12);
+//        commandMap.put("pick up", 12);
+//    }
 
-    public static void displaySubarea() throws InterruptedException {
-        commandMapInitialize();
+    private static boolean exit = false;
 
+    public static void displaySubarea2() throws InterruptedException, IOException {
         System.out.println("\n\n\n");
 
         drawHeader();
@@ -60,41 +62,56 @@ public class UIEnterSubarea {
         int commandCode;
 
         while(true) {
-            System.out.println("Please Give Command >> ");
+            System.out.println("Enter a command. You may engage the enemy, attempt to loot items,"
+                + " or return to area overlay >> ");
 
-            String command = s.nextLine().toLowerCase(Locale.ROOT);
+            String command = s.nextLine().toLowerCase();
 
-            if (commandMap.containsKey(command)) {
-                commandCode = commandMap.get(command);
+            if (inGameCommands.containsKey(command)) {
+                commandCode = inGameCommands.get(command);
                 break;
             }
             System.out.println("Invalid Command");
         }
 
         switch (commandCode) {
-            case 1:
+            case 21:
                 enemySquad = currentSubAreaContents.getContents().enemies;
                 if (enemySquad.size() > 0) {
                     EngageEnemy.gameEnginePrototype();
                 } else {
-                    System.out.println("You search the place, and no zombies spot.");
+                    System.out.println("Looking around, there are no zombies that want to fight.");
                 }
                 break;
-            case 0:
+            case 22:
+                exit = true;
                 break;
-            case 11:
+            case 16:
                 UIInventory.displayInventoryList();
                 break;
-            case 12:
+            case 17:
+                UICommandHelper.showHelp();
+                break;
+            case 19:
+                UICommandHelper.showHelpSubArea();
+                break;
+            case 24:
                 if (currentSubAreaContents.getContents().items.size() > 0) {
                     for (Item i : currentSubAreaContents.getContents().items) {
                         UIInventory.pickUpItem(i);
                     }
                     currentSubAreaContents.getContents().items.clear();
                 } else {
-                    System.out.println("You tried to find if there are any hidden items, but nothing is there.");
+                    System.out.println("Rummaging around you find there's nothing of value.");
                 }
                 break;
+        }
+    }
+
+    public static void displaySubarea() throws InterruptedException, IOException {
+        exit = false;
+        while (!exit) {
+            displaySubarea2();
         }
     }
 
@@ -145,5 +162,9 @@ public class UIEnterSubarea {
         outputString.append("*".repeat(x_axis_subArea));
         System.out.println(outputString);
         outputString.setLength(0);
+    }
+
+    public static void setExit(boolean exit) {
+        UIEnterSubarea.exit = exit;
     }
 }

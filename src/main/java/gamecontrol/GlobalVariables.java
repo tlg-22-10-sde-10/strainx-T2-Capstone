@@ -85,36 +85,57 @@ public class GlobalVariables {
         /* Design Pattern For Commands Map
         * value 1-10: for general selections
         * value 11-20: for map commands
-        * value 21-30: for combat commands
+        * value 21-25: for subarea commands
+        * value 26-30: for combat commands
         * value 31-40: for inventory commands
         * value -1: for exit
         * other values: */
 
+        inGameCommands.put("0", 0); //go back
+
         inGameCommands.put("1", 1); //select index 1
         inGameCommands.put("2", 2); //select index 2
         inGameCommands.put("3", 3); //select index 3
-        inGameCommands.put("4", 4); //select index 1
-        inGameCommands.put("5", 5); //select index 1
-        inGameCommands.put("6", 6); //select index 1
-        inGameCommands.put("7", 7); //select index 1
-        inGameCommands.put("8", 8); //select index 1
-        inGameCommands.put("9", 9); //select index 1
-        inGameCommands.put("10", 10); //select index 1
+        inGameCommands.put("4", 4); //select index 4
+        inGameCommands.put("5", 5); //select index 5
+        inGameCommands.put("6", 6); //select index 6
+        inGameCommands.put("7", 7); //select index 7
+        inGameCommands.put("8", 8); //select index 8
+        inGameCommands.put("9", 9); //select index 9
+        inGameCommands.put("10", 10); //select index 10
 
-        inGameCommands.put("w", 18); //go up
+        inGameCommands.put("w", 11); //go up
         inGameCommands.put("s", 12); //go down
-        inGameCommands.put("a", 14); //select index 1
-        inGameCommands.put("d", 16); //select index 1
-        inGameCommands.put("m", 15); //select index 1
-        inGameCommands.put("i", 11); //select index 1
-        inGameCommands.put("e", -1); //select index 1
-        inGameCommands.put("h", 17); //select index 1
+        inGameCommands.put("a", 13); //go west
+        inGameCommands.put("d", 14); //go east
+        inGameCommands.put("m", 15); //show minimap
+        inGameCommands.put("i", 16); //show inventory
+        inGameCommands.put("help", 17); //display help command
+        inGameCommands.put("helpMap", 18); //display help command
+        inGameCommands.put("helpmap", 18); //display help command
+        inGameCommands.put("helpSubarea", 19); //display help command
+        inGameCommands.put("helpsubarea", 19); //display help command
+        inGameCommands.put("helpCombat", 20); //display help command
+        inGameCommands.put("helpcombat", 20); //display help command
+        inGameCommands.put("e", -1); //exit game
+        inGameCommands.put("exit", -1); //exit game
+        inGameCommands.put("q", -1); //exit game
+        inGameCommands.put("quit", -1); //exit game
 
-        inGameCommands.put("f", 21); //Attack Enemy
-        inGameCommands.put("u", 22); //Use Items
-        inGameCommands.put("t", 23); //Play Tricks
-        inGameCommands.put("c", 24); //Auto Combat
-        inGameCommands.put("r", 25); //Retreat
+        inGameCommands.put("y", 21); //start combat
+        inGameCommands.put("yes", 21); //start combat
+        inGameCommands.put("n", 22); //leave area
+        inGameCommands.put("no", 22); //leave area
+        inGameCommands.put("", 22); //leave area
+        inGameCommands.put("l", 24); //loot items
+        inGameCommands.put("p", 24); //loot items
+        inGameCommands.put("pick up", 24); //loot items
+
+        inGameCommands.put("f", 26); //Attack Enemy
+        inGameCommands.put("u", 27); //Use Items
+//        inGameCommands.put("t", 23); //Play Tricks
+        inGameCommands.put("c", 29); //Auto Combat
+        inGameCommands.put("r", 30); //Retreat
     }
 
     private static void subMapInitialize() throws IOException {
@@ -140,17 +161,17 @@ public class GlobalVariables {
     }
 
     private static void combatCommandInitialize() {
-        combatCommandDescription.put("1", "Attack Enemy");
-        combatCommandDescription.put("2", "Use Items");
-        combatCommandDescription.put("3", "Play Tricks");
-        combatCommandDescription.put("4", "Auto Combat");
-        combatCommandDescription.put("5", "Retreat");
+        combatCommandDescription.put("f", "Attack Enemy");
+        combatCommandDescription.put("u", "Use Items");
+//        combatCommandDescription.put("3", "Play Tricks");
+        combatCommandDescription.put("c", "Auto Combat");
+        combatCommandDescription.put("r", "Retreat");
 
-        combatCommandCode.put("1", 1);
-        combatCommandCode.put("2", 2);
-        combatCommandCode.put("3", 3);
-        combatCommandCode.put("4", 4);
-        combatCommandCode.put("5", 5);
+//        combatCommandCode.put("1", 1);
+//        combatCommandCode.put("2", 2);
+//        combatCommandCode.put("3", 3);
+//        combatCommandCode.put("4", 4);
+//        combatCommandCode.put("5", 5);
     }
 
     private static void globalSquadInitialize() throws IOException {

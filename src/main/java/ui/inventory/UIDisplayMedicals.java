@@ -106,7 +106,7 @@ public class UIDisplayMedicals {
             String operation1 = "";
 
             if(medicals.size() > 0) {
-                operation1 = "Choose Medical Number or ";
+                operation1 = "Choose Medical Item you want to use";
             }
 
             String operation2 = "Press 0 to Go Back";
@@ -118,7 +118,7 @@ public class UIDisplayMedicals {
             System.out.println(outputString);
             drawHeader();
 
-            System.out.println("Press number to continue >> ");
+            System.out.println("Enter number to continue >> ");
 
             Scanner s = new Scanner(System.in);
             String command1;

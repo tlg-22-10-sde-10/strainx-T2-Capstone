@@ -4,12 +4,16 @@ import gamecontrol.GlobalVariables;
 import gamecontrol.contents.Enemy;
 import gamecontrol.contents.CrewMember;
 import gamemodel.mapengine.MainMap;
+import java.io.IOException;
+import ui.UICommandHelper;
 import ui.inventory.UIInventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
+import ui.maps.UIEnterSubarea;
+import ui.maps.UIMainMap;
 
 import static gamecontrol.GlobalVariables.*;
 import static gamemodel.combatengine.UICombat.*;
@@ -24,7 +28,7 @@ public class EngageEnemy {
 
     private static int rounds = 1;
 
-    public static void gameEnginePrototype() {
+    public static void gameEnginePrototype() throws IOException, InterruptedException {
         rounds = 1;
 
         while (enemySquad.size() > 0 && mySquad.get(0).getHP() > 0) {
@@ -68,7 +72,7 @@ public class EngageEnemy {
             Scanner s1 = new Scanner(System.in);
             var input = s1.nextLine();
 
-            behaviour = combatCommandCode.get(input);
+            behaviour = inGameCommands.get(input);
 
             if (behaviour == null) {
                 System.out.println("Invalid Command");
@@ -84,20 +88,26 @@ public class EngageEnemy {
         Integer command = playerCommandParser();
 
         switch (command) {
-            case 1:
+            case 26:
                 playerAttackEnemy();
                 break;
-            case 2:
+            case 27:
                 playerUseItems();
                 break;
-            case 3:
-                playerPlayTricks();
-                break;
-            case 4:
+//            case 28:
+//                playerPlayTricks();
+//                break;
+            case 29:
                 playerAutoCombat(-1);
                 break;
-            case 5:
+            case 30:
                 playerRetreat();
+                break;
+            case 17:
+                UICommandHelper.showHelp();
+                break;
+            case 20:
+                UICommandHelper.showHelpCombat();
                 break;
             default:
         }
@@ -174,9 +184,11 @@ public class EngageEnemy {
         }
     }
 
-    private static void enemySquadMove() {
+    private static void enemySquadMove() throws IOException, InterruptedException {
         for (Enemy en : enemySquad) {
             if (mySquad.get(0).getHP() <= 0) {
+                UIEnterSubarea.setExit(true);
+                UIMainMap.displayMainMapUI();
                 break;
             }
 

@@ -25,12 +25,12 @@ public class UIInventory {
     private static final String COL_3 = "3. Key Items";
     private static final String COL_4 = "0. Go Back";
 
-    private static void inventoryCommandsInitialize() {
-        inventoryCommands.put("1", "CHECK WEAPONS");
-        inventoryCommands.put("2", "CHECK MEDICALS");
-        inventoryCommands.put("3", "CHECK KEY ITEMS");
-        inventoryCommands.put("0", "GO BACK");
-    }
+//    private static void inventoryCommandsInitialize() {
+//        inventoryCommands.put("1", "CHECK WEAPONS");
+//        inventoryCommands.put("2", "CHECK MEDICALS");
+//        inventoryCommands.put("3", "CHECK KEY ITEMS");
+//        inventoryCommands.put("0", "GO BACK");
+//    }
 
     public static void pickUpItem(Item item) {
         int qty= 1;
@@ -143,7 +143,7 @@ public class UIInventory {
         while(true) {
             Scanner s = new Scanner(System.in);
 
-            inventoryCommandsInitialize();
+//            inventoryCommandsInitialize();
 
             displayHeader();
 
@@ -156,27 +156,27 @@ public class UIInventory {
 
                 userInput = s.nextLine();
 
-                if(inventoryCommands.containsKey(userInput)) {
+                if(inGameCommands.containsKey(userInput)) {
                     break;
                 }
                 System.out.println("Invalid Options");
             }
 
-            var command = inventoryCommands.get(userInput);
+            var command = inGameCommands.get(userInput);
 
-            if(command.equals("GO BACK")) {
+            if(command.equals(0)) {
                 break;
             }
 
             switch (command) {
-                case "CHECK WEAPONS":
+                case 1:
                     displayWeapons();
                     break;
-                case "CHECK MEDICALS":
+                case 2:
                     System.out.println("\n\n\n");
                     displayMedicals();
                     break;
-                case "CHECK KEY ITEMS":
+                case 3:
                     System.out.println("\n\n\n");
                     displayKeyItems();
                     break;

@@ -56,7 +56,7 @@ public class UIInventoryKeyItems {
         System.out.println(outputString);
         drawHeader();
 
-        System.out.println("Press number to continue >> ");
+        System.out.println("Enter number to continue >> ");
 
         Scanner s = new Scanner(System.in);
 

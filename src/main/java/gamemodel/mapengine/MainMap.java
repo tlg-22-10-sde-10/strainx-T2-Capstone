@@ -6,6 +6,7 @@ import gamecontrol.GlobalVariables;
 import gamecontrol.contents.Item;
 import gamecontrol.contents.ItemFactory;
 import gamecontrol.contents.Weapon;
+import gamemodel.combatengine.UICombat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
