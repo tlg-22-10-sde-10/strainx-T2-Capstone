@@ -1,7 +1,6 @@
-package teammember;
+package gamecontrol.contents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import contents.Weapon;
 
 public class CrewMember {
 

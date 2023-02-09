@@ -6,7 +6,7 @@ import ui.endgame.UITitlePage;
 
 import java.io.IOException;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 
 public class StrainXMain {

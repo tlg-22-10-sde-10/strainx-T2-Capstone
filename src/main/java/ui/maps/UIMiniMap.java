@@ -2,7 +2,7 @@ package ui.maps;
 
 import java.io.IOException;
 
-import static client.GlobalVariables.gameMap;
+import static gamecontrol.GlobalVariables.inGameMap;
 
 public class UIMiniMap {
 
@@ -17,7 +17,7 @@ public class UIMiniMap {
 
         int spaceHolder = 0;
 
-        var map = gameMap;
+        var map = inGameMap;
 
         int maxGrids = map.getDimensionY()*map.getDimensionX();
 

@@ -1,4 +1,4 @@
-package contents;
+package gamecontrol.contents;
 
 public class KeyItem extends Item {
 

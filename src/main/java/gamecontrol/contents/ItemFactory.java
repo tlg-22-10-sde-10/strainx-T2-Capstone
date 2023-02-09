@@ -1,8 +1,7 @@
-package contents;
+package gamecontrol.contents;
 
-import static client.GlobalVariables.inventory;
+import static gamecontrol.GlobalVariables.inventory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,6 +25,24 @@ public class ItemFactory {
     } else {
       item = new ArrayList<>(keyItemMap.values()).get(rg.nextInt(keyItemMap.size()));
     }
+    return item;
+  }
+
+  public static Item createItem(String itemName) throws NullPointerException {
+    Item item = null;
+
+    var weaponMap = inventory.getWeapons();
+    var medicalMap = inventory.getMedicalItem();
+    var keyItemMap = inventory.getKeyItems();
+
+    if (weaponMap.containsKey(itemName)) {
+      item = weaponMap.get(itemName);
+    } else if (medicalMap.containsKey(itemName)) {
+      item = medicalMap.get(itemName);
+    } else if (keyItemMap.containsKey(itemName)) {
+      item = keyItemMap.get(itemName);
+    }
+
     return item;
   }
 }
