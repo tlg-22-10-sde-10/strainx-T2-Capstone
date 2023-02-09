@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 public class UI_WinningPage {
     public static String displayWinning(){

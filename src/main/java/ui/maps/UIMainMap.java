@@ -5,6 +5,7 @@ import static client.GlobalVariables.gameMap;
 import static client.GlobalVariables.mySquad;
 
 import gamemap.MainMap;
+import ui.endgame.UIIntroBlurb;
 import ui.inventory.UIInventory;
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class UIMainMap {
   }
 
   public static void displayMainMapUI() throws IOException, InterruptedException {
+    UIIntroBlurb.displayIntro();
     commandInitialize();
     threatLvlMapInitialize();
 
