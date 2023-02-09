@@ -1,6 +1,5 @@
 package ui.endgame;
 
-import gamemap.SubAreaFactory;
 import java.util.Scanner;
 import ui.maps.UIEnterSubarea;
 
