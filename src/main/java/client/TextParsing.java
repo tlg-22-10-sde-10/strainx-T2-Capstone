@@ -1,5 +1,6 @@
 package client;
 
+import gamecontrol.GlobalVariables;
 import java.util.*;
 
 public class TextParsing {
@@ -55,7 +56,7 @@ public class TextParsing {
         List<String> wordlist;
         if(userInput.equalsIgnoreCase("quit")) {
             // ExitMessage()
-            GlobalVariables.gameExitMessage();
+            //GlobalVariables.gameExitMessage();
             System.exit(0);
         }
         if(userInput.equalsIgnoreCase("help")) {

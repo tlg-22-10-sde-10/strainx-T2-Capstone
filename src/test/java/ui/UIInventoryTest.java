@@ -1,14 +1,14 @@
 package ui;
 
 
-import client.GlobalVariables;
-import contents.ItemFactory;
-import contents.Medical;
+import gamecontrol.GlobalVariables;
+import gamecontrol.contents.ItemFactory;
+import gamecontrol.contents.Medical;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 import static ui.inventory.UIInventory.*;
 
 public class UIInventoryTest {

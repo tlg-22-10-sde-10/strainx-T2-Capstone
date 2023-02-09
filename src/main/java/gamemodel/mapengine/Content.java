@@ -1,8 +1,8 @@
-package gamemapengine;
+package gamemodel.mapengine;
 
-import contents.Enemy;
-import contents.Event;
-import contents.Item;
+import gamecontrol.contents.Enemy;
+import gamecontrol.contents.Event;
+import gamecontrol.contents.Item;
 
 import java.util.ArrayList;
 import java.util.List;

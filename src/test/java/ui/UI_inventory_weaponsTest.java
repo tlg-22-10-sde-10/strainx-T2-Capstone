@@ -1,12 +1,12 @@
 package ui;
 
-import client.GlobalVariables;
-import contents.ItemFactory;
+import gamecontrol.GlobalVariables;
+import gamecontrol.contents.ItemFactory;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static client.GlobalVariables.InventoryMap;
+import static gamecontrol.GlobalVariables.InventoryMap;
 import static ui.inventory.UIInventory.pickUpItem;
 
 public class UI_inventory_weaponsTest {

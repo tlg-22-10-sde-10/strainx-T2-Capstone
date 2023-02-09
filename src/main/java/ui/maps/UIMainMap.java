@@ -1,10 +1,15 @@
 package ui.maps;
 
-import static client.GlobalVariables.current_subArea;
-import static client.GlobalVariables.gameMap;
-import static client.GlobalVariables.mySquad;
+import static gamecontrol.GlobalVariables.InventoryMap;
+import static gamecontrol.GlobalVariables.currentSubAreaContents;
+import static gamecontrol.GlobalVariables.defeatBoss;
+import static gamecontrol.GlobalVariables.inGameMap;
+import static gamecontrol.GlobalVariables.mySquad;
 
-import gamemapengine.MainMap;
+import gamecontrol.contents.Weapon;
+import gamemodel.mapengine.MainMap;
+import ui.endgame.UIDisplayGameStatus;
+import ui.endgame.UIWinningPage;
 import ui.inventory.UIInventory;
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,7 +17,7 @@ import java.util.Scanner;
 
 public class UIMainMap {
 
-  private static final MainMap mainMap = gameMap;
+  private static final MainMap mainMap = inGameMap;
 
   private static final StringBuilder outputString = new StringBuilder();
 
@@ -37,6 +42,7 @@ public class UIMainMap {
     commandMap.put("i", 11); //Inventory
     commandMap.put("m", 12); //mini map
     commandMap.put("e", -1); //exit game
+    commandMap.put("cheat", -2); //ar
   }
 
   private static void threatLvlMapInitialize() {
@@ -62,9 +68,13 @@ public class UIMainMap {
       displayMapTitle();
 
       displayMapBody();
-      if (exit) {
+      if (exit || defeatBoss) {
         break;
       }
+    }
+
+    if (defeatBoss) {
+      UIDisplayGameStatus.displayInfo(UIWinningPage.displayWinning());
     }
   }
 
@@ -73,7 +83,7 @@ public class UIMainMap {
 
     int position = mainMap.getPosition();
 
-    var subMaps = mainMap.Game_Maps.get(position);
+    var subMaps = mainMap.gameMaps.get(position);
 
     String s;
 
@@ -93,22 +103,27 @@ public class UIMainMap {
 
     switch (commandMap.get(s)) {
       case 18:
-        gameMap.goNorth();
+        inGameMap.goNorth();
         break;
       case 15:
-        gameMap.goSouth();
+        inGameMap.goSouth();
         break;
       case 14:
-        gameMap.goWest();
+        inGameMap.goWest();
         break;
       case 16:
-        gameMap.goEast();
+        inGameMap.goEast();
         break;
       case 11:
         UIInventory.displayInventoryList();
         break;
       case -1:
         exit = true;
+        break;
+      case -2:
+        Weapon AR15 = new Weapon("ar-15", 75, "rare", "A lightweight, semi-automatic rifle.");
+        //Weapon big = new Weapon();
+        InventoryMap.put("ar-15", AR15);
         break;
       case 12:
         //display mini map
@@ -117,7 +132,7 @@ public class UIMainMap {
     }
 
     if (commandMap.get(s) < subMaps.size() && commandMap.get(s) >= 0) {
-      current_subArea = subMaps.get(commandMap.get(s));
+      currentSubAreaContents = subMaps.get(commandMap.get(s));
 
       UIEnterSubarea.displaySubarea();
     }
@@ -128,7 +143,7 @@ public class UIMainMap {
 
     int position = mainMap.getPosition();
 
-    var subMaps = mainMap.Game_Maps.get(position);
+    var subMaps = mainMap.gameMaps.get(position);
 
     int rows = subMaps.size();
 
@@ -188,7 +203,7 @@ public class UIMainMap {
   private static void displayMapTitle() {
     drawFooter();
 
-    String title = "AREA " + gameMap.getPosition();
+    String title = "AREA " + inGameMap.getPosition();
     int space = (x_axis_map - title.length()) / 2;
 
     outputString.append(" ".repeat(space));

@@ -1,6 +1,6 @@
 package ui.maps;
 
-import client.GlobalVariables;
+import gamecontrol.GlobalVariables;
 import org.junit.Test;
 
 import java.io.IOException;

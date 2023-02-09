@@ -1,31 +1,31 @@
 package ui.maps;
 
-import combatengine.EngageEnemy;
-import contents.Item;
-import gamemapengine.MainMap;
+import gamemodel.combatengine.EngageEnemy;
+import gamecontrol.contents.Item;
+import gamemodel.mapengine.MainMap;
 import ui.inventory.UIInventory;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 public class UIEnterSubarea {
 
     public static final int x_axis_subArea = 96;
     private static final StringBuilder outputString = new StringBuilder();
 
-    private static final MainMap mainMap = gameMap;
+    private static final MainMap mainMap = inGameMap;
 
     private static final HashMap<String, Integer> commandMap = new HashMap<>();
 
     private static final Scanner scanner = new Scanner(System.in);
 
     private static void commandMapInitialize() {
-        commandMap.put("y", 1);
-        commandMap.put("", 0);
-        commandMap.put("yes", 1);
+        commandMap.put("y", 1); //engage the enemy
+        commandMap.put("", 0); //go back
+        commandMap.put("yes", 1); //engage the enemy
         commandMap.put("n", 0);
         commandMap.put("i", 11);
         commandMap.put("l", 12);
@@ -73,7 +73,7 @@ public class UIEnterSubarea {
 
         switch (commandCode) {
             case 1:
-                enemySquad = current_subArea.getContents().enemies;
+                enemySquad = currentSubAreaContents.getContents().enemies;
                 if (enemySquad.size() > 0) {
                     EngageEnemy.gameEnginePrototype();
                 } else {
@@ -86,11 +86,11 @@ public class UIEnterSubarea {
                 UIInventory.displayInventoryList();
                 break;
             case 12:
-                if (current_subArea.getContents().items.size() > 0) {
-                    for (Item i : current_subArea.getContents().items) {
+                if (currentSubAreaContents.getContents().items.size() > 0) {
+                    for (Item i : currentSubAreaContents.getContents().items) {
                         UIInventory.pickUpItem(i);
                     }
-                    current_subArea.getContents().items.clear();
+                    currentSubAreaContents.getContents().items.clear();
                 } else {
                     System.out.println("You tried to find if there are any hidden items, but nothing is there.");
                 }
@@ -99,7 +99,7 @@ public class UIEnterSubarea {
     }
 
     private static void displaySubareaName() throws InterruptedException {
-        String text = "You have entered into " + current_subArea.getName();
+        String text = "You have entered into " + currentSubAreaContents.getName();
 
 //        for(var c : text.toCharArray()) {
 //            Thread.sleep(60);
@@ -108,15 +108,15 @@ public class UIEnterSubarea {
 
         System.out.println(text);
 
-        current_subArea.setVisited(true);
+        currentSubAreaContents.setVisited(true);
     }
 
     private static void displaySubareaDescription() {
-        System.out.println(current_subArea.getDescription());
+        System.out.println(currentSubAreaContents.getDescription());
     }
 
     private static void displaySubareaItems() {
-        int itemsNumber = current_subArea.getContents().items.size();
+        int itemsNumber = currentSubAreaContents.getContents().items.size();
         if (itemsNumber > 0) {
             System.out.println("You see " + itemsNumber + " item there.");
         } else{
@@ -125,7 +125,7 @@ public class UIEnterSubarea {
     }
 
     private static void displaySubareaEnemy() {
-        int enemyPack = current_subArea.getContents().enemies.size();
+        int enemyPack = currentSubAreaContents.getContents().enemies.size();
         if (enemyPack > 0) {
             System.out.println("You see " + enemyPack + " zombies walking around.");
         } else {

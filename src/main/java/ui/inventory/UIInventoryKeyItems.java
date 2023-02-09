@@ -1,11 +1,11 @@
 package ui.inventory;
 
-import contents.KeyItem;
+import gamecontrol.contents.KeyItem;
 
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.InventoryMap;
+import static gamecontrol.GlobalVariables.InventoryMap;
 
 public class UIInventoryKeyItems {
     private static final int x_axis_inventory_keyItem = 96;

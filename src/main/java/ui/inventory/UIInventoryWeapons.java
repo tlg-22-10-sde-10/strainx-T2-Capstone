@@ -1,12 +1,12 @@
 package ui.inventory;
 
-import contents.Weapon;
+import gamecontrol.contents.Weapon;
 
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 public class UIInventoryWeapons {
     private static final int x_axis_inventory_weapon = 96;

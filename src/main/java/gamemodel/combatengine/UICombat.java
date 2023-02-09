@@ -1,11 +1,12 @@
-package combatengine;
+package gamemodel.combatengine;
 
-import static client.GlobalVariables.*;
-import static combatengine.EngageEnemy.KIAList;
-import static combatengine.EngageEnemy.enemyKIAList;
+import static gamecontrol.GlobalVariables.*;
+import static gamemodel.combatengine.EngageEnemy.KIAList;
+import static gamemodel.combatengine.EngageEnemy.enemyKIAList;
 
 import ui.endgame.UIDisplayGameStatus;
 import ui.endgame.UILosingPage;
+import ui.endgame.UIWinningPage;
 
 public class UICombat {
 
@@ -14,6 +15,8 @@ public class UICombat {
     static StringBuilder outputString = new StringBuilder();
     static String playerSideName = "My Squad";
     static String enemySideName = "Enemy Squad";
+
+    public static final String FINAL_BOSS = "patient zero";
 
     public static void reportCombatRounds(int round) {
         drawFooter();
@@ -191,9 +194,14 @@ public class UICombat {
                 isAre = "are";
             }
             for (var en : enemyKIAList) {
+                if(en.getName().equals(FINAL_BOSS)) {
+                    defeatBoss = true;
+                }
+
                 defeatedEnemy += en.getEnemyType() + " " + en.getName() + ", ";
             }
             if (enemyKIAList.size() > 0) {
+                //when kill boss
                 System.out.println("\033[31m" + defeatedEnemy + "\033[0m" + isAre + " destroyed in the fight.");
             }
             enemyKIAList.clear();

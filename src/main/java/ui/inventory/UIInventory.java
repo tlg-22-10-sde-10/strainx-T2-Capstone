@@ -1,12 +1,14 @@
 package ui.inventory;
 
-import contents.*;
-
+import gamecontrol.contents.Item;
+import gamecontrol.contents.KeyItem;
+import gamecontrol.contents.Medical;
+import gamecontrol.contents.Weapon;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 import static ui.inventory.UIDisplayMedicals.displayMedicals;
 import static ui.inventory.UIInventoryKeyItems.displayKeyItems;
 import static ui.inventory.UIInventoryWeapons.displayWeapons;
@@ -21,13 +23,13 @@ public class UIInventory {
     private static final String COL_1 = "1. Weapons";
     private static final String COL_2 = "2. Medicals";
     private static final String COL_3 = "3. Key Items";
-    private static final String COL_4 = "4. Go Back";
+    private static final String COL_4 = "0. Go Back";
 
     private static void inventoryCommandsInitialize() {
         inventoryCommands.put("1", "CHECK WEAPONS");
         inventoryCommands.put("2", "CHECK MEDICALS");
         inventoryCommands.put("3", "CHECK KEY ITEMS");
-        inventoryCommands.put("4", "GO BACK");
+        inventoryCommands.put("0", "GO BACK");
     }
 
     public static void pickUpItem(Item item) {

@@ -1,4 +1,4 @@
-package gamemapengine;
+package gamemodel.mapengine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

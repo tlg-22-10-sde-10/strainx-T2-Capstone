@@ -1,10 +1,9 @@
 package ui;
 
-import client.GlobalVariables;
+import gamecontrol.GlobalVariables;
 import org.junit.Test;
 
 import java.io.IOException;
-import ui.maps.UIMainMap;
 
 
 public class UI_mapTest {

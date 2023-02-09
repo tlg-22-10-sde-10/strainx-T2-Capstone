@@ -1,7 +1,9 @@
-package combatengine;
+package gamemodel.combatengine;
 
-import contents.Enemy;
-import teammember.CrewMember;
+import gamecontrol.GlobalVariables;
+import gamecontrol.contents.Enemy;
+import gamecontrol.contents.CrewMember;
+import gamemodel.mapengine.MainMap;
 import ui.inventory.UIInventory;
 
 import java.util.ArrayList;
@@ -9,8 +11,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-import static client.GlobalVariables.*;
-import static combatengine.UICombat.*;
+import static gamecontrol.GlobalVariables.*;
+import static gamemodel.combatengine.UICombat.*;
 
 public class EngageEnemy {
     private static final Random rg = new Random();
@@ -20,11 +22,13 @@ public class EngageEnemy {
 
     static boolean retreat = false;
 
+    private static int rounds = 1;
+
     public static void gameEnginePrototype() {
-        int round = 1;
+        rounds = 1;
 
         while (enemySquad.size() > 0 && mySquad.get(0).getHP() > 0) {
-            reportCombatRounds(round);
+            reportCombatRounds(rounds);
 
             int mySquadInitiative = rg.nextInt(3);
 
@@ -53,7 +57,7 @@ public class EngageEnemy {
             }
 
             reportCombatResult(mySquadInitiative);
-            round += 1;
+            rounds += 1;
         }
     }
 
@@ -187,6 +191,14 @@ public class EngageEnemy {
                 if (target != 0) {
                     mySquad.remove(crew);
                 }
+            }
+        }
+
+        //enemy summon minions
+        if(enemySquad.get(0).getName().equals(FINAL_BOSS) && rounds%5 == 0 && enemySquad.size()<5) {
+            Enemy ens = MainMap.newEnemy();
+            if(ens.getHP() < 300) {
+                enemySquad.add(ens);
             }
         }
     }

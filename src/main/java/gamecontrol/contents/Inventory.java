@@ -1,4 +1,4 @@
-package contents;
+package gamecontrol.contents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
