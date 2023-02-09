@@ -62,8 +62,6 @@ public class UIInventoryTest {
         }
         System.out.println("----------");
 
-        GlobalVariables.gameInitialization();
-
         System.out.println(GlobalVariables.mySquad.get(0).getWeapon().getName());
         System.out.println("----------");
         System.out.println("use Items");
