@@ -1,5 +1,6 @@
 package ui.maps;
 
+import ui.endgame.UIIntroBlurb;
 import static gamecontrol.GlobalVariables.InventoryMap;
 import static gamecontrol.GlobalVariables.currentSubAreaContents;
 import static gamecontrol.GlobalVariables.defeatBoss;
@@ -12,6 +13,7 @@ import gamemodel.mapengine.MainMap;
 import ui.UICommandHelper;
 import ui.endgame.UIDisplayGameStatus;
 import ui.endgame.UIWinningPage;
+
 import ui.inventory.UIInventory;
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,7 +64,9 @@ public class UIMainMap {
   }
 
   public static void displayMainMapUI() throws IOException, InterruptedException {
-//    commandInitialize();
+
+    UIIntroBlurb.displayIntro();
+
     threatLvlMapInitialize();
 
     while (mySquad.get(0).getHP() > 0) {
