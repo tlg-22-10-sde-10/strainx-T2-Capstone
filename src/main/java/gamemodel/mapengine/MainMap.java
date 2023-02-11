@@ -27,7 +27,7 @@ public class MainMap {
 
     public HashMap<Integer, ArrayList<SubArea>> gameMaps = new HashMap<>();
 
-    private int position = 9;
+    private int position = 1;
 
     private final int dimensionX;
     private final int dimensionY;

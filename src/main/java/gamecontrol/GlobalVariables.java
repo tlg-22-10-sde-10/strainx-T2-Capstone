@@ -44,7 +44,7 @@ public class GlobalVariables {
 
     public static SubArea currentSubAreaContents = new SubArea();
 
-    public static MainMap inGameMap = new MainMap(3,3);
+    public static MainMap inGameMap = new MainMap(3,4);
 
     public static HashMap<String, Item> InventoryMap = new HashMap<>();
     //squads
