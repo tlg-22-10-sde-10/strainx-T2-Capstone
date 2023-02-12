@@ -8,7 +8,7 @@ import static gamecontrol.GlobalVariables.ITEM_QUANTITY_CAP;
 import static gamecontrol.GlobalVariables.PATIENT_ZERO;
 import static gamecontrol.GlobalVariables.enemiesCollection;
 import static gamecontrol.GlobalVariables.inGameMap;
-import static gamecontrol.GlobalVariables.itemsCollection;
+
 import static gamecontrol.GlobalVariables.miniBoss;
 import static gamecontrol.GlobalVariables.subAreasCollection;
 
@@ -93,8 +93,6 @@ public class MainMap {
     bossSubArea.setContents(contents);
 
     bossSpawnSubArea = rg.nextInt(3);
-    System.out.println(bossSpawnMap);
-    System.out.println(bossSpawnSubArea);
   }
 
   private static void generateMiniBoss() {
