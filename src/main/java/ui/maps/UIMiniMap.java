@@ -17,7 +17,7 @@ public class UIMiniMap {
     private static Scanner scannyMcScanFace = new Scanner(System.in);
 
     public static void displayMiniMap() throws IOException {
-        drawTopLine();
+        drawMiniMap();
 
     }
 
