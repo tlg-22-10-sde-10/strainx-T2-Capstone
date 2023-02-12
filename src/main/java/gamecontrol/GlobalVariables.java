@@ -54,6 +54,7 @@ public class GlobalVariables {
     public static MainMap inGameMap; //= new MainMap(3,3);
     //in game inventory
     public static Map<String, Item> InventoryMap = new HashMap<>();
+    
     //squads
     public static List<CrewMember> mySquad = new ArrayList<>();
     public static List<Enemy> enemySquad = new ArrayList<>();

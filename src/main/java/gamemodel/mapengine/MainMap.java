@@ -33,7 +33,7 @@ public class MainMap {
 
   public HashMap<Integer, List<SubArea>> gameMaps = new HashMap<>();
 
-  private int position = 9;
+  private int position = 1;
 
   private static int dimensionX;
   private static int dimensionY;
