@@ -136,7 +136,6 @@ public class UIMainMap {
       currentSubAreaContents = subMaps.get(inGameCommands.get(s)-1);
 
       if(currentSubAreaContents.getName().equals(DESTINATION)) {
-        System.out.println(GlobalVariables.getPassWord());
         System.out.println("This place needs password to access");
         System.out.println("Enter the password >>");
         s = scanner.nextLine();
