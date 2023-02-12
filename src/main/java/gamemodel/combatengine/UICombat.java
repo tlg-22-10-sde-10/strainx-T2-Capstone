@@ -1,15 +1,14 @@
 package gamemodel.combatengine;
 
 import static gamecontrol.GlobalVariables.*;
+import static gamemodel.combatengine.EngageEnemy.*;
 import static gamemodel.combatengine.EngageEnemy.KIAList;
 import static gamemodel.combatengine.EngageEnemy.enemyKIAList;
 
 import ui.endgame.UIDisplayGameStatus;
 import ui.endgame.UILosingPage;
-import ui.endgame.UIWinningPage;
 
 public class UICombat {
-
     public static int x_axis = 96; // display column width
 
     static StringBuilder outputString = new StringBuilder();
@@ -31,14 +30,44 @@ public class UICombat {
 
         System.out.println(outputString);
 
+        outputString.setLength(0);
+    }
+
+    public static void reportStartInitiativeStatus(int mySquadInitiative) {
+        drawFooter();
+
+        var respond = "";
+        if (mySquadInitiative > 0) {
+            respond = "You squad has won the initiative and will attack first.";
+            System.out.println(respond);
+        } else {
+            respond = "Enemy squad has won the initiative and will attack first.";
+            System.out.println(respond);
+            reportEnemyMove();
+        }
         drawFooter();
     }
 
     public static void reportInitiativeStatus(int mySquadInitiative) {
+        var respond = "";
         if (mySquadInitiative > 0) {
-            System.out.println("Enemy looks lost, let's take them down.");
+            respond = "You squad has won the initiative and will attack first.";
+            System.out.println(respond);
+            if(mySquadAttacked) {
+                reportMySquadMove();
+            }
+            if(enemyDmgMap.size() > 0) {
+                reportEnemyMove();
+            }
         } else {
-            System.out.println("Enemy attack.");
+            respond = "Enemy squad has won the initiative and will attack first.";
+            System.out.println(respond);
+            if(enemyDmgMap.size() > 0) {
+                reportEnemyMove();
+            }
+            if(mySquadAttacked) {
+                reportMySquadMove();
+            }
         }
         drawFooter();
     }
@@ -62,32 +91,6 @@ public class UICombat {
         System.out.println(outputString);
         drawFooter();
         System.out.print("Waiting instructions >> ");
-    }
-
-    private static void reportEngageStatusHeader() {
-        outputString.setLength(0);
-        //header
-        outputString.append(playerSideName);
-        outputString.append(" ".repeat((x_axis - playerSideName.length() - playerSideName.length()) / 2 - 1));
-        outputString.append("VS");
-        outputString.append(" ".repeat((x_axis - enemySideName.length() - enemySideName.length()) / 2 - 1));
-        outputString.append(enemySideName);
-
-        System.out.println(outputString);
-        drawFooter();
-
-    }
-
-    private static void reportEngageStatusInventory() {
-        outputString.setLength(0);
-
-        var weapon = mySquad.get(0).getWeapon();
-        String inventory = "Weapon: " + weapon.getName();
-
-        outputString.append(inventory);
-
-        System.out.println(outputString);
-        drawFooter();
     }
 
     private static void reportEngageStatusBody() {
@@ -135,11 +138,10 @@ public class UICombat {
         outputString.setLength(0);
         outputString.append("-".repeat(x_axis));
         System.out.println(outputString);
+        outputString.setLength(0);
     }
 
     public static void reportEngage() {
-        reportEngageStatusHeader();
-        reportEngageStatusInventory();
         reportEngageStatusBody();
     }
 
@@ -154,78 +156,89 @@ public class UICombat {
         }
     }
 
-    public static void reportEnemySquadStatus() {
-        for (var enemy : enemySquad) {
-            String output = enemy.getEnemyType() + " " + enemy.getName() + " | HP:" + enemy.getHP() + " | attack:" + enemy.getAttack();
-            for (int i = 0; i < 60; i++) {
-                output = " " + output;
-            }
-            System.out.println(output);
-        }
-    }
+    public static void reportEnemyMove() {
+        outputString.setLength(0);
+        outputString.append("\nTotal DMG Received since last action:\n");
 
-    public static void reportCombatResult(int mySquadInitiative) {
-        String defeatedEnemy = "";
-        String isAre = "is";
+        for(var name : enemyDmgMap.keySet()) {
+            outputString.append(name);
+            outputString.append(" (");
+            String receivedDMG = "\033[31m-" + enemyDmgMap.get(name) + "\033[0m";
+            outputString.append(receivedDMG);
+            outputString.append("); ");
+        }
+        System.out.println(outputString);
 
         outputString.setLength(0);
 
-        String line1 = "";
-        String line2 = "";
-        if(mySquadInitiative > enemySquadInitiative) {
-            line1 = "Report: our squad is engaging enemy. ";
-        } else {
-            line2 = "Report: enemy has broken through our defenses.";
-        }
-
-        line1 = "Report: our squad is engaging enemy. ";
-
-        outputString.append(line1);
-
-        outputString.append(line2);
-
-        if (enemyKIAList.size() + KIAList.size() == 0) {
-            line2 = "No one get killed in this round";
-            outputString.append(line2);
-
-            System.out.println("No one get killed in this round");
-        } else {
-            if (enemyKIAList.size() > 1) {
-                isAre = "are";
-            }
-            for (var en : enemyKIAList) {
-                if(en.getName().equals(FINAL_BOSS)) {
-                    defeatBoss = true;
-                }
-
-                defeatedEnemy += en.getEnemyType() + " " + en.getName() + ", ";
-            }
-            if (enemyKIAList.size() > 0) {
-                //when kill boss
-                System.out.println("\033[31m" + defeatedEnemy + "\033[0m" + isAre + " destroyed in the fight.");
-            }
-            enemyKIAList.clear();
-
-            String lostSoldier = "";
-            if (KIAList.size() > 1) {
-                isAre = "are";
-            } else {
-                isAre = "is";
-            }
-            for (var crew : KIAList) {
-                lostSoldier += crew.getRank() + " " + crew.getName() + ", ";
-            }
-            if (KIAList.size() > 0) {
-                System.out.println("\033[31m" + lostSoldier + "\033[0m" + isAre + " killed in the fight");
+        if (KIAList.size() > 0) {
+            for (var s : KIAList) {
+                var line = "\033[31m" + s.rank + " " + s.getName() + "\033[0m"
+                    + " is killed and turned into \033[35ma zombie\033[0m.\n";
+                outputString.append(line);
             }
             KIAList.clear();
         }
 
+        if(summonedMinion.size() > 0) {
+            for (var e: summonedMinion) {
+                System.out.println(FINAL_BOSS + " reanimated a \033[35m"+ e.getEnemyType() + " " + e.getName() + "\033[0m to join the fight!\n");
+            }
+        }
+        summonedMinion.clear();
+
+        System.out.print(outputString);
+        outputString.setLength(0);
+    }
+
+    public static void reportMySquadMove() {
+        outputString.setLength(0);
+
+        if (enemyKIAList.size() == 0) {
+            var line2 = "No enemies were killed since last action.\n";
+            outputString.append(line2);
+        } else {
+            for(var e : enemyKIAList) {
+                var line = "\033[32m" + e.getEnemyType() +" " + e.getName() + "\033[0m" + " is destroyed.\n";
+                outputString.append(line);
+            }
+            enemyKIAList.clear();
+        }
+        System.out.print(outputString);
+
+        outputString.setLength(0);
+    }
+
+    public static void reportFinalCombatResult() {
         if (mySquad.get(0).HP <= 0) {
             UIDisplayGameStatus.displayInfo(UILosingPage.display());
-
         } else if (enemySquad.size() == 0) {
             System.out.println("All enemies destroyed");
         }
     }
+
+    //    private static void reportEngageStatusHeader() {
+//        outputString.setLength(0);
+//        //header
+//        outputString.append(playerSideName);
+//        outputString.append(" ".repeat((x_axis - playerSideName.length() - playerSideName.length()) / 2 - 1));
+//        outputString.append("VS");
+//        outputString.append(" ".repeat((x_axis - enemySideName.length() - enemySideName.length()) / 2 - 1));
+//        outputString.append(enemySideName);
+//
+//        System.out.println(outputString);
+//        drawFooter();
+//    }
+//
+//    private static void reportEngageStatusInventory() {
+//        outputString.setLength(0);
+//
+//        var weapon = mySquad.get(0).getWeapon();
+//        String inventory = "Weapon: " + weapon.getName();
+//
+//        outputString.append(inventory);
+//
+//        System.out.println(outputString);
+//        drawFooter();
+//    }
 }

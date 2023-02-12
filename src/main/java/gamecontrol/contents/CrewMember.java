@@ -12,7 +12,8 @@ public class CrewMember {
 
     public Weapon weapon = new Weapon();
 
-    public int HP = 100;
+    @JsonProperty("HP")
+    public int HP;
 
     @JsonProperty("maxHP")
     private int maxHP;

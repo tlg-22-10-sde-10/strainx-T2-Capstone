@@ -1,12 +1,9 @@
 package ui;
 
-import java.util.Scanner;
-
 public class UICommandHelper {
 
   private static final StringBuilder outputString = new StringBuilder();
   public static final int x_axis_map = 95;
-  private static Scanner scanner = new Scanner(System.in);
 
   private static void drawFooter() {
     outputString.setLength(0);
@@ -27,9 +24,6 @@ public class UICommandHelper {
     System.out.println("For help with gameplay in the Combat interface, type helpCombat");
 
     drawFooter();
-
-    System.out.println("Press any key to continue >>");
-    scanner.nextLine();
   }
 
   public static void showHelpMap() {
@@ -48,9 +42,6 @@ public class UICommandHelper {
     System.out.println("Entering \"i\" in the command prompt will display the player's inventory.");
     System.out.println("Entering \"e\", \"exit\", \"q\", or \"quit\" in the command prompt will exit the game.");
     drawFooter();
-
-    System.out.println("Press any key to continue >>");
-    scanner.nextLine();
   }
 
   public static void showHelpSubArea() {
@@ -68,9 +59,6 @@ public class UICommandHelper {
     System.out.println("Entering \"pick up\" in the command prompt will attempt to loot items in the area");
 
     drawFooter();
-
-    System.out.println("Press any key to continue >>");
-    scanner.nextLine();
   }
 
   public static void showHelpCombat() {
@@ -85,9 +73,6 @@ public class UICommandHelper {
     System.out.println("Entering \"r\" in the command prompt will attempt to retreat.");
 
     drawFooter();
-
-    System.out.println("Press any key to continue >>");
-    scanner.nextLine();
   }
 
 }

@@ -21,6 +21,4 @@ public class KeyItem extends Item {
     public void setDamage(int damage) {
         this.damage = damage;
     }
-
-
 }

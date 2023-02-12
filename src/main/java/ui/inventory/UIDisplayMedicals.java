@@ -1,23 +1,19 @@
 package ui.inventory;
 
 import gamecontrol.contents.Medical;
-
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static gamecontrol.GlobalVariables.InventoryMap;
+import static gamecontrol.GlobalVariables.inGameCommands;
 import static gamecontrol.GlobalVariables.mySquad;
 import static ui.inventory.UIInventory.useItems;
 
 public class UIDisplayMedicals {
     private static final int x_axis_inventory_medical = 96;
-
     private static final StringBuilder outputString = new StringBuilder();
 
     private static void displayMedicalsHeader() {
-        System.out.println("\n\n\n\n\n");
-
         outputString.setLength(0);
         String inv = "MEDICALS LIST";
         int invSpaceHolder = (x_axis_inventory_medical -inv.length())/2;
@@ -74,13 +70,9 @@ public class UIDisplayMedicals {
 
             int space = x_axis_inventory_medical*7/16;
 
-            HashMap<String, Medical> medicalsMap = new HashMap<>();
-
             for(var k : medicals) {
                 drawFooter();
                 Medical meds = (Medical) k;
-
-                medicalsMap.put(String.valueOf(i), meds);
 
                 String name = i + ". " + meds.getName();
                 String heals = "Heal Points: " + meds.getValue();
@@ -109,7 +101,7 @@ public class UIDisplayMedicals {
                 operation1 = "Choose Medical Item you want to use";
             }
 
-            String operation2 = "Press 0 to Go Back";
+            String operation2 = "Press 0 or enter to Go Back";
             int last_line_space = x_axis_inventory_medical -operation1.length()-operation2.length();
             outputString.append(operation1);
             outputString.append(" ".repeat(last_line_space));
@@ -118,55 +110,48 @@ public class UIDisplayMedicals {
             System.out.println(outputString);
             drawHeader();
 
-            System.out.println("Enter number to continue >> ");
+            System.out.println("Press key to continue >> ");
 
             Scanner s = new Scanner(System.in);
-            String command1;
 
-            while(true) {
-                String userInput = s.nextLine();
-
-                if(medicalsMap.containsKey(userInput) || userInput.equals("0")) {
-                    command1 = userInput;
-
-                    break;
-                } else {
-                    System.out.println("Invalid Selection!");
-                }
-            }
+            int thisCommandCode;
 
             Medical newMeds;
 
-            if(command1.equals("0")) {
-                System.out.println("\n\n\n\n\n");
-                break;
-            } else {
-                newMeds = medicalsMap.get(command1);
+            while(true) {
+                String userInput = s.nextLine();
+
+                if(inGameCommands.containsKey(userInput)) {
+                    if((inGameCommands.get(userInput) >= 0 && inGameCommands.get(userInput) <= medicals.size()) || userInput.equals("")) {
+                        thisCommandCode = inGameCommands.get(userInput);
+                        break;
+                    }
+                }
+                System.out.println("Invalid Selection!");
             }
 
-            String command2;
-
-            HashMap<String, Integer> soldierMap = new HashMap<>();
-            for(int j = 0; j < mySquad.size(); j++){
-                soldierMap.put(String.valueOf(j+1), j);
+            if(thisCommandCode == 0 || thisCommandCode == 22) {
+                break;
+            } else {
+                newMeds = (Medical) medicals.get(thisCommandCode-1);
             }
 
             while(true) {
-                System.out.println("Choose soldier number use item, press 0 to cancel");
+                System.out.println("Choose soldier number use item, press 0 or enter to cancel");
 
                 String userInput = s.nextLine();
 
-                if(soldierMap.containsKey(userInput) || userInput.equals("0")) {
-                    command2 = userInput;
-
-                    break;
-                } else {
-                    System.out.println("Invalid Selection!");
+                if(inGameCommands.containsKey(userInput)) {
+                    if((inGameCommands.get(userInput) >= 0 && inGameCommands.get(userInput) <= mySquad.size()) || userInput.equals("")) {
+                        thisCommandCode = inGameCommands.get(userInput);
+                        break;
+                    }
                 }
+                System.out.println("Invalid Selection!");
             }
 
-            if(!command2.equals("0")) {
-                var soldier = mySquad.get(soldierMap.get(command2));
+            if(thisCommandCode>0 && thisCommandCode!=22) {
+                var soldier = mySquad.get(thisCommandCode-1);
 
                 int HP = Math.min(soldier.getMaxHP(), soldier.getHP() + newMeds.getValue());
                 soldier.setHP(HP);
