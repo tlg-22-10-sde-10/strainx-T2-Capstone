@@ -8,9 +8,15 @@ import gamecontrol.contents.Item;
 import gamemodel.mapengine.MainMap;
 import gamemodel.mapengine.SubArea;
 
+import gamemusic.AudioPlayer;
+import gamemusic.MusicHelper;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import jsonparsing.JsonParsing;
 
 import java.io.IOException;
@@ -63,7 +69,8 @@ public class GlobalVariables {
     public static HashMap<String, String> combatCommandDescription = new HashMap<>();
     public static HashMap<String, Integer> combatCommandCode = new HashMap<>();
 
-    public static void gameInitialization() throws IOException {
+    public static void gameInitialization()
+        throws IOException {
         inventoryInitialize();
 
         subMapInitialize();
@@ -79,6 +86,8 @@ public class GlobalVariables {
         combatCommandInitialize();
 
         inGameCommandsInitialize();
+
+        titleMusicInitialize();
     }
 
     private static void inGameCommandsInitialize() {
@@ -87,7 +96,7 @@ public class GlobalVariables {
         * value 11-20: for map commands
         * value 21-25: for subarea commands
         * value 26-30: for combat commands
-        * value 31-40: for inventory commands
+        * value 31-40: for miscellaneous commands
         * value -1: for exit
         * other values: */
 
@@ -136,6 +145,20 @@ public class GlobalVariables {
 //        inGameCommands.put("t", 23); //Play Tricks
         inGameCommands.put("c", 29); //Auto Combat
         inGameCommands.put("r", 30); //Retreat
+
+        inGameCommands.put("musicon", 31); //start music
+        inGameCommands.put("musicoff", 32); //stop music
+        inGameCommands.put("v+", 33); //increase volume
+        inGameCommands.put("v-", 34); //decrease volume
+
+    }
+
+    public static void titleMusicInitialize() {
+        AudioPlayer.getInstance().playAudio();
+    }
+
+    public static void titleMusicStop() {
+        AudioPlayer.getInstance().stopAudio();
     }
 
     private static void subMapInitialize() throws IOException {

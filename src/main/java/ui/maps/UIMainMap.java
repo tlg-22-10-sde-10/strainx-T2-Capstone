@@ -1,5 +1,8 @@
 package ui.maps;
 
+import gamemusic.AudioPlayer;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import ui.endgame.UIIntroBlurb;
 import static gamecontrol.GlobalVariables.InventoryMap;
 import static gamecontrol.GlobalVariables.currentSubAreaContents;
@@ -7,6 +10,8 @@ import static gamecontrol.GlobalVariables.defeatBoss;
 import static gamecontrol.GlobalVariables.inGameCommands;
 import static gamecontrol.GlobalVariables.inGameMap;
 import static gamecontrol.GlobalVariables.mySquad;
+import static gamecontrol.GlobalVariables.titleMusicInitialize;
+import static gamecontrol.GlobalVariables.titleMusicStop;
 
 import gamecontrol.contents.Weapon;
 import gamemodel.mapengine.MainMap;
@@ -84,7 +89,8 @@ public class UIMainMap {
     }
   }
 
-  private static void displayMapBody() throws InterruptedException, IOException {
+  private static void displayMapBody()
+      throws InterruptedException, IOException {
     displayMapContent();
 
     int position = mainMap.getPosition();
@@ -132,6 +138,18 @@ public class UIMainMap {
         break;
       case 18:
         UICommandHelper.showHelpMap();
+        break;
+      case 31:
+        titleMusicInitialize();
+        break;
+      case 32:
+        titleMusicStop();
+        break;
+      case 33:
+        AudioPlayer.changeVolume(1);
+        break;
+      case 34:
+        AudioPlayer.changeVolume(2);
         break;
       case -1:
         while (true) {
