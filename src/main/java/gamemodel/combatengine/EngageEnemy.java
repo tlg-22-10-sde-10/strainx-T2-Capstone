@@ -1,138 +1,179 @@
 package gamemodel.combatengine;
 
-import gamecontrol.GlobalVariables;
 import gamecontrol.contents.Enemy;
 import gamecontrol.contents.CrewMember;
-import gamemodel.mapengine.MainMap;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import ui.UICommandHelper;
 import ui.inventory.UIInventory;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import ui.maps.UIEnterSubarea;
-import ui.maps.UIMainMap;
 
 import static gamecontrol.GlobalVariables.*;
 import static gamemodel.combatengine.UICombat.*;
+import static gamemodel.mapengine.MainMap.newEnemy;
 
 public class EngageEnemy {
     private static final Random rg = new Random();
+    private static final Scanner s1 = new Scanner(System.in);
 
     public static ArrayList<CrewMember> KIAList = new ArrayList<>();
     public static ArrayList<Enemy> enemyKIAList = new ArrayList<>();
+    public static Map<String, Integer> enemyDmgMap = new HashMap<>();
+    public static List<Enemy> summonedMinion = new ArrayList<>();
+    public static boolean mySquadAttacked = false;
 
     static boolean retreat = false;
+    private static boolean isInvalidCommand = true;
 
     private static int rounds = 1;
 
-    public static void gameEnginePrototype() throws IOException, InterruptedException {
+    public static void gameEnginePrototype() {
         rounds = 1;
+        mySquadAttacked = false;
+
+        int mySquadInitiative = 0;
 
         while (enemySquad.size() > 0 && mySquad.get(0).getHP() > 0) {
-            reportCombatRounds(rounds);
-
-            int mySquadInitiative = rg.nextInt(3);
-
-           reportEngage();
+            System.out.println("\n\n");
+            mySquadInitiative = rg.nextInt(3);
 
             retreat = false;
 
-            reportInitiativeStatus(mySquadInitiative);
-
             if (mySquadInitiative > 0) {
+                reportCombatRounds(rounds);
+
+                reportInitiativeStatus(mySquadInitiative);
+
+                reportEngage();
+                enemyDmgMap.clear();
+
                 playerMove();
                 if (retreat) {
                     break;
                 }
+
                 restOfMySquadMove();
 
                 enemySquadMove();
             } else {
                 enemySquadMove();
 
+                reportCombatRounds(rounds);
+
+                reportInitiativeStatus(mySquadInitiative);
+
+                reportEngage();
+                enemyDmgMap.clear();
+
+                if(mySquad.get(0).getHP() <= 0){
+                    break;
+                }
+
                 playerMove();
                 if (retreat) {
                     break;
                 }
+
                 restOfMySquadMove();
             }
 
-            reportCombatResult(mySquadInitiative);
+            if(enemyKIAList.stream().anyMatch(e -> e.getName().equals(FINAL_BOSS))) {
+                defeatBoss = true;
+            }
             rounds += 1;
         }
-    }
 
-    private static Integer playerCommandParser() {
-        Integer behaviour = null;
+        reportInitiativeStatus(mySquadInitiative);
+        reportEngage();
 
-        while (behaviour == null) {
-            Scanner s1 = new Scanner(System.in);
-            var input = s1.nextLine();
+        reportFinalCombatResult();
+        System.out.println("Press any key to continue...");
+        s1.nextLine();
 
-            behaviour = inGameCommands.get(input);
-
-            if (behaviour == null) {
-                System.out.println("Invalid Command");
-            }
-        }
-
-        return behaviour;
+        enemyKIAList.clear();
+        enemyDmgMap.clear();
     }
 
     private static void playerMove() {
         reportPlayerMove();
 
-        Integer command = playerCommandParser();
+        isInvalidCommand = true;
 
-        switch (command) {
-            case 26:
-                playerAttackEnemy();
-                break;
-            case 27:
-                playerUseItems();
-                break;
-//            case 28:
-//                playerPlayTricks();
-//                break;
-            case 29:
-                playerAutoCombat(-1);
-                break;
-            case 30:
-                playerRetreat();
-                break;
-            case 17:
-                UICommandHelper.showHelp();
-                break;
-            case 20:
-                UICommandHelper.showHelpCombat();
-                break;
-            default:
+        while (isInvalidCommand) {
+            String userInput = s1.nextLine().toLowerCase();
+
+            int thisCommandCode = inGameCommands.get(userInput);
+
+            switch (thisCommandCode) {
+                case 26:
+                    isInvalidCommand = false;
+
+                    int playersTarget = playerTargetedEnemy();
+
+                    if(isInvalidCommand) {
+                        System.out.print("Waiting instructions >> ");
+                    } else {
+                        playerAutoCombat(playersTarget);
+                    }
+                    break;
+                case 27:
+                    isInvalidCommand = false;
+                    playerUseItems();
+                    break;
+                case 29:
+                    isInvalidCommand = false;
+                    playerAutoCombat(-1);
+                    break;
+                case 30:
+                    isInvalidCommand = false;
+                    playerRetreat();
+                    break;
+                case 17:
+                    UICommandHelper.showHelp();
+                    System.out.println("Press any key to continue...");
+                    s1.nextLine();
+                    reportCombatRounds(rounds);
+                    reportEngage();
+                    reportPlayerMove();
+                    break;
+                case 20:
+                    isInvalidCommand = false;
+                    UICommandHelper.showHelpCombat();
+                    break;
+                default:
+                    System.out.println("Invalid Command");
+            }
         }
     }
 
-    private static void playerAttackEnemy() {
+    private static int playerTargetedEnemy() {
         System.out.println("-----choose a target-----");
 
-        HashMap<String, Integer> targets = new HashMap<>();
-        for (int i = 0; i < enemySquad.size(); i++) {
-            targets.put(String.valueOf(i + 1), i);
-        }
+        int target;
 
-        Integer target = null;
-        while (target == null) {
-            Scanner s1 = new Scanner(System.in);
-            var selection = s1.nextLine();
+        while (true) {
+            var selection = s1.nextLine().toLowerCase();
 
-            target = targets.get(selection);
-            if (target == null) {
+            if(inGameCommands.containsKey(selection)) {
+                if(selection.equals("") || (inGameCommands.get(selection)>0 && inGameCommands.get(selection)<=enemySquad.size())) {
+                    target = inGameCommands.get(selection);
+                    break;
+                }
                 System.out.println("-----Invalid Selection-----");
             }
         }
 
-        playerAutoCombat(target);
+        if(target == 22) {
+            isInvalidCommand = true;
+        } else {
+            target -= 1;
+        }
+
+        return target;
     }
 
     private static void playerUseItems() {
@@ -140,19 +181,17 @@ public class EngageEnemy {
         UIInventory.displayInventoryList();
     }
 
-    private static void playerPlayTricks() {
-
-    }
-
     private static void playerRetreat() {
         retreat = rg.nextBoolean();
         reportRetreatResults(retreat);
     }
 
-    private static void playerAutoCombat(Integer target) {
-        if(target < 0) {
+    private static void playerAutoCombat(int target) {
+        if(target == -1) {
             target = rg.nextInt(enemySquad.size());
         }
+
+        mySquadAttacked = true;
 
         Enemy enemy = enemySquad.get(target);
         var player = mySquad.get(0);
@@ -171,6 +210,8 @@ public class EngageEnemy {
                 break;
             }
 
+            mySquadAttacked = true;
+
             int target = rg.nextInt(enemySquad.size());
             int dmg = mySquad.get(i).getAttack() + mySquad.get(i).getWeapon().getWeapon_base_dmg();
 
@@ -184,12 +225,11 @@ public class EngageEnemy {
         }
     }
 
-    private static void enemySquadMove() throws IOException, InterruptedException {
+    private static void enemySquadMove() {
         for (Enemy en : enemySquad) {
             if (mySquad.get(0).getHP() <= 0) {
-                UIEnterSubarea.setExit(true);
-                UIMainMap.displayMainMapUI();
-                break;
+
+                UIEnterSubarea.setExitSubAreaUI(true);
             }
 
             int target = rg.nextInt(mySquad.size());
@@ -198,7 +238,13 @@ public class EngageEnemy {
             CrewMember crew = mySquad.get(target);
             crew.setHP(crew.getHP() - dmg);
 
-            if (crew.getHP() <= 0) {
+            var targetName = crew.getRank() + " " + crew.getName();
+            if(enemyDmgMap.containsKey(targetName)) {
+                dmg += enemyDmgMap.get(targetName);
+            }
+            enemyDmgMap.put(targetName, dmg);
+
+            if (crew.getHP() <= 0 && !KIAList.contains(crew)) {
                 KIAList.add(crew);
                 if (target != 0) {
                     mySquad.remove(crew);
@@ -206,11 +252,23 @@ public class EngageEnemy {
             }
         }
 
-        //enemy summon minions
-        if(enemySquad.get(0).getName().equals(FINAL_BOSS) && rounds%5 == 0 && enemySquad.size()<5) {
-            Enemy ens = MainMap.newEnemy();
-            if(ens.getHP() < 300) {
-                enemySquad.add(ens);
+        if (enemySquad.size() > 0) {
+            if (enemySquad.get(0).getEnemyType().equals("zombie")) {
+                for (int i = 0; i < KIAList.size(); i++) {
+                    Enemy zombie = newEnemy("soldier");
+                    enemySquad.add(zombie);
+                }
+            }
+
+            //enemy summon minions
+
+            if (enemySquad.get(0).getName().equals(FINAL_BOSS) && rounds % 5 == 0
+                && enemySquad.size() < 5) {
+                Enemy ens = newEnemy();
+                if (ens.getHP() < 200) {
+                    enemySquad.add(ens);
+                    summonedMinion.add(ens);
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 package gamecontrol.contents;
 
-import static gamecontrol.GlobalVariables.inventory;
+import static gamecontrol.GlobalVariables.itemsCollection;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,9 +11,9 @@ public class ItemFactory {
   public static Item createItem() throws NullPointerException {
     Item item;
 
-    var weaponMap = inventory.getWeapons();
-    var medicalMap = inventory.getMedicalItem();
-    var keyItemMap = inventory.getKeyItems();
+    var weaponMap = itemsCollection.getWeapons();
+    var medicalMap = itemsCollection.getMedicalItem();
+    var keyItemMap = itemsCollection.getKeyItems();
 
     Random rg = new Random();
     int r = rg.nextInt(3);
@@ -31,9 +31,9 @@ public class ItemFactory {
   public static Item createItem(String itemName) throws NullPointerException {
     Item item = null;
 
-    var weaponMap = inventory.getWeapons();
-    var medicalMap = inventory.getMedicalItem();
-    var keyItemMap = inventory.getKeyItems();
+    var weaponMap = itemsCollection.getWeapons();
+    var medicalMap = itemsCollection.getMedicalItem();
+    var keyItemMap = itemsCollection.getKeyItems();
 
     if (weaponMap.containsKey(itemName)) {
       item = weaponMap.get(itemName);

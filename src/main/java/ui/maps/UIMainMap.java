@@ -4,6 +4,7 @@ import gamemusic.AudioPlayer;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import ui.endgame.UIIntroBlurb;
+import static gamecontrol.GlobalVariables.DESTINATION;
 import static gamecontrol.GlobalVariables.InventoryMap;
 import static gamecontrol.GlobalVariables.currentSubAreaContents;
 import static gamecontrol.GlobalVariables.defeatBoss;
@@ -13,6 +14,7 @@ import static gamecontrol.GlobalVariables.mySquad;
 import static gamecontrol.GlobalVariables.titleMusicInitialize;
 import static gamecontrol.GlobalVariables.titleMusicStop;
 
+import gamecontrol.GlobalVariables;
 import gamecontrol.contents.Weapon;
 import gamemodel.mapengine.MainMap;
 import ui.UICommandHelper;
@@ -30,29 +32,13 @@ public class UIMainMap {
 
   private static final StringBuilder outputString = new StringBuilder();
 
-  private static final HashMap<String, Integer> commandMap = new HashMap<>();
-
   private static final HashMap<Integer, String> threatLvlMap = new HashMap<>();
 
   private static final Scanner scanner = new Scanner(System.in);
 
   public static final int x_axis_map = 95; //need to be an odd number for map display
 
-  //public static final int y_axis_map = 13; //need to be an odd number for map display
-
   private static boolean exit = false;
-
-//  private static void commandInitialize() {
-//    /* avoid give command code from 1-10 because this command map will add command codes when playing the game*/
-//    commandMap.put("w", 18); //Go North
-//    commandMap.put("s", 15); //Go South
-//    commandMap.put("a", 14); //Go East
-//    commandMap.put("d", 16); //Go West
-//    commandMap.put("i", 11); //Inventory
-//    commandMap.put("m", 12); //mini map
-//    commandMap.put("e", -1); //exit game
-//    commandMap.put("cheat", -2); //ar
-//  }
 
   private static void threatLvlMapInitialize() {
     threatLvlMap.put(3, "\033[31mHigh\33[0m");
@@ -69,19 +55,13 @@ public class UIMainMap {
   }
 
   public static void displayMainMapUI() throws IOException, InterruptedException {
-
-    UIIntroBlurb.displayIntro();
-
     threatLvlMapInitialize();
 
-    while (mySquad.get(0).getHP() > 0) {
-      System.out.println("\n\n");
+    while (mySquad.get(0).getHP() > 0 && !defeatBoss && !exit) {
+      System.out.println("\n");
       displayMapTitle();
 
       displayMapBody();
-      if (exit || defeatBoss) {
-        break;
-      }
     }
 
     if (defeatBoss) {
@@ -157,28 +137,35 @@ public class UIMainMap {
 
           s = scanner.nextLine().toLowerCase();
 
-          if (s.equals("y")) {
-            exit = true;
-            break;
-          } else if (s.equals("n")) {
-            break;
-          } else {
+          if (!s.equals("y") && !s.equals("n")) {
             System.out.println("Invalid entry, try again.");
+          } else {
+            if (s.equals("y")) { exit = true; }
+            break;
           }
         }
       case -2:
         Weapon AR15 = new Weapon("ar-15", 75, "rare", "A lightweight, semi-automatic rifle.");
-        //Weapon big = new Weapon();
         InventoryMap.put("ar-15", AR15);
         break;
-
       default:
     }
 
     if (inGameCommands.get(s) <= subMaps.size() && inGameCommands.get(s) >= 0) {
       currentSubAreaContents = subMaps.get(inGameCommands.get(s)-1);
 
-      UIEnterSubarea.displaySubarea();
+      if(currentSubAreaContents.getName().equals(DESTINATION)) {
+        System.out.println("This place needs password to access");
+        System.out.println("Enter the password >>");
+        s = scanner.nextLine();
+        if(s.equals(GlobalVariables.getPassWord())) {
+          UIEnterSubarea.displaySubarea(); // when this is lab
+        } else {
+          System.out.println("Invalid password.");
+        }
+      }else {
+        UIEnterSubarea.displaySubarea(); //when not lab
+      }
     }
   }
 
@@ -192,8 +179,6 @@ public class UIMainMap {
     int rows = subMaps.size();
 
     for (int i = 0; i < rows; i++) {
-      commandMap.put(String.valueOf(i + 1), i);
-
       var subMap = subMaps.get(i);
 
       String line1 = (i + 1) + ". " + subMap.getName() + "\n\n";
@@ -213,15 +198,15 @@ public class UIMainMap {
         myPower = mySquad.stream().mapToInt(e -> e.getHP() * e.getAttack()).sum();
 
         if (enemyPower == 0) {
-          threatLevel = "\033[34mSafe\33[0m";
+          threatLevel = threatLvlMap.get(0);
         } else if (myPower * 3 / 4 >= enemyPower) {
-          threatLevel = "\033[32mLow\33[0m" + " (" + subMap.getContents().enemies.size() + " "
+          threatLevel = threatLvlMap.get(1) + " (" + subMap.getContents().enemies.size() + " "
               + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         } else if (myPower * 5 / 4 >= enemyPower) {
-          threatLevel = "\033[33mMedium\33[0m" + " (" + subMap.getContents().enemies.size() + " "
+          threatLevel = threatLvlMap.get(2) + " (" + subMap.getContents().enemies.size() + " "
               + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         } else if (myPower * 5 / 4 < enemyPower) {
-          threatLevel = "\033[31mHigh\33[0m" + " (" + subMap.getContents().enemies.size() + " "
+          threatLevel = threatLvlMap.get(3) + " (" + subMap.getContents().enemies.size() + " "
               + subMap.getContents().enemies.get(0).getEnemyType() + ")";
         }
 
