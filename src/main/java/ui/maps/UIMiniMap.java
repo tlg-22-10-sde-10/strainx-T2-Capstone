@@ -11,20 +11,16 @@ import static gamecontrol.GlobalVariables.inGameMap;
 public class UIMiniMap {
 
     private static final StringBuilder outputString = new StringBuilder();
-    private static final Scanner s = new Scanner(System.in);
-    private static final String PLAYER_INDICATOR = "\033[030;42mYOU ARE HERE \33[0m";
+//    private static final String PLAYER_INDICATOR = "\033[030;42mYOU ARE HERE \33[0m";
 
     private static Scanner scannyMcScanFace = new Scanner(System.in);
 
-    public static void displayMiniMap() throws IOException {
+    public static void displayMiniMap() {
         drawMiniMap();
-
     }
 
     private static void drawMiniMap() {
         outputString.setLength(0);
-
-        int spaceHolder = 1;
 
         var map = inGameMap;
 
@@ -41,11 +37,11 @@ public class UIMiniMap {
         for (int i =0; i< maxGrids; i++) {
             areas[i] = content + " "+ (i+1) + ":";
             if((i+1) == map.getPosition()) {
-                areas[i] = PLAYER_INDICATOR;
+                areas[i] = playerIndicator;
             }
         }
 
-        int maxLength = Math.max(PLAYER_INDICATOR.length(), areas[maxGrids-1].length());
+        int maxLength = Math.max(playerIndicator.length(), areas[maxGrids-1].length());
 
         int maxLengthEachBlock = maxLength + 1;
 
@@ -70,7 +66,7 @@ public class UIMiniMap {
                     blockSpace += 6;
 
                     //player_indicator can be customized and will be different
-                    if(PLAYER_INDICATOR.length()%2 ==0) {
+                    if(playerIndicator.length()%2 ==0) {
                         outputString.append(" ");
                     }
                 }
