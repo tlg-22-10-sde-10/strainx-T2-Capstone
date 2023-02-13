@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class UIMiniMap {
 
+
   private static final StringBuilder outputString = new StringBuilder();
   private static final String PLAYER_INDICATOR = "\033[030;42mYOU ARE HERE\33[0m";
 
@@ -18,7 +19,6 @@ public class UIMiniMap {
 
   private static void drawMiniMap() {
     outputString.setLength(0);
-
     var map = inGameMap;
 
     int maxGrids = map.getDimensionY() * map.getDimensionX();
@@ -446,9 +446,7 @@ public class UIMiniMap {
 
       outputString.setLength(0);
 
-      //place first subarea headers
-
-      for (int x = 0; x < map.getDimensionX(); x++) {
+    for (int x = 0; x < map.getDimensionX(); x++) {
         for (int k = 0; k < 3; k++) {
           outputString.append("#");
           String subAreaName = "??????";
