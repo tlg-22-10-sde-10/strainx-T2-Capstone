@@ -95,7 +95,7 @@ public class UIEnterSubarea {
                         System.out.println("Rummaging around you find there's nothing of value.");
                     }
                 } else {
-                    System.out.println("There are no way to get the item without defeating those zombies.");
+                    System.out.println("You may not loot the area with enemies present!");
                 }
                 UIEnterSubarea.scanner.nextLine();
                 break;

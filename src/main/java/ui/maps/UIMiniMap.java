@@ -6,12 +6,14 @@ import java.util.Scanner;
 
 public class UIMiniMap {
 
+
   private static final StringBuilder outputString = new StringBuilder();
   private static final String PLAYER_INDICATOR = "\033[030;42mYOU ARE HERE\33[0m";
 
   private static final Scanner scannyMcScanFace = new Scanner(System.in);
 
   public static void displayMiniMap() {
+
     drawMiniMap3();
   }
 
@@ -84,6 +86,8 @@ public class UIMiniMap {
       //place sub areas
       for (int k = 0; k < 3; k++) {
         for (int x = 0; x < map.getDimensionX(); x++) {
+
+
           outputString.append("#");
           String subAreaName = "??????";
 
