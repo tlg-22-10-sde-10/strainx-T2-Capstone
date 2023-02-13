@@ -1,12 +1,10 @@
 package ui.inventory;
 
-import contents.Weapon;
-
-import java.util.HashMap;
+import gamecontrol.contents.Weapon;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 public class UIInventoryWeapons {
     private static final int x_axis_inventory_weapon = 96;
@@ -14,8 +12,6 @@ public class UIInventoryWeapons {
 
     public static void displayWeapons() {
         while (true) {
-            System.out.println("\n\n\n\n\n");
-
             outputString.setLength(0);
             String inv = "WEAPON LIST";
             int invSpaceHolder = (x_axis_inventory_weapon-inv.length())/2;
@@ -40,13 +36,10 @@ public class UIInventoryWeapons {
                     .collect(Collectors.toList());
 
             int i = 1;
-            HashMap<String, Weapon> weaponsMap = new HashMap<>();
 
             for(var k : weapons) {
                 drawFooter();
                 Weapon weapon = (Weapon) k;
-
-                weaponsMap.put(String.valueOf(i), weapon);
 
                 String weaponName = i + ". " + weapon.getName();
                 String weaponBaseDMG = "Base Damage: " + weapon.getWeapon_base_dmg();
@@ -56,7 +49,7 @@ public class UIInventoryWeapons {
                 outputString.append(weaponName);
                 outputString.append(" ".repeat(line_space));
                 outputString.append(weaponBaseDMG);
-                outputString.append("\n");
+                outputString.append("\n\n");
                 outputString.append(weapon.getDescription());
 
                 System.out.println(outputString);
@@ -71,7 +64,7 @@ public class UIInventoryWeapons {
                 operation1 = "Press Weapon Number to Equip.";
             }
 
-            String operation2 = "Press 0 to Go Back";
+            String operation2 = "Press 0 or enter to Go Back";
             int last_line_space = x_axis_inventory_weapon-operation1.length()-operation2.length();
             outputString.append(operation1);
             outputString.append(" ".repeat(last_line_space));
@@ -80,34 +73,35 @@ public class UIInventoryWeapons {
             System.out.println(outputString);
             drawHeader();
 
-            System.out.println("Press number to continue >> ");
+            System.out.println("Press key to continue >> ");
 
             Scanner s = new Scanner(System.in);
-            String command;
+            int thisCommandCode;
 
             while(true) {
-                String userInput = s.nextLine();
+                String userInput = s.nextLine().toLowerCase();
 
-                if(weaponsMap.containsKey(userInput) || userInput.equals("0")) {
-                    command = userInput;
-
-                    break;
-                } else {
-                    System.out.println("Invalid Selection!");
+                if(inGameCommands.containsKey(userInput)) {
+                    if((inGameCommands.get(userInput) >=0 && inGameCommands.get(userInput)<=weapons.size()) || userInput.equals("")) {
+                        thisCommandCode = inGameCommands.get(userInput);
+                        break;
+                    }
                 }
+                System.out.println("Invalid Selection!");
             }
 
-            if(command.equals("0")) {
-                System.out.println("\n\n\n\n\n");
-
+            if(thisCommandCode == 0 || thisCommandCode == 22) {
                 break;
             } else {
-                var newWeapon = weaponsMap.get(command);
+                Weapon newWeapon = (Weapon) weapons.get(thisCommandCode-1);
                 mySquad.get(0).setWeapon(newWeapon);
 
-                System.out.println("\n\n\n\n\n");
+                System.out.println("You are equipped with " + "\033[36m" + newWeapon.getName() + "\33[0m now");
+                System.out.println("Press any key to continue...");
+                s.nextLine();
             }
         }
+        System.out.println("\n\n");
     }
 
     private static void drawFooter() {
@@ -123,5 +117,4 @@ public class UIInventoryWeapons {
         System.out.println(outputString);
         outputString.setLength(0);
     }
-
 }

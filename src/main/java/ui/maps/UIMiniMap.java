@@ -1,80 +1,128 @@
 package ui.maps;
 
-import java.io.IOException;
+import static gamecontrol.GlobalVariables.inGameMap;
 
-import static client.GlobalVariables.gameMap;
+import java.util.Scanner;
 
 public class UIMiniMap {
 
-    private static final StringBuilder outputString = new StringBuilder();
 
-    public static void displayMiniMap() throws IOException {
-        drawTopLine();
+  private static final StringBuilder outputString = new StringBuilder();
+  private static final String PLAYER_INDICATOR = "\033[030;42mYOU ARE HERE\33[0m";
+
+  private static final Scanner scannyMcScanFace = new Scanner(System.in);
+
+  public static void displayMiniMap() {
+
+    drawMiniMap3();
+  }
+
+  public static void drawMiniMap3() {
+    outputString.setLength(0);
+
+    var map = inGameMap;
+
+    int maxGrids = map.getDimensionY() * map.getDimensionX();
+
+    String content = "Area";
+
+    String longestString = PLAYER_INDICATOR;
+
+    for (int i = 1; i <= maxGrids; i++) {
+      for (int j = 0; j < map.gameMap.get(i).size(); j++) {
+        if (map.gameMap.get(i).get(j).getName().length() > longestString.length()) {
+          longestString = map.gameMap.get(i).get(j).getName();
+        }
+      }
     }
 
-    private static void drawTopLine() {
-        outputString.setLength(0);
+    String[] areas = new String[maxGrids];
 
-        int spaceHolder = 0;
+    for (int i = 0; i < maxGrids; i++) {
+      areas[i] = content + " " + (i + 1) + ":";
+      if ((i + 1) == map.getPosition()) {
+        areas[i] = PLAYER_INDICATOR;
+      }
+    }
 
-        var map = gameMap;
+    int maxLength = Math.max(longestString.length(), areas[maxGrids - 1].length());
 
-        int maxGrids = map.getDimensionY()*map.getDimensionX();
+    int maxLengthEachBlock = maxLength + 1;
 
-        String content = "Area";
-        String playerIndicator = "\033[030;42mYOU ARE HERE\33[0m";
+    maxLength = maxLengthEachBlock * map.getDimensionX() + 1;
 
-        String[] areas = new String[maxGrids];
-        for (int i =0; i< maxGrids; i++) {
-            areas[i] = content + " "+ (i+1);
-            if((i+1) == map.getPosition()) {
-                areas[i] = playerIndicator;
-            }
+    for (int y = 0; y < map.getDimensionY(); y++) {
+      outputString.setLength(0);
+
+      outputString.append("# ".repeat(maxLength / 2));
+
+      System.out.println(outputString.append("#"));
+      outputString.setLength(0);
+
+      //place area headers
+      for (int x = 0; x < map.getDimensionX(); x++) {
+        int blockSpaceLeft =
+            (maxLengthEachBlock - 1 - areas[x + y * map.getDimensionX()].length()) / 2;
+        int blockSpaceRight =
+            maxLengthEachBlock - 1 - areas[x + y * map.getDimensionX()].length() - blockSpaceLeft;
+
+        outputString.append("#");
+
+        if (x + y * map.getDimensionX() == map.getPosition() - 1) {
+          blockSpaceLeft += 6;
+          blockSpaceRight += 7;
         }
 
-        int maxLength = Math.max(playerIndicator.length(), areas[maxGrids-1].length());
+        outputString.append(" ".repeat(blockSpaceLeft));
+        outputString.append(areas[x + y * map.getDimensionX()]);
+        outputString.append(" ".repeat(blockSpaceRight));
+      }
 
-        int maxLengthEachBlock = maxLength + spaceHolder*2 + 1;
+      outputString.append("#");
+      System.out.println(outputString);
 
-        maxLength = maxLengthEachBlock*map.getDimensionX() +1;
+      outputString.setLength(0);
 
-        for (int y =0; y<map.getDimensionY(); y++) {
-            outputString.setLength(0);
+      //place sub areas
+      for (int k = 0; k < 3; k++) {
+        for (int x = 0; x < map.getDimensionX(); x++) {
 
-            outputString.append("# ".repeat(maxLength/2));
 
-            System.out.println(outputString);
-            outputString.setLength(0);
+          outputString.append("#");
+          String subAreaName = "??????";
 
-            for(int x=0; x<map.getDimensionX(); x++) {
-
-                int blockSpace = (maxLengthEachBlock - 1 - areas[x+y*map.getDimensionX()].length())/2;
-
-                outputString.append("#");
-
-                if(x+y*map.getDimensionX() == map.getPosition()-1) {
-                    blockSpace += 6;
-                    if(playerIndicator.length()%2 ==0) {
-                        outputString.append(" ");
-                    }
-                }
-                outputString.append(" ".repeat(blockSpace));
-                outputString.append(areas[x+y*map.getDimensionX()]);
-
-                outputString.append(" ".repeat(blockSpace));
-            }
-            if(maxLength%2==0) {
-                outputString.replace(outputString.length()-1, outputString.length()-1, "#");
-            } else {
-                outputString.append(" #");
+          if (map.gameMap.get(x + 1 + y * map.getDimensionX()).size() > k) {
+            if(map.gameMap.get(x + 1 + y * map.getDimensionX()).get(k).getVisited()) {
+              subAreaName = map.gameMap.get(x + 1 + y * map.getDimensionX()).get(k)
+                  .getName();
             }
 
-            System.out.println(outputString);
+            int blockSpaceLeft =
+                (maxLengthEachBlock - 1 - subAreaName.length()) / 2;
+            int blockSpaceRight =
+                maxLengthEachBlock - 1 - subAreaName.length() - blockSpaceLeft;
+
+            outputString.append(" ".repeat(blockSpaceLeft));
+            outputString.append(subAreaName);
+            outputString.append(" ".repeat(blockSpaceRight));
+          } else {
+            outputString.append(" ".repeat(maxLengthEachBlock - 1));
+          }
         }
-
-        outputString.setLength(0);
-        outputString.append("# ".repeat(maxLength/2));
+        outputString.append("#");
         System.out.println(outputString);
+
         outputString.setLength(0);
+      }
     }
+
+    outputString.append("# ".repeat(maxLength / 2));
+    outputString.append("#");
+    System.out.println(outputString);
+    outputString.setLength(0);
+
+    System.out.println("\n");
+    System.out.println("Press any key to continue >>");
+    scannyMcScanFace.nextLine();
+  }
 }

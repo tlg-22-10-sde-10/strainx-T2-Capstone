@@ -2,36 +2,42 @@
   {
     "name": "Jefferson",
     "rank": "PFC",
+    "HP": 100,
     "maxHP": 100,
     "attack": 20
   },
   {
     "name": "Ricardo",
     "rank": "SPC",
+    "HP": 100,
     "maxHP": 100,
     "attack": 20
   },
   {
     "name": "Jackson",
     "rank": "CPL",
+    "HP": 100,
     "maxHP": 100,
     "attack": 20
   },
   {
     "name": "Marcus",
     "rank": "PV2",
+    "HP": 100,
     "maxHP": 100,
     "attack": 20
   },
   {
     "name": "Roy",
     "rank": "SPC",
+    "HP": 100,
     "maxHP": 100,
     "attack": 20
   },
   {
     "name": "Steph",
     "rank": "PFC",
+    "HP": 100,
     "maxHP": 100,
     "attack": 20
   }
