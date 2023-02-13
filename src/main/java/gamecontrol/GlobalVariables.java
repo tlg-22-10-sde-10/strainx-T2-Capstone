@@ -23,14 +23,6 @@ import ui.maps.UIEnterSubarea;
 
 
 public class GlobalVariables {
-
-    public static void playerHelpCall() {
-        System.out.println("Here are some tips:");
-        System.out.println("You can interact with items, by typing get [item] or use [item].");
-        System.out.println("You can move from your location to another location by typing go [direction].");
-        System.out.println("Examples: go north or use shotgun");
-    }
-
     public static final int ENEMY_SQUAD_SIZE_CAP = 6;
     public static final int ITEM_QUANTITY_CAP = 6;
     public static final int SUB_AREA_CAP=3;

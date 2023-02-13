@@ -53,7 +53,7 @@ public class UIEnterMainMap {
     outputString.setLength(0);
   }
 
-  public static void displayMainMapUI() throws InterruptedException {
+  public static void displayMainMapUI() {
     threatLvlMapInitialize();
 
     exit = false;
@@ -71,7 +71,7 @@ public class UIEnterMainMap {
     }
   }
 
-  private static void displayMapBody() throws InterruptedException {
+  private static void displayMapBody() {
     UICombat.reportMySquadStatus();
 
     drawFooter();
@@ -210,7 +210,6 @@ public class UIEnterMainMap {
 
   public static String displayThreatLvl(SubArea subMap) {
     String threatLevel = "??????";
-    //int position = inGameMap.getPosition();
 
     int enemyPower = 0;
 
