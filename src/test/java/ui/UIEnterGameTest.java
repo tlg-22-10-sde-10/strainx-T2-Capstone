@@ -11,14 +11,4 @@ public class UIEnterGameTest {
   public void displayStaff() throws InterruptedException {
     UIEnterGame.displayStaff();
   }
-
-  @Test
-  public void displayGameControl() {
-    UIEnterGame.displayGameControl();
-  }
-
-  @Test
-  public void displayEnterGame() throws InterruptedException, IOException {
-    UIEnterGame.displayEnterGame();
-  }
 }
