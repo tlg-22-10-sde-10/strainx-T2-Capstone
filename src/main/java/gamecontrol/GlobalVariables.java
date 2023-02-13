@@ -44,6 +44,8 @@ public class GlobalVariables {
 
     public static boolean defeatBoss = false;
 
+    public static boolean firstVisitToLab;
+
     public static Enemy miniBoss = new Enemy();
     public static Enemy finalBoss = new Enemy();
 
@@ -75,6 +77,7 @@ public class GlobalVariables {
     private static String passWord;
 
     public static void gameInitialization() throws IOException {
+        firstVisitToLab = true;
         defeatBoss = false;
         InventoryMap = new HashMap<>();
 

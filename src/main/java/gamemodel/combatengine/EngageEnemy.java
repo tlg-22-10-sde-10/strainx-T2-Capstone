@@ -164,7 +164,7 @@ public class EngageEnemy {
     }
 
     private static int playerTargetedEnemy() {
-        System.out.println("-----choose a target-----");
+        System.out.println("-----Select an enemy by entering their number-----");
 
         int target;
 
