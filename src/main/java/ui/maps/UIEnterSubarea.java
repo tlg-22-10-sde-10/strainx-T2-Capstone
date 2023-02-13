@@ -1,43 +1,26 @@
 package ui.maps;
 
-import combatengine.EngageEnemy;
-import contents.Item;
-import gamemapengine.MainMap;
+import gamemodel.combatengine.EngageEnemy;
+import gamecontrol.contents.Item;
+
+import ui.UICommandHelper;
 import ui.inventory.UIInventory;
 
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Scanner;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 
 public class UIEnterSubarea {
 
     public static final int x_axis_subArea = 96;
     private static final StringBuilder outputString = new StringBuilder();
 
-    private static final MainMap mainMap = gameMap;
-
-    private static final HashMap<String, Integer> commandMap = new HashMap<>();
-
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static void commandMapInitialize() {
-        commandMap.put("y", 1);
-        commandMap.put("", 0);
-        commandMap.put("yes", 1);
-        commandMap.put("n", 0);
-        commandMap.put("i", 11);
-        commandMap.put("l", 12);
-        commandMap.put("p", 12);
-        commandMap.put("pick", 12);
-        commandMap.put("pick up", 12);
-    }
+    private static boolean exitSubAreaUI = false;
 
-    public static void displaySubarea() throws InterruptedException {
-        commandMapInitialize();
-
-        System.out.println("\n\n\n");
+    private static void drawSubArea() throws InterruptedException {
+        System.out.println("\n");
 
         drawHeader();
 
@@ -50,56 +33,87 @@ public class UIEnterSubarea {
         drawHeader();
 
         displaySubareaItems();
+
         drawFooter();
+
         displaySubareaEnemy();
 
         drawFooter();
 
-        Scanner s = new Scanner(System.in);
-
         int commandCode;
 
         while(true) {
-            System.out.println("Please Give Command >> ");
+            System.out.println("Enter a command. You may engage the enemy, loot items,"
+                + " or return to area overlay >> ");
 
-            String command = s.nextLine().toLowerCase(Locale.ROOT);
+            String command = scanner.nextLine().toLowerCase();
 
-            if (commandMap.containsKey(command)) {
-                commandCode = commandMap.get(command);
+            if (inGameCommands.containsKey(command)) {
+                commandCode = inGameCommands.get(command);
                 break;
             }
             System.out.println("Invalid Command");
         }
 
         switch (commandCode) {
-            case 1:
-                enemySquad = current_subArea.getContents().enemies;
+            case 21:
+                enemySquad = currentSubAreaContents.getContents().enemies;
                 if (enemySquad.size() > 0) {
                     EngageEnemy.gameEnginePrototype();
                 } else {
-                    System.out.println("You search the place, and no zombies spot.");
+                    System.out.println("Looking around, there are no zombies that want to fight.");
                 }
                 break;
-            case 0:
+            case 22:
+                exitSubAreaUI = true;
                 break;
-            case 11:
+            case 16:
                 UIInventory.displayInventoryList();
                 break;
-            case 12:
-                if (current_subArea.getContents().items.size() > 0) {
-                    for (Item i : current_subArea.getContents().items) {
-                        UIInventory.pickUpItem(i);
-                    }
-                    current_subArea.getContents().items.clear();
-                } else {
-                    System.out.println("You tried to find if there are any hidden items, but nothing is there.");
-                }
+            case 17:
+                UICommandHelper.showHelp();
                 break;
+            case 19:
+                UICommandHelper.showHelpSubArea();
+
+                System.out.println("Press any key to continue >>");
+                UIEnterSubarea.scanner.nextLine();
+                break;
+            case 24:
+                if (currentSubAreaContents.getContents().enemies.size() == 0) {
+                    if (currentSubAreaContents.getContents().items.size() > 0) {
+                        for (Item i : currentSubAreaContents.getContents().items) {
+                            UIInventory.pickUpItem(i);
+                            outputString.append(i.getName());
+                            outputString.append(", ");
+                        }
+
+                        outputString.append("added to your inventory.");
+                        System.out.println(outputString);
+                        currentSubAreaContents.getContents().items.clear();
+                    } else {
+                        System.out.println("Rummaging around you find there's nothing of value.");
+                    }
+                } else {
+                    System.out.println("There are no way to get the item without defeating those zombies.");
+                }
+                UIEnterSubarea.scanner.nextLine();
+                break;
+            default:
+                System.out.println("Invalid Input");
+        }
+    }
+
+    public static void displaySubarea() throws InterruptedException {
+        exitSubAreaUI = false;
+
+        while (!exitSubAreaUI && mySquad.get(0).getHP()>0 && !defeatBoss) {
+            drawSubArea();
         }
     }
 
     private static void displaySubareaName() throws InterruptedException {
-        String text = "You have entered into " + current_subArea.getName();
+        String text = "You have entered into " + currentSubAreaContents.getName();
 
 //        for(var c : text.toCharArray()) {
 //            Thread.sleep(60);
@@ -108,15 +122,15 @@ public class UIEnterSubarea {
 
         System.out.println(text);
 
-        current_subArea.setVisited(true);
+        currentSubAreaContents.setVisited(true);
     }
 
     private static void displaySubareaDescription() {
-        System.out.println(current_subArea.getDescription());
+        System.out.println(currentSubAreaContents.getDescription());
     }
 
     private static void displaySubareaItems() {
-        int itemsNumber = current_subArea.getContents().items.size();
+        int itemsNumber = currentSubAreaContents.getContents().items.size();
         if (itemsNumber > 0) {
             System.out.println("You see " + itemsNumber + " item there.");
         } else{
@@ -125,9 +139,10 @@ public class UIEnterSubarea {
     }
 
     private static void displaySubareaEnemy() {
-        int enemyPack = current_subArea.getContents().enemies.size();
+        int enemyPack = currentSubAreaContents.getContents().enemies.size();
+        var threatLvl = UIEnterMainMap.displayThreatLvl(currentSubAreaContents);
         if (enemyPack > 0) {
-            System.out.println("You see " + enemyPack + " zombies walking around.");
+            System.out.println("You see " + enemyPack + " zombies walking around. Threat lvl: " + threatLvl) ;
         } else {
             System.out.println("This place looks safe, at least for now.");
         }
@@ -145,5 +160,9 @@ public class UIEnterSubarea {
         outputString.append("*".repeat(x_axis_subArea));
         System.out.println(outputString);
         outputString.setLength(0);
+    }
+
+    public static void setExitSubAreaUI(boolean exitSubAreaUI) {
+        UIEnterSubarea.exitSubAreaUI = exitSubAreaUI;
     }
 }

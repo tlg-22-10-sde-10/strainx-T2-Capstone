@@ -1,12 +1,13 @@
 package ui.inventory;
 
-import contents.*;
-
-import java.util.HashMap;
+import gamecontrol.contents.Item;
+import gamecontrol.contents.KeyItem;
+import gamecontrol.contents.Medical;
+import gamecontrol.contents.Weapon;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static client.GlobalVariables.*;
+import static gamecontrol.GlobalVariables.*;
 import static ui.inventory.UIDisplayMedicals.displayMedicals;
 import static ui.inventory.UIInventoryKeyItems.displayKeyItems;
 import static ui.inventory.UIInventoryWeapons.displayWeapons;
@@ -16,39 +17,31 @@ public class UIInventory {
     private static final int x_axis_inventory = 96;
     private static final StringBuilder outputString = new StringBuilder();
 
-    private static final HashMap<String, String> inventoryCommands = new HashMap<>();
-
     private static final String COL_1 = "1. Weapons";
     private static final String COL_2 = "2. Medicals";
     private static final String COL_3 = "3. Key Items";
-    private static final String COL_4 = "4. Go Back";
-
-    private static void inventoryCommandsInitialize() {
-        inventoryCommands.put("1", "CHECK WEAPONS");
-        inventoryCommands.put("2", "CHECK MEDICALS");
-        inventoryCommands.put("3", "CHECK KEY ITEMS");
-        inventoryCommands.put("4", "GO BACK");
-    }
+    private static final String COL_4 = "0. Go Back";
 
     public static void pickUpItem(Item item) {
         int qty= 1;
 
-        if(InventoryMap.containsKey(item.getName())) {
-            qty += InventoryMap.get(item.getName()).getQty();
-        } else if (item.getClass().equals(KeyItem.class)) {
+       if (item.getClass().equals(KeyItem.class)) {
             var key = (KeyItem) item;
 
-            switch (item.getName()) {
-                case "body armor":
-                    mySquad.get(0).setMaxHP(mySquad.get(0).getMaxHP() + key.getHealth());
-                    break;
-                case "squad equipment upgrades":
-                    for (int i=1;i<mySquad.size();i++) {
-                        var crew = mySquad.get(i);
-                        crew.setMaxHP(crew.getMaxHP() + key.getHealth());
-                        crew.setAttack(crew.getAttack() + key.getDamage());
-                    }
-                    break;
+            if(!InventoryMap.containsKey(item.getName())) {
+                switch (item.getName()) {
+                    case "body armor":
+
+                        mySquad.get(0).setMaxHP(mySquad.get(0).getMaxHP() + key.getHealth());
+                        break;
+                    case "squad equipment upgrades":
+                        for (int i=1;i<mySquad.size();i++) {
+                            var crew = mySquad.get(i);
+                            crew.setMaxHP(crew.getMaxHP() + key.getHealth());
+                            crew.setAttack(crew.getAttack() + key.getDamage());
+                        }
+                        break;
+                }
             }
         }
 
@@ -64,7 +57,7 @@ public class UIInventory {
     }
 
     private static void displayHeader() {
-        System.out.println("\n\n\n\n\n");
+        System.out.println("\n\n");
         outputString.setLength(0);
         String inv = "INVENTORY LIST";
         int invSpaceHolder = (x_axis_inventory-inv.length())/2;
@@ -89,7 +82,6 @@ public class UIInventory {
     }
 
     private static void displayBody() {
-
         var weapons = InventoryMap.values().stream()
                 .filter(i->i.getClass().equals(Weapon.class))
                 .collect(Collectors.toList());
@@ -141,8 +133,6 @@ public class UIInventory {
         while(true) {
             Scanner s = new Scanner(System.in);
 
-            inventoryCommandsInitialize();
-
             displayHeader();
 
             displayBody();
@@ -152,30 +142,32 @@ public class UIInventory {
             while (true) {
                 System.out.println("Choose Number Options >> ");
 
-                userInput = s.nextLine();
+                userInput = s.nextLine().toLowerCase();
 
-                if(inventoryCommands.containsKey(userInput)) {
+                if(inGameCommands.containsKey(userInput)) {
+                    if(inGameCommands.get(userInput) >= 0 && inGameCommands.get(userInput) <=3 || userInput.equals(""))
                     break;
                 }
                 System.out.println("Invalid Options");
             }
 
-            var command = inventoryCommands.get(userInput);
+            var command = inGameCommands.get(userInput);
 
-            if(command.equals("GO BACK")) {
+            if(command.equals(0) || command.equals(22)) {
                 break;
             }
 
             switch (command) {
-                case "CHECK WEAPONS":
+                case 1:
+                    System.out.println("\n\n");
                     displayWeapons();
                     break;
-                case "CHECK MEDICALS":
-                    System.out.println("\n\n\n");
+                case 2:
+                    System.out.println("\n\n");
                     displayMedicals();
                     break;
-                case "CHECK KEY ITEMS":
-                    System.out.println("\n\n\n");
+                case 3:
+                    System.out.println("\n\n");
                     displayKeyItems();
                     break;
             }
