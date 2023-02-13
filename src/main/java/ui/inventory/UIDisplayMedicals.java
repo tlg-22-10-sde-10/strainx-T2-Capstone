@@ -1,6 +1,7 @@
 package ui.inventory;
 
 import gamecontrol.contents.Medical;
+import gamemodel.combatengine.UICombat;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -23,37 +24,7 @@ public class UIDisplayMedicals {
 
         drawHeader();
 
-        int rows = mySquad.size()/2 + 1;
-        int spaceHolder = 16;
-        int space = (x_axis_inventory_medical-spaceHolder)/2;
-
-        for (int i = 0; i<rows; i+=2) {
-            String soldierLeftName = (i+1) + ". " + mySquad.get(i).getRank() + " " + mySquad.get(i).getName();
-            String soldierLeftHP = "HP: " + mySquad.get(i).getHP() + "/" + mySquad.get(i).getMaxHP();
-
-            String soldierRightName = "";
-            String soldierRightHP = "";
-
-            if(i+1<mySquad.size()) {
-                soldierRightName = (i+2) + ". " + mySquad.get(i+1).getRank() + " " + mySquad.get(i+1).getName();
-                soldierRightHP = "HP: " + mySquad.get(i+1).getHP() + "/" + mySquad.get(i+1).getMaxHP();
-            }
-
-            int space1 = space - soldierLeftHP.length() - soldierLeftName.length();
-            int space2 = space - soldierRightHP.length() -soldierRightName.length();
-
-            outputString.append(soldierLeftName);
-            outputString.append(" ".repeat(space1));
-            outputString.append(soldierLeftHP);
-            outputString.append(" ".repeat(spaceHolder));
-
-            outputString.append(soldierRightName);
-            outputString.append(" ".repeat(space2));
-            outputString.append(soldierRightHP);
-
-            System.out.println(outputString);
-            outputString.setLength(0);
-        }
+        UICombat.reportMySquadStatus();
     }
 
     public static void displayMedicals() {

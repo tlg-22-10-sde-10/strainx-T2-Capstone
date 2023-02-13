@@ -1,11 +1,6 @@
 package ui.maps;
 
-import gamemusic.AudioPlayer;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import ui.endgame.UIIntroBlurb;
 import static gamecontrol.GlobalVariables.DESTINATION;
-import static gamecontrol.GlobalVariables.InventoryMap;
 import static gamecontrol.GlobalVariables.currentSubAreaContents;
 import static gamecontrol.GlobalVariables.defeatBoss;
 import static gamecontrol.GlobalVariables.inGameCommands;
@@ -15,20 +10,17 @@ import static gamecontrol.GlobalVariables.titleMusicInitialize;
 import static gamecontrol.GlobalVariables.titleMusicStop;
 
 import gamecontrol.GlobalVariables;
-import gamecontrol.contents.Weapon;
-import gamemodel.mapengine.MainMap;
+import gamemodel.combatengine.UICombat;
+import gamemodel.mapengine.SubArea;
+import gamemusic.AudioPlayer;
+import java.util.HashMap;
+import java.util.Scanner;
 import ui.UICommandHelper;
 import ui.endgame.UIDisplayGameStatus;
 import ui.endgame.UIWinningPage;
-
 import ui.inventory.UIInventory;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Scanner;
 
-public class UIMainMap {
-
-  private static final MainMap mainMap = inGameMap;
+public class UIEnterMainMap {
 
   private static final StringBuilder outputString = new StringBuilder();
 
@@ -36,7 +28,7 @@ public class UIMainMap {
 
   private static final Scanner scanner = new Scanner(System.in);
 
-  public static final int x_axis_map = 95; //need to be an odd number for map display
+  public static final int x_axis_map = 96;
 
   private static boolean exit = false;
 
@@ -47,15 +39,25 @@ public class UIMainMap {
     threatLvlMap.put(0, "\033[34mSafe\33[0m");
   }
 
-  private static void drawFooter() {
+  public static void drawFooter() {
     outputString.setLength(0);
     outputString.append("-".repeat(x_axis_map));
     System.out.println(outputString);
     outputString.setLength(0);
   }
 
-  public static void displayMainMapUI() throws IOException, InterruptedException {
+  public static void drawFooter(int xAxis) {
+    outputString.setLength(0);
+    outputString.append("-".repeat(xAxis));
+    System.out.println(outputString);
+    outputString.setLength(0);
+  }
+
+  public static void displayMainMapUI() throws InterruptedException {
     threatLvlMapInitialize();
+
+    exit = false;
+    //defeatBoss = false;
 
     while (mySquad.get(0).getHP() > 0 && !defeatBoss && !exit) {
       System.out.println("\n");
@@ -69,13 +71,16 @@ public class UIMainMap {
     }
   }
 
-  private static void displayMapBody()
-      throws InterruptedException, IOException {
+  private static void displayMapBody() throws InterruptedException {
+    UICombat.reportMySquadStatus();
+
+    drawFooter();
+
     displayMapContent();
 
-    int position = mainMap.getPosition();
+    int position = inGameMap.getPosition();
 
-    var subMaps = mainMap.gameMaps.get(position);
+    var subMaps = inGameMap.gameMap.get(position);
 
     String s;
 
@@ -132,38 +137,32 @@ public class UIMainMap {
         AudioPlayer.changeVolume(2);
         break;
       case -1:
-        while (true) {
-          System.out.println("To confirm quit, type y or n >>");
-
-          s = scanner.nextLine().toLowerCase();
-
-          if (!s.equals("y") && !s.equals("n")) {
-            System.out.println("Invalid entry, try again.");
-          } else {
-            if (s.equals("y")) { exit = true; }
-            break;
-          }
+        System.out.println("To confirm quit, type \33[31mY\33[0m to continue >>");
+        s = scanner.nextLine().toLowerCase();
+        if (s.equals("y")) {
+          exit = true;
         }
-      case -2:
-        Weapon AR15 = new Weapon("ar-15", 75, "rare", "A lightweight, semi-automatic rifle.");
-        InventoryMap.put("ar-15", AR15);
         break;
       default:
+        if (inGameCommands.get(s) > subMaps.size() || inGameCommands.get(s) <= 0) {
+          System.out.println("Invalid Command! Press any key to continue...");
+          scanner.nextLine();
+        }
     }
 
-    if (inGameCommands.get(s) <= subMaps.size() && inGameCommands.get(s) >= 0) {
-      currentSubAreaContents = subMaps.get(inGameCommands.get(s)-1);
+    if (inGameCommands.get(s) <= subMaps.size() && inGameCommands.get(s) > 0) {
+      currentSubAreaContents = subMaps.get(inGameCommands.get(s) - 1);
 
-      if(currentSubAreaContents.getName().equals(DESTINATION)) {
+      if (currentSubAreaContents.getName().equals(DESTINATION)) {
         System.out.println("This place needs password to access");
         System.out.println("Enter the password >>");
         s = scanner.nextLine();
-        if(s.equals(GlobalVariables.getPassWord())) {
+        if (s.equals(GlobalVariables.getPassWord())) {
           UIEnterSubarea.displaySubarea(); // when this is lab
         } else {
           System.out.println("Invalid password.");
         }
-      }else {
+      } else {
         UIEnterSubarea.displaySubarea(); //when not lab
       }
     }
@@ -172,9 +171,9 @@ public class UIMainMap {
   private static void displayMapContent() {
     outputString.setLength(0);
 
-    int position = mainMap.getPosition();
+    int position = inGameMap.getPosition();
 
-    var subMaps = mainMap.gameMaps.get(position);
+    var subMaps = inGameMap.gameMap.get(position);
 
     int rows = subMaps.size();
 
@@ -183,39 +182,19 @@ public class UIMainMap {
 
       String line1 = (i + 1) + ". " + subMap.getName() + "\n\n";
 
-      String threatLevel = "??????";
+      String threatLevel= "??????";
       String itemsInMap = "??????";
 
       if (subMap.getVisited()) {
-
-        int enemyPower = 0;
-        if (subMap.getContents().enemies.size() > 0) {
-          enemyPower = subMap.getContents().enemies.stream().
-              mapToInt(e -> e.getHP() * e.getAttack()).sum();
-        }
-
-        int myPower;
-        myPower = mySquad.stream().mapToInt(e -> e.getHP() * e.getAttack()).sum();
-
-        if (enemyPower == 0) {
-          threatLevel = threatLvlMap.get(0);
-        } else if (myPower * 3 / 4 >= enemyPower) {
-          threatLevel = threatLvlMap.get(1) + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
-        } else if (myPower * 5 / 4 >= enemyPower) {
-          threatLevel = threatLvlMap.get(2) + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
-        } else if (myPower * 5 / 4 < enemyPower) {
-          threatLevel = threatLvlMap.get(3) + " (" + subMap.getContents().enemies.size() + " "
-              + subMap.getContents().enemies.get(0).getEnemyType() + ")";
-        }
-
         if (subMap.getContents().items.size() > 0) {
           itemsInMap = String.valueOf(subMap.getContents().items.size());
         } else {
           itemsInMap = "None";
         }
+
+        threatLevel = displayThreatLvl(subMap);
       }
+
 
       String line2 = "Threat level: " + threatLevel + "\n";
       String line3 = "Items inside: " + itemsInMap;
@@ -227,6 +206,36 @@ public class UIMainMap {
       System.out.println(outputString);
       drawFooter();
     }
+  }
+
+  public static String displayThreatLvl(SubArea subMap) {
+    String threatLevel = "??????";
+    //int position = inGameMap.getPosition();
+
+    int enemyPower = 0;
+
+    if (subMap.getContents().enemies.size() > 0) {
+      enemyPower = subMap.getContents().enemies.stream().
+          mapToInt(e -> e.getHP() * e.getAttack()).sum();
+    }
+
+    int myPower;
+    myPower = mySquad.stream().mapToInt(e -> e.getHP() * e.getAttack()).sum();
+
+    if (enemyPower == 0) {
+      threatLevel = threatLvlMap.get(0);
+    } else if (myPower * 3 / 4 >= enemyPower) {
+      threatLevel = threatLvlMap.get(1) + " (" + subMap.getContents().enemies.size() + " "
+          + subMap.getContents().enemies.get(0).getEnemyType() + ")";
+    } else if (myPower * 5 / 4 >= enemyPower) {
+      threatLevel = threatLvlMap.get(2) + " (" + subMap.getContents().enemies.size() + " "
+          + subMap.getContents().enemies.get(0).getEnemyType() + ")";
+    } else if (myPower * 5 / 4 < enemyPower) {
+      threatLevel = threatLvlMap.get(3) + " (" + subMap.getContents().enemies.size() + " "
+          + subMap.getContents().enemies.get(0).getEnemyType() + ")";
+    }
+
+    return threatLevel;
   }
 
   private static void displayMapTitle() {

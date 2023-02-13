@@ -5,13 +5,16 @@ import static gamecontrol.GlobalVariables.DROP_RATE_MAP;
 import static gamecontrol.GlobalVariables.DROP_RATE_ROLL;
 import static gamecontrol.GlobalVariables.ENEMY_SQUAD_SIZE_CAP;
 import static gamecontrol.GlobalVariables.ITEM_QUANTITY_CAP;
-import static gamecontrol.GlobalVariables.PATIENT_ZERO;
-import static gamecontrol.GlobalVariables.enemiesCollection;
+import static gamecontrol.GlobalVariables.FINAL_BOSS;
+import static gamecontrol.GlobalVariables.SUB_AREA_CAP;
+import static gamecontrol.GlobalVariables.enemiesTemplateCollection;
+import static gamecontrol.GlobalVariables.finalBoss;
 import static gamecontrol.GlobalVariables.inGameMap;
-
 import static gamecontrol.GlobalVariables.miniBoss;
-import static gamecontrol.GlobalVariables.subAreasCollection;
+import static gamecontrol.GlobalVariables.rg;
+import static gamecontrol.GlobalVariables.subAreaTemplatesCollection;
 
+import gamecontrol.GameDifficulty;
 import gamecontrol.GlobalVariables;
 import gamecontrol.contents.Enemy;
 import gamecontrol.contents.Item;
@@ -22,16 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 public class MainMap {
 
+  public Map<Integer, List<SubArea>> gameMap = new HashMap<>();
+
+  private static final Map<Integer, Item> customItemSpawnDistribution = new HashMap<>();
+
   private static final int DEFAULT_X = 3;
   private static final int DEFAULT_Y = 3;
-
-  private static final Random rg = new Random();
-
-  public HashMap<Integer, List<SubArea>> gameMaps = new HashMap<>();
 
   private int position = 1;
 
@@ -41,11 +43,10 @@ public class MainMap {
   private static int miniBossSpawnMap = 1;
   private static SubArea miniBossSubArea = new SubArea();
 
-  private static int miniBossSpawnSubArea = 0;
-  private static SubArea bossSubArea = new SubArea();
+  private static int finalBossSpawnMap = 1;
+  private static SubArea finalBossSubArea = new SubArea();
 
-  private static int bossSpawnMap = 1;
-  private static int bossSpawnSubArea = 0;
+  private static final List<Item> mustSpawnItems = new ArrayList<>();
 
   public int getPosition() {
     return position;
@@ -63,13 +64,30 @@ public class MainMap {
     return dimensionY;
   }
 
-  private static final Map<Integer, Item> distribution = new HashMap<>();
-
   public MainMap() {
     dimensionY = DEFAULT_Y;
     dimensionX = DEFAULT_X;
   }
 
+  public MainMap(GameDifficulty difficulty) {
+    if (GameDifficulty.Easy.equals(difficulty)) {
+      dimensionY = 3;
+      dimensionX = 3;
+    } else if (GameDifficulty.Medium.equals(difficulty)) {
+      if (GlobalVariables.rg.nextBoolean()) {
+        dimensionY = 3;
+        dimensionX = 4;
+      } else {
+        dimensionY = 4;
+        dimensionX = 3;
+      }
+    } else if (GameDifficulty.Hard.equals(difficulty)) {
+      dimensionY = 4;
+      dimensionX = 4;
+    }
+  }
+
+  //test purpose;
   public MainMap(int x, int y) {
     if (x < DEFAULT_X) {
       x = DEFAULT_X;
@@ -82,26 +100,31 @@ public class MainMap {
     dimensionX = x;
   }
 
-  private static void generateBoss() {
-    bossSpawnMap = rg.nextInt(dimensionX*dimensionY) + 1;
+  private void generateBoss() {
+    finalBossSpawnMap = rg.nextInt(dimensionX * dimensionY) + 1;
 
-    bossSubArea = inGameMap.newSubArea(DESTINATION);
+    finalBossSubArea = inGameMap.spawnSubArea(DESTINATION);
 
-    var contents = bossSubArea.getContents();
+    var contents = finalBossSubArea.getContents();
     contents.items.clear();
 
-    bossSubArea.setContents(contents);
+    //not necessary have enemies in content
+    if (contents.enemies.size() > 0) {
+      contents.enemies.set(0, FINAL_BOSS);
+    } else {
+      contents.enemies.add(FINAL_BOSS);
+    }
 
-    bossSpawnSubArea = rg.nextInt(3);
+    finalBossSubArea.setContents(contents);
   }
 
-  private static void generateMiniBoss() {
+  private void generateMiniBoss() {
     do {
-      miniBossSpawnMap = rg.nextInt(dimensionX*dimensionY) +1;
+      miniBossSpawnMap = rg.nextInt(dimensionX * dimensionY) + 1;
     }
-    while (miniBossSpawnMap==bossSpawnMap);
+    while (miniBossSpawnMap == finalBossSpawnMap);
 
-    SubArea miniBossRoom = inGameMap.newSubArea();
+    SubArea miniBossRoom = inGameMap.spawnSubArea();
 
     var contents = miniBossRoom.getContents();
 
@@ -109,129 +132,122 @@ public class MainMap {
     passWordNote.setQty(1);
     passWordNote.setDescription("In case I can't remember! " + GlobalVariables.getPassWord());
     passWordNote.setName("An odd note");
-    passWordNote.setDamage(0);
-    passWordNote.setHealth(0);
     passWordNote.setRarity("unique");
+
     contents.items.add(passWordNote);
 
-    var enemies = contents.enemies;
-    if(enemies.size() > 0) {
-      enemies.set(0, miniBoss);
+    if (contents.enemies.size() > 0) {
+      contents.enemies.set(0, miniBoss);
     } else {
-      enemies.add(miniBoss);
+      contents.enemies.add(miniBoss);
     }
 
     miniBossRoom.setContents(contents);
     miniBossSubArea = miniBossRoom;
-
-    miniBossSpawnSubArea = rg.nextInt(3);
-    System.out.println(miniBoss.getName());
-    System.out.println(miniBossSpawnMap);
-    System.out.println(miniBossSpawnSubArea);
   }
 
-  public static void mustIncludeInitialize() {
+  private void customSpawnItemInitialize() {
     var m249 = ItemFactory.createItem("m249");
+    var ar15 = ItemFactory.createItem("ar-15");
     var kit = ItemFactory.createItem("squad equipment upgrades");
-    var meds = ItemFactory.createItem("first aid kit");
+    var meds1 = ItemFactory.createItem("first aid kit");
+    var meds2 = ItemFactory.createItem("first aid kit");
+    var meds3 = ItemFactory.createItem("first aid kit");
     var armor = ItemFactory.createItem("body armor");
 
-    List<Item> mustIncludedItems = new ArrayList<>();
+    mustSpawnItems.add(ar15);
+    mustSpawnItems.add(kit);
+    mustSpawnItems.add(meds1);
+    mustSpawnItems.add(meds2);
+    mustSpawnItems.add(meds3);
+    mustSpawnItems.add(armor);
+  }
 
-    mustIncludedItems.add(m249);
-    mustIncludedItems.add(kit);
-    mustIncludedItems.add(meds);
-    mustIncludedItems.add(armor);
+  private void customSpawnItems() {
+    customSpawnItemInitialize();
 
     int mapSize = dimensionX * dimensionY;
 
-    while (mustIncludedItems.size() > 0) {
-      int spawnLocation = rg.nextInt(mapSize);
-      if(spawnLocation != bossSpawnMap) {
-        if (!distribution.containsKey(spawnLocation)) {
-          distribution.put(spawnLocation, mustIncludedItems.get(0));
-          mustIncludedItems.remove(0);
+    while (mustSpawnItems.size() > 0) {
+      int spawnMap = rg.nextInt(mapSize) + 1;
+      if (spawnMap != finalBossSpawnMap) {
+        if (!customItemSpawnDistribution.containsKey(spawnMap)) {
+          customItemSpawnDistribution.put(spawnMap, mustSpawnItems.get(0));
 
+          mustSpawnItems.remove(0);
         }
       }
     }
   }
 
   //can be optimized
-  public void initializeMap() {
-    mustIncludeInitialize();
+  public void gameMapInitialize() {
     generateBoss();
+    customSpawnItems();
     generateMiniBoss();
 
     for (int i = 1; i <= dimensionX * dimensionY; i++) {
-      int subAreaNumbers = rg.nextInt(3) + 1;
+      var mapBlock = newMapBlock();
 
-      ArrayList<SubArea> mapBlock = new ArrayList<>();
-
-      int room = rg.nextInt(subAreaNumbers);
-
-      for (int j = 0; j < subAreaNumbers; j++) {
-        SubArea thisSubArea = newSubArea();
-
-//        if (j == subAreaNumbers - 1 && i == this.dimensionX * this.dimensionY
-//            && subAreasCollection.stream().anyMatch(s -> s.getName().equals(DESTINATION))) {
-//          thisSubArea = newSubArea(DESTINATION);
-//        }
-
-        if(i == bossSpawnMap && (j == bossSpawnSubArea || j == subAreaNumbers - 1)) {
-          thisSubArea = bossSubArea;
-        }
-
-        if (i == miniBossSpawnMap && (j == miniBossSpawnSubArea || j == subAreaNumbers - 1)) {
-          thisSubArea = miniBossSubArea;
-        }
-
-        //assign must spawn items into the map
-        if (distribution.containsKey(i - 1) && j == room) {
-          var amendedContent = thisSubArea.getContents();
-          amendedContent.items.add(distribution.get(i - 1));
-
-          distribution.remove(i - 1);
-
-          thisSubArea.setContents(amendedContent);
-        }
-
-        mapBlock.add(thisSubArea);
+      //add final boss
+      if (i == finalBossSpawnMap) {
+        var finalBossSpawnRoomNumber = rg.nextInt(mapBlock.size());
+        //var finalBossSpawnRoom = mapBlock.get(finalBossSpawnRoomNumber);
+        mapBlock.set(finalBossSpawnRoomNumber, finalBossSubArea);
       }
-      gameMaps.put(i, mapBlock);
+
+      //add miniBoss
+      if (i == miniBossSpawnMap) {
+        var miniBossSpawnRoomNumber = rg.nextInt(mapBlock.size());
+        var miniBossSpawnRoom = mapBlock.get(miniBossSpawnRoomNumber);
+        miniBossSpawnRoom.setContents(miniBossSubArea.getContents());
+      }
+
+      //add must spawn item
+      if(customItemSpawnDistribution.containsKey(i)) {
+        var customItemSpawnRoomNumber = rg.nextInt(mapBlock.size());
+        var customItemSpawnRoom = mapBlock.get(customItemSpawnRoomNumber);
+
+        customItemSpawnRoom.getContents().items.add(customItemSpawnDistribution.get(i));
+        customItemSpawnDistribution.remove(i);
+      }
+
+      gameMap.put(i, mapBlock);
     }
   }
 
-  private SubArea newSubArea() {
+  private List<SubArea> newMapBlock() {
+    List<SubArea> mapBlock = new ArrayList<>();
+
+    int subAreaCounts = rg.nextInt(SUB_AREA_CAP) + 1;
+
+    for (int j = 0; j < subAreaCounts; j++) {
+      SubArea thisSubArea = spawnSubArea();
+
+      mapBlock.add(thisSubArea);
+    }
+
+    return mapBlock;
+  }
+
+  private SubArea spawnSubArea() {
     SubArea thisSubArea = new SubArea();
 
-    if (subAreasCollection.size() > 0) {
-      SubArea subAreaTemplate = subAreasCollection.get(rg.nextInt(subAreasCollection.size()));
+    if (subAreaTemplatesCollection.size() > 0) {
+      var subAreaTemplateName = subAreaTemplatesCollection
+          .get(rg.nextInt(subAreaTemplatesCollection.size())).getName();
 
-      var content = newContent();
-
-//      if (subAreaTemplate.getName().equals(DESTINATION)) {
-//        content.enemies.add(0, PATIENT_ZERO);
-//      }
-
-      thisSubArea.setName(subAreaTemplate.getName());
-      thisSubArea.setDescription(subAreaTemplate.getDescription());
-      thisSubArea.setContents(content);
-
-      subAreaTemplate.setReUseCap(subAreaTemplate.getReUseCap() - 1);
-
-      if (subAreaTemplate.getReUseCap() < 1) {
-        GlobalVariables.subAreasCollection.remove(subAreaTemplate);
-      }
+      thisSubArea = spawnSubArea(subAreaTemplateName);
     }
+
     return thisSubArea;
   }
 
-  private SubArea newSubArea(String subAreaName) {
+  private SubArea spawnSubArea(String subAreaName) {
     SubArea thisSubArea = new SubArea();
 
-    if (subAreasCollection.size() > 0) {
-      Optional<SubArea> selectedSubArea = subAreasCollection.stream()
+    if (subAreaTemplatesCollection.size() > 0) {
+      Optional<SubArea> selectedSubArea = subAreaTemplatesCollection.stream()
           .filter(s -> s.getName().equals(subAreaName)).findFirst();
 
       if (selectedSubArea.isPresent()) {
@@ -240,36 +256,43 @@ public class MainMap {
 
         thisSubArea.setName(subAreaTemplate.getName());
         thisSubArea.setDescription(subAreaTemplate.getDescription());
-        thisSubArea.setContents(new Content());
-
-        if (subAreaTemplate.getName().equals(DESTINATION)) {
-          var content = thisSubArea.getContents();
-
-          content.enemies.add(0, PATIENT_ZERO);
-
-          thisSubArea.setContents(content);
-        }
+        thisSubArea.setContents(spawnContent());
 
         if (subAreaTemplate.getReUseCap() < 1) {
-          GlobalVariables.subAreasCollection.remove(subAreaTemplate);
+          subAreaTemplatesCollection.remove(subAreaTemplate);
         }
       }
     }
     return thisSubArea;
   }
 
-  private Content newContent() {
+  private Content spawnContent() {
     Content contents = new Content();
 
-    //create enemy list
+    contents.enemies = spawnEnemyList();
+
+    if (!contents.enemies.contains(finalBoss)) {
+      contents.items = spawnItemList();
+    }
+
+    return contents;
+  }
+
+  private List<Enemy> spawnEnemyList() {
+    List<Enemy> enemies = new ArrayList<>();
+
     int enemySize = rg.nextInt(ENEMY_SQUAD_SIZE_CAP + 1);
 
     for (int i = 0; i < enemySize; i++) {
-      Enemy newEnemy = newEnemy();
-      contents.enemies.add(newEnemy);
+      enemies.add(newEnemy());
     }
 
-    //create item list
+    return enemies;
+  }
+
+  private List<Item> spawnItemList() {
+    List<Item> items = new ArrayList<>();
+
     int itemSize = rg.nextInt(ITEM_QUANTITY_CAP);
 
     for (int i = 0; i < itemSize; i++) {
@@ -278,45 +301,38 @@ public class MainMap {
       int roll = rg.nextInt(DROP_RATE_ROLL + 1);
 
       if (DROP_RATE_MAP.get(newItem.getRarity()) < roll) {
-        contents.items.add(newItem);
+        items.add(newItem);
       }
     }
-    return contents;
+
+    return items;
   }
 
-  public static Enemy newEnemy() {
-    int enemyIndex = rg.nextInt(enemiesCollection.size());
-    var randomEnemy = enemiesCollection.get(enemyIndex);
+  public Enemy newEnemy() {
+    int enemyIndex = GlobalVariables.rg.nextInt(enemiesTemplateCollection.size());
+    var enemyName = enemiesTemplateCollection.get(enemyIndex).getName();
 
-    String EnemyName = randomEnemy.getName();
-    String EnemyType = randomEnemy.getEnemyType();
-
-    int EnemyHP =
-        randomEnemy.getHP() + rg.nextInt(randomEnemy.getHP() / 5) - randomEnemy.getHP() / 10;
-    int EnemyAttack = randomEnemy.getAttack() + rg.nextInt(randomEnemy.getAttack() / 5)
-        - randomEnemy.getAttack() / 10;
-
-    String EnemySpecialPower = randomEnemy.getSpecial_power();
-
-    return new Enemy(EnemyName, EnemyType, EnemyHP, EnemyAttack, EnemySpecialPower);
+    return newEnemy(enemyName);
   }
 
-  public static Enemy newEnemy(String name) {
+  public Enemy newEnemy(String name) {
     var enemy = new Enemy();
 
-    var enemyTemplate = enemiesCollection.stream()
+    var enemyTemplate = enemiesTemplateCollection.stream()
         .filter(e -> e.getName().equals(name)).findFirst();
 
     if (enemyTemplate.isPresent()) {
       enemy.setName(enemyTemplate.get().getName());
       enemy.setEnemyType(enemyTemplate.get().getEnemyType());
 
-      int EnemyHP = enemyTemplate.get().getHP() + rg.nextInt(enemyTemplate.get().getHP() / 5)
-          - enemyTemplate.get().getHP() / 10;
+      int EnemyHP =
+          enemyTemplate.get().getHP() + GlobalVariables.rg.nextInt(enemyTemplate.get().getHP() / 5)
+              - enemyTemplate.get().getHP() / 10;
       enemy.setMaxHP(EnemyHP);
 
       int EnemyAttack =
-          enemyTemplate.get().getAttack() + rg.nextInt(enemyTemplate.get().getAttack() / 5)
+          enemyTemplate.get().getAttack() + GlobalVariables.rg.nextInt(
+              enemyTemplate.get().getAttack() / 5)
               - enemyTemplate.get().getAttack() / 10;
       enemy.setAttack(EnemyAttack);
     }
