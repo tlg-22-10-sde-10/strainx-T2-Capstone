@@ -1,19 +1,23 @@
 package client;
 
-import ui.UIEnterGame;
 import ui.endgame.UIDisplayGameStatus;
-import ui.endgame.UIIntroBlurb;
-import ui.maps.UIEnterMainMap;
+import ui.maps.UIMainMap;
 import ui.endgame.UITitlePage;
 
 import java.io.IOException;
+
+import static client.GlobalVariables.*;
+
 
 public class StrainXMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        UIEnterGame.displayEnterGame();
+        gameInitialization();
+        //Scanner userInput = new Scanner(System.in);
 
-        //UIEnterMainMap.displayMainMapUI();
+        UIDisplayGameStatus.displayInfo(UITitlePage.displayTitle());
+
+        UIMainMap.displayMainMapUI();
     }
 }
