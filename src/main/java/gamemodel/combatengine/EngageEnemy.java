@@ -14,14 +14,14 @@ import ui.maps.UIEnterSubarea;
 
 import static gamecontrol.GlobalVariables.*;
 import static gamemodel.combatengine.UICombat.*;
-import static gamemodel.mapengine.MainMap.newEnemy;
 
 public class EngageEnemy {
     private static final Random rg = new Random();
     private static final Scanner s1 = new Scanner(System.in);
 
-    public static ArrayList<CrewMember> KIAList = new ArrayList<>();
-    public static ArrayList<Enemy> enemyKIAList = new ArrayList<>();
+    private static List<CrewMember> KIAList = new ArrayList<>();
+    private static List<Enemy> enemyKIAList = new ArrayList<>();
+
     public static Map<String, Integer> enemyDmgMap = new HashMap<>();
     public static List<Enemy> summonedMinion = new ArrayList<>();
     public static boolean mySquadAttacked = false;
@@ -45,10 +45,10 @@ public class EngageEnemy {
 
             if (mySquadInitiative > 0) {
                 reportCombatRounds(rounds);
-
                 reportInitiativeStatus(mySquadInitiative);
-
+                reportCombatProcess(mySquadInitiative);
                 reportEngage();
+
                 enemyDmgMap.clear();
 
                 playerMove();
@@ -63,10 +63,10 @@ public class EngageEnemy {
                 enemySquadMove();
 
                 reportCombatRounds(rounds);
-
                 reportInitiativeStatus(mySquadInitiative);
-
+                reportCombatProcess(mySquadInitiative);
                 reportEngage();
+
                 enemyDmgMap.clear();
 
                 if(mySquad.get(0).getHP() <= 0){
@@ -81,16 +81,21 @@ public class EngageEnemy {
                 restOfMySquadMove();
             }
 
-            if(enemyKIAList.stream().anyMatch(e -> e.getName().equals(FINAL_BOSS))) {
+            if(enemyKIAList.stream().anyMatch(e -> e.getName().equals(FINAL_BOSS.getName()))) {
                 defeatBoss = true;
             }
             rounds += 1;
         }
 
-        reportInitiativeStatus(mySquadInitiative);
+        if(!retreat) {
+            reportCombatProcess(mySquadInitiative);
+        }
         reportEngage();
 
-        reportFinalCombatResult();
+        if(mySquad.get(0).getHP() <= 0) {
+            reportDefeated();
+        }
+
         System.out.println("Press any key to continue...");
         s1.nextLine();
 
@@ -104,9 +109,19 @@ public class EngageEnemy {
         isInvalidCommand = true;
 
         while (isInvalidCommand) {
-            String userInput = s1.nextLine().toLowerCase();
 
-            int thisCommandCode = inGameCommands.get(userInput);
+            int thisCommandCode;
+
+            while(true) {
+                System.out.print("Waiting Instructions >> ");
+                String userInput = s1.nextLine().toLowerCase();
+
+                if(inGameCommands.containsKey(userInput)) {
+                    thisCommandCode = inGameCommands.get(userInput);
+                    break;
+                }
+                System.out.println("Invalid Command");
+            }
 
             switch (thisCommandCode) {
                 case 26:
@@ -114,9 +129,7 @@ public class EngageEnemy {
 
                     int playersTarget = playerTargetedEnemy();
 
-                    if(isInvalidCommand) {
-                        System.out.print("Waiting instructions >> ");
-                    } else {
+                    if(!isInvalidCommand) {
                         playerAutoCombat(playersTarget);
                     }
                     break;
@@ -201,6 +214,7 @@ public class EngageEnemy {
         if (enemy.getHP() <= 0) {
             enemySquad.remove(enemy);
             enemyKIAList.add(enemy);
+            UIEnemyKIAList.add(enemy);
         }
     }
 
@@ -221,6 +235,7 @@ public class EngageEnemy {
             if (enemy.getHP() <= 0) {
                 enemySquad.remove(enemy);
                 enemyKIAList.add(enemy);
+                UIEnemyKIAList.add(enemy);
             }
         }
     }
@@ -228,7 +243,6 @@ public class EngageEnemy {
     private static void enemySquadMove() {
         for (Enemy en : enemySquad) {
             if (mySquad.get(0).getHP() <= 0) {
-
                 UIEnterSubarea.setExitSubAreaUI(true);
             }
 
@@ -246,25 +260,32 @@ public class EngageEnemy {
 
             if (crew.getHP() <= 0 && !KIAList.contains(crew)) {
                 KIAList.add(crew);
+                UIKIAList.add(crew);
                 if (target != 0) {
                     mySquad.remove(crew);
                 }
             }
         }
 
+        reanimateDead();
+    }
+
+    private static void reanimateDead() {
         if (enemySquad.size() > 0) {
+            //reanimate dead soldiers
             if (enemySquad.get(0).getEnemyType().equals("zombie")) {
                 for (int i = 0; i < KIAList.size(); i++) {
-                    Enemy zombie = newEnemy("soldier");
-                    enemySquad.add(zombie);
+                    Enemy reanimatedTeamMate = inGameMap.newEnemy();
+                    reanimatedTeamMate.setName(KIAList.get(i).getName());
+                    enemySquad.add(reanimatedTeamMate);
                 }
+                KIAList.clear();
             }
 
             //enemy summon minions
-
-            if (enemySquad.get(0).getName().equals(FINAL_BOSS) && rounds % 5 == 0
+            if (enemySquad.get(0).getName().equals(FINAL_BOSS.getName()) && rounds % 5 == 0
                 && enemySquad.size() < 5) {
-                Enemy ens = newEnemy();
+                Enemy ens = inGameMap.newEnemy();
                 if (ens.getHP() < 200) {
                     enemySquad.add(ens);
                     summonedMinion.add(ens);

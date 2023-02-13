@@ -9,14 +9,9 @@ import gamemodel.mapengine.MainMap;
 import gamemodel.mapengine.SubArea;
 
 import gamemusic.AudioPlayer;
-import gamemusic.MusicHelper;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Random;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.util.stream.Collectors;
 import jsonparsing.JsonParsing;
 
@@ -36,28 +31,30 @@ public class GlobalVariables {
         System.out.println("Examples: go north or use shotgun");
     }
 
-    //public static int exit_code = 0;
     public static final int ENEMY_SQUAD_SIZE_CAP = 6;
     public static final int ITEM_QUANTITY_CAP = 6;
-    private static final int INITIAL_COMPANION_SIZE = 3;
+    public static final int SUB_AREA_CAP=3;
+
+    public static final Random rg = new Random();
 
     public static final String DESTINATION = "Schrader Lab";
-    public static final Enemy PATIENT_ZERO = new Enemy("patient zero", 1200, 20, "zombie");
 
-    public static Enemy miniBoss = new Enemy();
+    public static final Enemy FINAL_BOSS =
+        new Enemy("patient zero", 1200, 20, "zombie");
 
     public static boolean defeatBoss = false;
 
+    public static Enemy miniBoss = new Enemy();
+    public static Enemy finalBoss = new Enemy();
+
     public static Map<String, Integer> DROP_RATE_MAP = new HashMap<>();
     public static final int DROP_RATE_ROLL = 100; //default is 100 unless the drop rate map is changed accordingly
-
-    private static String passWord;
 
     public static Map<String, Integer> inGameCommands = new HashMap<>();
 
     public static SubArea currentSubAreaContents = new SubArea();
 
-    public static MainMap inGameMap; //= new MainMap(3,3);
+    public static MainMap inGameMap; // = new MainMap();
     //in game inventory
     public static Map<String, Item> InventoryMap = new HashMap<>();
     
@@ -65,33 +62,37 @@ public class GlobalVariables {
     public static List<CrewMember> mySquad = new ArrayList<>();
     public static List<Enemy> enemySquad = new ArrayList<>();
 
-    //subArea
-    public static List<SubArea> subAreasCollection = new ArrayList<>();
-    public static List<Enemy> enemiesCollection = new ArrayList<>();
-    public static List<CrewMember> squad = new ArrayList<>();
-
-    //inventory from json file
-    public static Inventory itemsCollection = new Inventory();
+    //from json file
+    public static List<SubArea> subAreaTemplatesCollection = new ArrayList<>();
+    public static List<Enemy> enemiesTemplateCollection = new ArrayList<>();
+    public static List<CrewMember> mySquadTemplate = new ArrayList<>();
+    public static Inventory itemTemplatesCollection = new Inventory();
 
     //combat engine UI
     public static Map<String, String> combatCommandDescription = new HashMap<>();
 
+    private static final int INITIAL_COMPANION_SIZE = 3;
+    private static String passWord;
+
     public static void gameInitialization() throws IOException {
+        defeatBoss = false;
+        InventoryMap = new HashMap<>();
+
         passWordInitialize();
 
-        inventoryInitialize();
+        inventoryTemplateInitialize();
 
         subMapInitialize();
 
         dropRateMapInitialize();
 
-        contentEnemyInitialize();
+        enemiesTemplateInitialize();
 
         miniBossInitialize();
 
-        inGameMap.initializeMap();
+        inGameMap.gameMapInitialize();
 
-        globalSquadInitialize();
+        mySquadInitialize();
 
         combatCommandInitialize();
 
@@ -110,6 +111,7 @@ public class GlobalVariables {
         * value -1: for exit
         * other values: */
         //inGameCommands.put("", 0); //go back
+
         inGameCommands.put("0", 0); //go back
 
         inGameCommands.put("1", 1); //select index 1
@@ -176,7 +178,6 @@ public class GlobalVariables {
     }
 
     private static void passWordInitialize() {
-        Random rg = new Random();
         StringBuilder s = new StringBuilder();
 
         int passWordLength = 4;
@@ -188,16 +189,20 @@ public class GlobalVariables {
     }
 
     private static void subMapInitialize() throws IOException {
-        try (InputStream input = JsonParsing.openResource("locations.json")) {
-            subAreasCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+        subAreaTemplatesCollection.clear();
 
-            subAreasCollection.forEach(a->a.setDescription(convertDescription(a.getDescription())));
+        try (InputStream input = JsonParsing.openResource("locations.json")) {
+            subAreaTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+
+            subAreaTemplatesCollection.forEach(a->a.setDescription(convertDescription(a.getDescription())));
         }
     }
 
-    private static void inventoryInitialize() throws IOException {
+    private static void inventoryTemplateInitialize() throws IOException {
+        itemTemplatesCollection = new Inventory();
+
         try (InputStream input = JsonParsing.openResource("items.json")) {
-            itemsCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+            itemTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
 
@@ -212,24 +217,30 @@ public class GlobalVariables {
     private static void combatCommandInitialize() {
         combatCommandDescription.put("f", "Attack Enemy");
         combatCommandDescription.put("u", "Use Items");
-//        combatCommandDescription.put("3", "Play Tricks");
         combatCommandDescription.put("c", "Auto Combat");
         combatCommandDescription.put("r", "Retreat");
     }
 
-    private static void globalSquadInitialize() throws IOException {
+    private static void mySquadTemplateInitialize() throws IOException {
+        mySquadTemplate.clear();
+
         try (InputStream input = JsonParsing.openResource("crew.json")) {
-            squad = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+            mySquadTemplate = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+        }
+    }
 
-            CrewMember p1 = new CrewMember("Player", "SGT", 100, 20);
-            mySquad.add(p1);
+    private static void mySquadInitialize() throws IOException {
+        mySquadTemplateInitialize();
+        mySquad.clear();
 
-            Random rg = new Random();
-            for(int i=0;i<INITIAL_COMPANION_SIZE; i++) {
-                var p = squad.get(rg.nextInt(squad.size()));
-                mySquad.add(p);
-                squad.remove(p);
-            }
+        CrewMember p1 = new CrewMember("Player", "SGT", 100, 20);
+        mySquad.add(p1);
+
+        for(int i=0;i<INITIAL_COMPANION_SIZE; i++) {
+            var p = mySquadTemplate.get(rg.nextInt(mySquadTemplate.size()));
+
+            mySquad.add(p);
+            mySquadTemplate.remove(p);
         }
     }
 
@@ -251,31 +262,28 @@ public class GlobalVariables {
         return convertedDescription.toString();
     }
 
-    public static void contentEnemyInitialize() throws IOException {
+    public static void enemiesTemplateInitialize() throws IOException {
+        enemiesTemplateCollection.clear();
         try (InputStream input = JsonParsing.openResource("enemies.json")) {
-            enemiesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+            enemiesTemplateCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
 
     public static void miniBossInitialize() {
-        Random rg = new Random();
-
-        var miniBossList = enemiesCollection.stream().filter(e->e.getMaxHP()>300).collect(Collectors.toList());
+        var miniBossList = enemiesTemplateCollection.stream()
+            .filter(e->e.getMaxHP()>300).collect(Collectors.toList());
 
         Enemy miniBossTemplate = null;
 
-        if(enemiesCollection.size()>0) {
-            miniBossTemplate = enemiesCollection.get(rg.nextInt(enemiesCollection.size()));
-        }
-
         if (miniBossList.size()>0) {
             miniBossTemplate = miniBossList.get(rg.nextInt(miniBossList.size()));
+        } else if(enemiesTemplateCollection.size()>0) {
+            miniBossTemplate = enemiesTemplateCollection.get(rg.nextInt(enemiesTemplateCollection.size()));
         }
 
         if (miniBossTemplate != null) {
-            GlobalVariables.miniBoss = MainMap.newEnemy(miniBossTemplate.getName());
+            miniBoss = inGameMap.newEnemy(miniBossTemplate.getName());
+            enemiesTemplateCollection.remove(miniBossTemplate);
         }
-
-        enemiesCollection.remove(miniBossTemplate);
     }
 }

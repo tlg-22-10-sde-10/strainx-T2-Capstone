@@ -2,9 +2,8 @@ package gamecontrol.contents;
 
 public class KeyItem extends Item {
 
-    private int health;
-    private int damage;
-
+    private int health = 0;
+    private int damage = 0;
 
     public int getHealth() {
         return health;

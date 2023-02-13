@@ -1,7 +1,5 @@
 package ui.endgame;
 
-import java.util.Random;
-
 public class UITitlePage {
     public static String displayTitle() {
         return "\n" +
@@ -14,5 +12,10 @@ public class UITitlePage {
                 "     ▄█    ███     ███       ███    ███   ███    ███ ███  ███   ███  ▄███     ███▄  \n" +
                 "   ▄████████▀     ▄████▀     ███    ███   ███    █▀  █▀    ▀█   █▀  ████       ███▄ \n" +
                 "                             ███    ███                                             \n";
+    }
+
+    public static void display2() {
+        String x = "    ▄████████     ███        ▄████████    ▄████████  ▄█  ███▄▄▄▄   ▀████    ▐████▀  ";
+        System.out.println(x.length());
     }
 }

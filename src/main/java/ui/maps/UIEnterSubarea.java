@@ -2,7 +2,7 @@ package ui.maps;
 
 import gamemodel.combatengine.EngageEnemy;
 import gamecontrol.contents.Item;
-import java.io.IOException;
+
 import ui.UICommandHelper;
 import ui.inventory.UIInventory;
 
@@ -19,7 +19,7 @@ public class UIEnterSubarea {
 
     private static boolean exitSubAreaUI = false;
 
-    private static void drawSubArea() throws InterruptedException, IOException {
+    private static void drawSubArea() throws InterruptedException {
         System.out.println("\n");
 
         drawHeader();
@@ -80,18 +80,22 @@ public class UIEnterSubarea {
                 UIEnterSubarea.scanner.nextLine();
                 break;
             case 24:
-                if (currentSubAreaContents.getContents().items.size() > 0) {
-                    for (Item i : currentSubAreaContents.getContents().items) {
-                        UIInventory.pickUpItem(i);
-                        outputString.append(i.getName());
-                        outputString.append(", ");
-                    }
+                if (currentSubAreaContents.getContents().enemies.size() == 0) {
+                    if (currentSubAreaContents.getContents().items.size() > 0) {
+                        for (Item i : currentSubAreaContents.getContents().items) {
+                            UIInventory.pickUpItem(i);
+                            outputString.append(i.getName());
+                            outputString.append(", ");
+                        }
 
-                    outputString.append("added to your inventory.");
-                    System.out.println(outputString);
-                    currentSubAreaContents.getContents().items.clear();
+                        outputString.append("added to your inventory.");
+                        System.out.println(outputString);
+                        currentSubAreaContents.getContents().items.clear();
+                    } else {
+                        System.out.println("Rummaging around you find there's nothing of value.");
+                    }
                 } else {
-                    System.out.println("Rummaging around you find there's nothing of value.");
+                    System.out.println("There are no way to get the item without defeating those zombies.");
                 }
                 UIEnterSubarea.scanner.nextLine();
                 break;
@@ -100,7 +104,7 @@ public class UIEnterSubarea {
         }
     }
 
-    public static void displaySubarea() throws InterruptedException, IOException {
+    public static void displaySubarea() throws InterruptedException {
         exitSubAreaUI = false;
 
         while (!exitSubAreaUI && mySquad.get(0).getHP()>0 && !defeatBoss) {
@@ -136,8 +140,9 @@ public class UIEnterSubarea {
 
     private static void displaySubareaEnemy() {
         int enemyPack = currentSubAreaContents.getContents().enemies.size();
+        var threatLvl = UIEnterMainMap.displayThreatLvl(currentSubAreaContents);
         if (enemyPack > 0) {
-            System.out.println("You see " + enemyPack + " zombies walking around.");
+            System.out.println("You see " + enemyPack + " zombies walking around. Threat lvl: " + threatLvl) ;
         } else {
             System.out.println("This place looks safe, at least for now.");
         }
