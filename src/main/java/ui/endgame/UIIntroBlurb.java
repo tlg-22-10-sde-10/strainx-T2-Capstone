@@ -1,7 +1,6 @@
 package ui.endgame;
 
 import java.util.Scanner;
-import ui.maps.UIEnterSubarea;
 
 public class UIIntroBlurb {
 
@@ -27,12 +26,12 @@ public class UIIntroBlurb {
 
     System.out.print(paragraph1);
     System.out.print("\nPress enter to continue>>");
-    String input = scan.nextLine();
+    scan.nextLine();
     System.out.print(paragraph2);
     System.out.print("\nPress enter to continue>>");
-    input = scan.nextLine();
+    scan.nextLine();
     System.out.print(paragraph3);
     System.out.print("\nPress enter to continue>>");
-    input = scan.nextLine();
+    scan.nextLine();
   }
 }

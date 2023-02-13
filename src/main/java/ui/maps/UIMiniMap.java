@@ -297,9 +297,6 @@ public class UIMiniMap {
       outputString.setLength(0);
 
       //place first subarea headers
-      for (int k = 0; k < 3; k++) {
-
-      }
 
       for (int x = 0; x < map.getDimensionX(); x++) {
 
@@ -454,17 +451,21 @@ public class UIMiniMap {
       for (int x = 0; x < map.getDimensionX(); x++) {
         for (int k = 0; k < 3; k++) {
           outputString.append("#");
+          String subAreaName = "??????";
+
+          if (map.gameMap.get(x + 1 + y * map.getDimensionX()).get(0).getVisited()) {
+            subAreaName = map.gameMap.get(x + 1 + y * map.getDimensionX()).get(k).getName();
+          }
+
           if (map.gameMap.get(x + 1 + y * map.getDimensionX()).size() > k) {
 
             int blockSpaceLeft =
-                (maxLengthEachBlock - 1 - map.gameMap.get(x + 1 + y * map.getDimensionX()).get(k)
-                    .getName().length()) / 2;
+                (maxLengthEachBlock - 1 - subAreaName.length()) / 2;
             int blockSpaceRight =
-                maxLengthEachBlock - 1 - map.gameMap.get(x + 1 + y * map.getDimensionX()).get(k)
-                    .getName().length() - blockSpaceLeft;
+                maxLengthEachBlock - 1 - subAreaName.length() - blockSpaceLeft;
 
             outputString.append(" ".repeat(blockSpaceLeft));
-            outputString.append(map.gameMap.get(x + 1 + y * map.getDimensionX()).get(k).getName());
+            outputString.append(subAreaName);
             outputString.append(" ".repeat(blockSpaceRight));
           } else {
             outputString.append(" ".repeat(maxLengthEachBlock - 1));
