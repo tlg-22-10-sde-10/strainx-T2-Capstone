@@ -1,92 +1,74 @@
 [
   {
     "name": "soldier",
-    "maxHP": 150,
-    "attack": 7,
+    "maxHP": 130,
+    "attack": 10,
     "type": "zombie"
   },
   {
     "name": "scientist",
-    "maxHP": 400,
-    "attack": 20,
+    "maxHP": 1000,
+    "attack": 40,
     "type": "zombie"
   },
   {
     "name": "researcher",
-    "maxHP": 100,
-    "attack": 9,
+    "maxHP": 120,
+    "attack": 10,
     "type": "zombie"
   },
   {
     "name": "nurse",
     "maxHP": 110,
-    "attack": 8,
+    "attack": 10,
     "type": "zombie"
   },
   {
     "name": "doctor",
-    "maxHP": 120,
-    "attack": 8,
+    "maxHP": 250,
+    "attack": 10,
     "type": "zombie"
   },
   {
     "name": "big guy",
-    "maxHP": 200,
-    "attack": 12,
+    "maxHP": 300,
+    "attack": 10,
     "type": "zombie"
   },
   {
-    "name": "military police",
-    "maxHP": 140,
+    "name": "police officer",
+    "maxHP": 130,
     "attack": 10,
     "type": "zombie"
   },
   {
     "name": "dog",
-    "maxHP": 70,
+    "maxHP": 80,
     "attack": 20,
     "type": "zombie"
   },
   {
     "name": "fire fighter",
-    "maxHP": 140,
-    "attack": 12,
+    "maxHP": 120,
+    "attack": 20,
     "type": "zombie"
   },
   {
     "name": "pilot",
-    "maxHP": 120,
-    "attack": 12,
+    "maxHP": 100,
+    "attack": 15,
     "type": "zombie"
   },
   {
     "name": "guards",
     "maxHP": 140,
-    "attack": 8,
+    "attack": 15,
     "type": "zombie"
   },
   {
-    "name": "mechanic",
-    "maxHP": 140,
-    "attack": 12,
-    "type": "zombie"
-  },
-  {
-    "name": "cook",
-    "maxHP": 140,
-    "attack": 9,
-    "type": "zombie"
-  },
-  {
-    "name": "waiter",
-    "maxHP": 110,
-    "attack": 9,
-    "type": "zombie"
-  },
-  {
-    "name": "waitress",
-    "maxHP": 100,
-    "attack": 10,
+    "name": "machine operator",
+    "maxHP": 120,
+    "attack": 15,
     "type": "zombie"
   }
 ]
