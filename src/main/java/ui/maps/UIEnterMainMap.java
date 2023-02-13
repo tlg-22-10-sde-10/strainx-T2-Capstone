@@ -87,7 +87,7 @@ public class UIEnterMainMap {
     exit = false;
 
     while (true) {
-      System.out.println("Choose Your Command >> ");
+      System.out.println("Select An Action >> ");
 
       s = scanner.nextLine().toLowerCase();
 
@@ -95,7 +95,7 @@ public class UIEnterMainMap {
         break;
       }
 
-      System.out.println("Invalid Input");
+      System.out.println("Invalid Input. Type help if you need a list of actions.");
     }
 
     switch (inGameCommands.get(s)) {
@@ -154,8 +154,15 @@ public class UIEnterMainMap {
       currentSubAreaContents = subMaps.get(inGameCommands.get(s) - 1);
 
       if (currentSubAreaContents.getName().equals(DESTINATION)) {
-        System.out.println("This place needs password to access");
-        System.out.println("Enter the password >>");
+        if (GlobalVariables.firstVisitToLab) {
+          System.out.println("Upon finally reaching the lab, you start making your way toward its Entry Control Point.\n"
+              + "Inside, there is a massive blast proof door with a panel to the right prompting for a password.\n"
+              + "\"Of course there was no mention of this in the mission briefing notes...\" you think to yourself.\n"
+              + "Looking around you see the Entry Control officer's reception desk across the room. Behind the desk\n"
+              + "you find a hastily, bloodstained note that reads: \"For entry, find the lead scientist..\"");
+          GlobalVariables.firstVisitToLab = false;
+        }
+        System.out.println("\nAccess to this Lab is password protected. Enter the password >>");
         s = scanner.nextLine();
         if (s.equals(GlobalVariables.getPassWord())) {
           UIEnterSubarea.displaySubarea(); // when this is lab

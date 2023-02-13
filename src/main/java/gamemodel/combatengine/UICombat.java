@@ -41,9 +41,9 @@ public class UICombat {
     public static void reportInitiativeStatus(int mySquadInitiative) {
         var respond = "";
         if (mySquadInitiative > 0) {
-            respond = "You squad has won the initiative and attack first.";
+            respond = "Your squad has won the initiative and attacks first.";
         } else {
-            respond = "Enemy squad has won the initiative and attack first.";
+            respond = "Enemy squad has won the initiative and attacks first.";
         }
         System.out.println(respond + "\n");
     }
@@ -85,7 +85,7 @@ public class UICombat {
         if (retreat) {
             System.out.println("Your squad retreated from the combat in one piece.");
         } else {
-            System.out.println("The enemy is not done with you yet.");
+            System.out.println("The enemy presses the attack, retreat failed!");
         }
     }
 
@@ -132,7 +132,7 @@ public class UICombat {
             if (i < enemySquad.size()) {
                 var enemy = enemySquad.get(i);
 
-                enemySquadLine = enemy.getEnemyType() + " " + enemy.getName() +
+                enemySquadLine = (i+1) + ". " + enemy.getEnemyType() + " " + enemy.getName() +
                         " | HP: " + enemy.getHP() + "/" + enemy.getMaxHP() +
                         " | attack: " + enemy.getAttack();
             }
@@ -165,7 +165,7 @@ public class UICombat {
 
     public static void reportEnemyMove() {
         outputString.setLength(0);
-        outputString.append("Total DMG Received since last action:\n");
+        outputString.append("DMG Received since last action:\n");
 
         for(var name : enemyDmgMap.keySet()) {
             outputString.append(name);
