@@ -16,6 +16,8 @@ public class UIInventoryTest {
 
   @Test
   public void pickUpItem1() throws IOException {
+    GlobalVariables.inGameMap = new MainMap();
+
     GlobalVariables.gameInitialization();
 
     Item item = ItemFactory.createItem("body armor");
@@ -31,6 +33,8 @@ public class UIInventoryTest {
 
   @Test
   public void pickUpKeyItem() throws IOException {
+    GlobalVariables.inGameMap = new MainMap();
+
     GlobalVariables.gameInitialization();
 
     Item item = ItemFactory.createItem("body armor");

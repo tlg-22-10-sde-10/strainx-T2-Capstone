@@ -20,10 +20,6 @@ public class JsonParsing {
         return defaultMapper;
     }
 
-    public static JsonNode jsonFileReader(String path) throws IOException {
-        return objectMapper.readTree(new File(path));
-    }
-
     //reflection
     public static InputStream openResource(String name) {
         return JsonParsing.class.getClassLoader().getResourceAsStream(name);

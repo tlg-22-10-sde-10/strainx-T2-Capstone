@@ -1,5 +1,6 @@
 package gamemodel.combatengine;
 
+import static gamecontrol.GlobalVariables.inGameMap;
 import static org.junit.Assert.*;
 
 import gamecontrol.GlobalVariables;
@@ -13,7 +14,6 @@ public class UICombatTest {
 
   @Test
   public void reportMySquadStatus() throws IOException {
-
     GlobalVariables.inGameMap = new MainMap();
 
     GlobalVariables.gameInitialization();

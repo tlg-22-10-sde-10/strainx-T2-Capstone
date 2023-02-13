@@ -19,7 +19,7 @@ public class UIEnterSubarea {
 
     private static boolean exitSubAreaUI = false;
 
-    private static void drawSubArea() throws InterruptedException {
+    private static void drawSubArea() {
         System.out.println("\n");
 
         drawHeader();
@@ -104,7 +104,7 @@ public class UIEnterSubarea {
         }
     }
 
-    public static void displaySubarea() throws InterruptedException {
+    public static void displaySubarea()  {
         exitSubAreaUI = false;
 
         while (!exitSubAreaUI && mySquad.get(0).getHP()>0 && !defeatBoss) {
@@ -112,13 +112,8 @@ public class UIEnterSubarea {
         }
     }
 
-    private static void displaySubareaName() throws InterruptedException {
+    private static void displaySubareaName() {
         String text = "You have entered into " + currentSubAreaContents.getName();
-
-//        for(var c : text.toCharArray()) {
-//            Thread.sleep(60);
-//            System.out.print(c);
-//        }
 
         System.out.println(text);
 
