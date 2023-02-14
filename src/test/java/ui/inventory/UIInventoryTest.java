@@ -3,12 +3,10 @@ package ui.inventory;
 import static org.junit.Assert.*;
 
 import gamecontrol.GlobalVariables;
-import gamecontrol.contents.Inventory;
 import gamecontrol.contents.Item;
 import gamecontrol.contents.ItemFactory;
-import gamecontrol.contents.KeyItem;
 import gamemodel.mapengine.MainMap;
-import gamemodel.mapengine.SubArea;
+
 import java.io.IOException;
 import org.junit.Test;
 

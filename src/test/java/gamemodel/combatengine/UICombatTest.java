@@ -1,12 +1,9 @@
 package gamemodel.combatengine;
 
-import static gamecontrol.GlobalVariables.inGameMap;
-import static org.junit.Assert.*;
-
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.MainMap;
 import java.io.IOException;
-import javax.swing.GroupLayout;
+
 import org.junit.Test;
 import ui.maps.UIEnterMainMap;
 
