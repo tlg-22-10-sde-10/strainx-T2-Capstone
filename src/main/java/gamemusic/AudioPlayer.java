@@ -74,6 +74,12 @@ public class AudioPlayer {
   }
 
   public static void setVolume(Float volume) {
-    AudioPlayer.volume = volume;
+    if(volume < -80.0f) {
+      AudioPlayer.volume = -80.0f;
+    } else if (volume > 6.0206f) {
+      AudioPlayer.volume = 6.0206f;
+    } else {
+      AudioPlayer.volume = volume;
+    }
   }
 }
