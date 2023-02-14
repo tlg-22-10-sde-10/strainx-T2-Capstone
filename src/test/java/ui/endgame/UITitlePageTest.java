@@ -1,7 +1,5 @@
 package ui.endgame;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class UITitlePageTest {
