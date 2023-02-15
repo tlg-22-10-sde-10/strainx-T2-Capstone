@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class TitlePanel extends JPanel {
 
-    private final int SCREEN_WIDTH = 1024;
-    private final int SCREEN_HEIGHT = 768;
+    public final static int SCREEN_WIDTH = 1024;
+    public final static int SCREEN_HEIGHT = 768;
 
 
     public TitlePanel() {
@@ -56,6 +56,7 @@ public class TitlePanel extends JPanel {
         startBtn.setBorderPainted(false);
         return startBtn;
     }
+
 
     private JTextArea addTitleText() {
         TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 580, 150);
