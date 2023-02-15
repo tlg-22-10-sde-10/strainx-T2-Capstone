@@ -1,8 +1,11 @@
-package GUI;
+package ui.gui.components;
+
+import gamecontrol.contents.CrewMember;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StatsPanel extends JPanel{
 
@@ -11,7 +14,7 @@ public class StatsPanel extends JPanel{
     private JPanel p3;
     private JPanel p4;
 
-    public StatsPanel(ArrayList<String> players){
+    public StatsPanel( List<CrewMember> players ){
         super(new GridLayout(2,2));
         this.p1 = new JPanel();
         this.p2 = new JPanel();
@@ -22,19 +25,22 @@ public class StatsPanel extends JPanel{
         add(this.p3);
         add(this.p4);
         setSubPanelDefaults(players);
-        setSize(800,100);
+        setSize(1024,100);
     }
 
-    private Integer setSubPanelDefaults(ArrayList<String> players){
+    private Integer setSubPanelDefaults(List<CrewMember> players){
+
         ArrayList<JPanel> panels = getAllSubPanels();
         for (JPanel p : panels) {
             p.setLayout(new FlowLayout());
-            JLabel label = new JLabel(players.remove(0));
-            p.add(label);
-            p.add(new JLabel("HP : N/100"));
-            p.add(new JLabel("ATK: N    "));
+            CrewMember crewMember = players.remove(0);
 
-            p.setBackground(Color.DARK_GRAY);
+            JLabel label = new JLabel(String.format("%s %s",crewMember.getRank(),crewMember.getName()));
+            p.add(label);
+            p.add(new JLabel(String.format("HP : %d/%d",crewMember.getHP(),crewMember.getMaxHP())));
+            p.add(new JLabel(String.format(" Attack %d",crewMember.attack)));
+
+            p.setBackground(Color.GRAY);
             p.setPreferredSize(new Dimension(40,50));
         }
         return 1;
