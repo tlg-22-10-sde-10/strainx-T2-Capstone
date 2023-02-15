@@ -32,8 +32,13 @@ public class DifficultyButton extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             setDifficulty(s);
-            JDialog d = (JDialog) this.getTopLevelAncestor();
+            DifficultyDialog d = (DifficultyDialog) this.getTopLevelAncestor();
             d.dispose();
+            JFrame frame = d.getFrame();
+            frame.getContentPane().removeAll();
+            frame.add(DrawIntro.drawIntro());
+            frame.setSize(1024,768);
+            frame.pack();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

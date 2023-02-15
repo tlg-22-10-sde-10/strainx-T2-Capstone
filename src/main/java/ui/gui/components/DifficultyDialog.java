@@ -1,25 +1,23 @@
 package ui.gui.components;
 
 import gamecontrol.GameDifficulty;
-import ui.gui.TitlePanel;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class DifficultyDialog {
+public class DifficultyDialog extends JDialog implements WindowConstants,RootPaneContainer {
 
-    public JFrame frame;
-    public JDialog dialog;
+    private final JFrame frame;
+
     public DifficultyDialog(JFrame frame) {
         this.frame = frame;
-        dialog = new JDialog(frame);
-        dialog.setLayout(new BorderLayout());
-        dialog.setBounds(200,200,300,100);
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this.frame);
-        dialog.add(label(),BorderLayout.NORTH);
-        dialog.add(buttons(),BorderLayout.CENTER);
-        dialog.setVisible(true);
+
+        this.setLayout(new BorderLayout());
+        this.setBounds(200,200,300,100);
+        this.setResizable(false);
+        this.setLocationRelativeTo(this.frame);
+        this.add(label(),BorderLayout.NORTH);
+        this.add(buttons(),BorderLayout.CENTER);
+        this.setVisible(true);
     }
 
     private JPanel label() {
@@ -36,5 +34,9 @@ public class DifficultyDialog {
         panel.add(new DifficultyButton(GameDifficulty.Medium));
         panel.add(new DifficultyButton(GameDifficulty.Hard));
         return panel;
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }
