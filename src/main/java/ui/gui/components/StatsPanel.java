@@ -35,8 +35,7 @@ public class StatsPanel extends JPanel{
             p.setLayout(new FlowLayout());
             CrewMember crewMember = players.remove(0);
 
-            JLabel label = new JLabel(String.format("%s %s",crewMember.getRank(),crewMember.getName()));
-            p.add(label);
+            p.add(new JLabel(String.format("%s %s",crewMember.getRank(),crewMember.getName())));
             p.add(new JLabel(String.format("HP : %d/%d",crewMember.getHP(),crewMember.getMaxHP())));
             p.add(new JLabel(String.format(" Attack %d",crewMember.attack)));
 
