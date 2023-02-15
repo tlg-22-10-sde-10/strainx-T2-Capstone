@@ -1,13 +1,10 @@
 package ui.gui.components;
 
-import gamecontrol.GameDifficulty;
-import gamecontrol.GlobalVariables;
-import gamemodel.mapengine.MainMap;
-
 import javax.swing.*;
 import java.io.IOException;
 
 public class StartButton extends JButton {
+    DifficultyDialog d = null;
     public StartButton() {
         this.setText("Start Game");
         this.setEnabled(true);
@@ -21,12 +18,11 @@ public class StartButton extends JButton {
         });
         this.setOpaque(false);
     }
-
     private void startGame() throws IOException {
-        if (GlobalVariables.inGameMap == null) {
-            GlobalVariables.inGameMap = new MainMap(GameDifficulty.Easy);
-            GlobalVariables.gameInitialization();
+        if(d == null) {
+            d = new DifficultyDialog((JFrame) this.getTopLevelAncestor());
+        } else {
+            d = null;
         }
-        System.out.println(GlobalVariables.getPassWord());
     }
 }
