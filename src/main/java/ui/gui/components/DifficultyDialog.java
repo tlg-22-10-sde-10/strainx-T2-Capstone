@@ -7,17 +7,17 @@ import java.awt.*;
 public class DifficultyDialog extends JDialog implements WindowConstants,RootPaneContainer {
 
     private final JFrame frame;
-
     public DifficultyDialog(JFrame frame) {
+        super(frame);
         this.frame = frame;
-
-        this.setLayout(new BorderLayout());
-        this.setBounds(200,200,300,100);
-        this.setResizable(false);
-        this.setLocationRelativeTo(this.frame);
-        this.add(label(),BorderLayout.NORTH);
-        this.add(buttons(),BorderLayout.CENTER);
-        this.setVisible(true);
+        setLayout(new BorderLayout());
+        setBounds(200,200,300,100);
+        setResizable(false);
+        setLocationRelativeTo(frame);
+        add(label(),BorderLayout.NORTH);
+        add(buttons(),BorderLayout.CENTER);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setVisible(true);
     }
 
     private JPanel label() {

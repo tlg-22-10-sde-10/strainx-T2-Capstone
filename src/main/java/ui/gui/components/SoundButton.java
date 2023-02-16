@@ -2,24 +2,25 @@ package ui.gui.components;
 
 import gamemusic.AudioPlayer;
 import javax.swing.*;
+import java.awt.*;
 
 public class SoundButton extends JButton {
 
-    private boolean soundOn;
+
     public SoundButton() {
-        this.setText("<html><pre>Toggle<br> Sound</pre></html>");
-        this.setEnabled(true);
-        this.setFocusable(false);
-        this.addActionListener(e -> toggleSound());
+        setText("Toggle Sound");
+        setEnabled(true);
+        setFocusable(false);
+        addActionListener(e -> toggleSound());
+        setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     private void toggleSound() {
-        if(!soundOn) {
+        if(AudioPlayer.getClip() == null) {
             AudioPlayer.getInstance().playAudio();
-            soundOn = true;
         } else {
             AudioPlayer.getInstance().stopAudio();
-            soundOn = false;
+            AudioPlayer.setClip(null);
         }
     }
 }

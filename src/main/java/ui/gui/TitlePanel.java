@@ -9,6 +9,7 @@ public class TitlePanel extends JPanel {
 
     public final static int SCREEN_WIDTH = 1024;
     public final static int SCREEN_HEIGHT = 768;
+    private SettingsWindow settingWindow;
 
 
     public TitlePanel() {
@@ -20,7 +21,7 @@ public class TitlePanel extends JPanel {
         this.add(addTitleShadow());
         this.add(addStartButton());
         this.add(addExitButton());
-        this.add(addSoundButton());
+        this.add(addSettingsButton());
         this.add(background());
     }
 
@@ -30,13 +31,20 @@ public class TitlePanel extends JPanel {
         return label;
     }
 
-    private JButton addSoundButton() {
-        JButton soundBtn = new SoundButton();
-        soundBtn.setBounds(5,SCREEN_HEIGHT-55,100,50);
-        soundBtn.setBackground(Color.ORANGE);
-        soundBtn.setOpaque(true);
-        //soundBtn.setBorderPainted(false);
-        return soundBtn;
+    private JButton addSettingsButton() {
+        JButton setting = new JButton();
+        setting.setText("Settings");
+        setting.setBounds(5,SCREEN_HEIGHT-55,100,50);
+        setting.setBackground(Color.ORANGE);
+        setting.setOpaque(true);
+        setting.setBorderPainted(false);
+        setting.addActionListener(e -> {
+            if (settingWindow == null || !settingWindow.isDisplayable()) {
+                System.out.println(this.getTopLevelAncestor());
+                settingWindow = new SettingsWindow((JFrame) this.getTopLevelAncestor());
+            }
+        });
+        return setting;
     }
 
     private JButton addExitButton() {
