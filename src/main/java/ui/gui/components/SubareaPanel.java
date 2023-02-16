@@ -19,15 +19,19 @@ public class SubareaPanel extends JPanel {
 
     private Integer createSubareaPanels(JPanel area,List<SubArea> subAreaList,Integer areaNumber){
 
-        area.add(new JLabel(String.format("%d",areaNumber)));
+        area.add(new JLabel(String.format("Area %d",areaNumber)));
+
         for (SubArea subArea : subAreaList) {
+
+            // TEMP JButton Component to represent the pop-up Subarea on-click
             JButton building = new JButton();
             building.setAlignmentY(Component.CENTER_ALIGNMENT);
             building.setAlignmentX(Component.CENTER_ALIGNMENT);
-            building.setSize(200,100);
+//            building.setPreferredSize(new Dimension(300,200));
             building.add(new JLabel(subArea.getName()));
-            building.setName(subArea.getName());
+            building.setName(subArea.getName()); // give the btn a name
             building.addActionListener(btnListener(building));
+
             area.add(building);
         }
 

@@ -3,23 +3,19 @@ package ui.gui.components;
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 
-import javax.accessibility.Accessible;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainMapPanel extends JPanel{
+public class MapPanel extends JPanel{
 
-    // provide list of Areas, easy 3x3
-    public MainMapPanel(){
-        add(new JLabel("MAP"), BorderLayout.SOUTH);
-        setBackground(Color.BLACK);
-        setSize(1024,668);
+    //TODO ADD background image for the map
+
+    public MapPanel(){
+        setBackground(Color.PINK);
         setOpaque(true);
-        setLayout(new GridLayout(3,3));
+        setLayout(new GridLayout(GlobalVariables.inGameMap.getDimensionX(),GlobalVariables.inGameMap.getDimensionY()));
         appendAreaPanels(this);
     }
 
@@ -32,6 +28,5 @@ public class MainMapPanel extends JPanel{
 
         return 1;
     }
-
 
 }

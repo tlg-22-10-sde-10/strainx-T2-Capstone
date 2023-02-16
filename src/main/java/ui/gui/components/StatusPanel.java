@@ -7,14 +7,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatsPanel extends JPanel{
+public class StatusPanel extends JPanel{
 
     private JPanel p1;
     private JPanel p2;
     private JPanel p3;
     private JPanel p4;
 
-    public StatsPanel( List<CrewMember> players ){
+    public StatusPanel(List<CrewMember> players ){
         super(new GridLayout(2,2));
         this.p1 = new JPanel();
         this.p2 = new JPanel();
@@ -25,7 +25,6 @@ public class StatsPanel extends JPanel{
         add(this.p3);
         add(this.p4);
         setSubPanelDefaults(players);
-        setSize(1024,100);
     }
 
     private Integer setSubPanelDefaults(List<CrewMember> players){
