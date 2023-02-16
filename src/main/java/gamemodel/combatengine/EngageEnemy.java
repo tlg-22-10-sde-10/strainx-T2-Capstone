@@ -199,7 +199,7 @@ public class EngageEnemy {
         reportRetreatResults(retreat);
     }
 
-    private static void playerAutoCombat(int target) {
+    public static void playerAutoCombat(int target) {
         if(target == -1) {
             target = rg.nextInt(enemySquad.size());
         }
