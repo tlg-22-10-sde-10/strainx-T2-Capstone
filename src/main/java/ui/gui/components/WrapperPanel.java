@@ -12,8 +12,9 @@ public class WrapperPanel extends JPanel {
     public WrapperPanel(){
         setBorder(new LineBorder(Color.CYAN));
         setPreferredSize( new Dimension(1024,768));
-        add(new StatusPanel(GlobalVariables.mySquad));
-        add(new MapPanel());
+        setLayout(new BorderLayout());
+        add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+        add(new MapPanel(),BorderLayout.CENTER);
         addComponentListener( adjustSubPanelDimensions(this) );
     }
 

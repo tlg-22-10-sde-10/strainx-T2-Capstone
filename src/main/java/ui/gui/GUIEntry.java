@@ -12,7 +12,7 @@ import java.io.IOException;
 public class GUIEntry {
     public static void start() throws IOException {
 
-        GlobalVariables.inGameMap = new MainMap(GameDifficulty.Medium);
+        GlobalVariables.inGameMap = new MainMap(GameDifficulty.Easy);
         GlobalVariables.gameInitialization();
 
         // TEST StatsPanel
