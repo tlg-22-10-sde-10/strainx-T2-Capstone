@@ -30,9 +30,11 @@ public class StatusPanel extends JPanel{
     private Integer setSubPanelDefaults(List<CrewMember> players){
 
         ArrayList<JPanel> panels = getAllSubPanels();
+        int count = 0;
         for (JPanel p : panels) {
             p.setLayout(new FlowLayout());
-            CrewMember crewMember = players.remove(0);
+
+            CrewMember crewMember = players.get(count);
 
             p.add(new JLabel(String.format("%s %s",crewMember.getRank(),crewMember.getName())));
             p.add(new JLabel(String.format("HP : %d/%d",crewMember.getHP(),crewMember.getMaxHP())));
@@ -40,6 +42,7 @@ public class StatusPanel extends JPanel{
 
             p.setBackground(Color.GRAY);
             p.setPreferredSize(new Dimension(40,50));
+            count+=1;
         }
         return 1;
     }

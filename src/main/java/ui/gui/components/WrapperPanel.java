@@ -22,7 +22,6 @@ public class WrapperPanel extends JPanel {
         return new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-//                super.componentResized(e);
                 int thisHeight = parent.getHeight();
                 int thisWidth = parent.getWidth();
 
