@@ -12,7 +12,6 @@ import java.util.Scanner;
 import ui.endgame.UIDisplayGameStatus;
 import ui.endgame.UIIntroBlurb;
 import ui.endgame.UITitlePage;
-import ui.gui.components.InventoryPanel;
 import ui.maps.UIEnterMainMap;
 
 public class UIEnterGame {
@@ -22,7 +21,7 @@ public class UIEnterGame {
     private static final Map<String, String> enterGameControl = new HashMap<>();
     private static final StringBuilder sb= new StringBuilder();
 
-  public static void displayEnterGame(InventoryPanel inventoryPanel) throws InterruptedException, IOException {
+  public static void displayEnterGame() throws InterruptedException, IOException {
 
     boolean exit = false;
 

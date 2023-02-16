@@ -25,10 +25,31 @@ public class InventoryDialog extends JDialog implements ActionListener {
         }
 
         public void actionPerformed(ActionEvent e) {
-            JDialog inventoryDialog = new JDialog(frame, "Inventory List");
-            inventoryDialog.setSize(200, 400);
-            inventoryDialog.setVisible(true);
+            JDialog inventoryDialog = getjDialog();
+            String[] items = getInventoryList();
 
-            inventoryDialog.add(new JLabel("first aid"));
+            //creating a new JList and add to JScrollPane
+            JList<String> itemList = new JList<>(items);
+            itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            JScrollPane scrollPane = new JScrollPane(itemList);
+
+            //add JScrollPane to dialog
+            inventoryDialog.add(scrollPane, BorderLayout.CENTER);
         }
+
+    private static String[] getInventoryList() {
+            //TODO: call the function to display inventory list
+        String[] items = {"axe", "first aid", "knife"};
+        return items;
     }
+
+
+    private JDialog getjDialog() {
+        JDialog inventoryDialog = new JDialog(frame, "Inventory List");
+        inventoryDialog.setSize(200, 300);
+        inventoryDialog.getContentPane().setBackground(Color.red);
+        inventoryDialog.setLocationRelativeTo(frame);
+        inventoryDialog.setVisible(true);
+        return inventoryDialog;
+    }
+}
