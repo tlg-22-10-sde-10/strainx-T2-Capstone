@@ -21,10 +21,9 @@ public class MapPanel extends JPanel{
     private Integer appendAreaPanels(JPanel mainMapPanel) {
 // Traverse subareas
         for (Map.Entry<Integer, List<SubArea>> areasMap : GlobalVariables.inGameMap.gameMap.entrySet()) {
-            SubareaPanel area = new SubareaPanel(areasMap.getKey(),areasMap.getValue());
+            AreaPanel area = new AreaPanel(areasMap.getKey(),areasMap.getValue());
             mainMapPanel.add(area);
         }
-
         return 1;
     }
 

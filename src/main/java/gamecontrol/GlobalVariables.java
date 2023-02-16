@@ -92,8 +92,8 @@ public class GlobalVariables {
         combatCommandInitialize();
 
         inGameCommandsInitialize();
-// TODO: enable music
-//        titleMusicInitialize();
+
+        titleMusicInitialize();
     }
 
     private static void inGameCommandsInitialize() {
