@@ -1,5 +1,14 @@
 StrainX
 
+GUI Implementation by:
+
+Lorenzo Ortega
+
+Lok Tamang
+
+Joseph Racke
+
+
 mavern project
 
 1. team members:
