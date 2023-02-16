@@ -31,7 +31,7 @@
         <!--
         TODO: Replace main-class.name when final entry point is setup
         -->
-        <main-class.name>ui.gui.TitlePanel</main-class.name>
+        <main-class.name>client.StrainXMain</main-class.name>
 
     </properties>
 
