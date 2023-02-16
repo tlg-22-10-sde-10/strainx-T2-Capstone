@@ -59,13 +59,13 @@ public class UIEnterMainMap {
     exit = false;
     //defeatBoss = false;
 
+    // Main Player
     while (mySquad.get(0).getHP() > 0 && !defeatBoss && !exit) {
       System.out.println("\n");
       displayMapTitle();
 
       displayMapBody();
     }
-
     if (defeatBoss) {
       UIDisplayGameStatus.displayInfo(UIWinningPage.displayWinning());
     }

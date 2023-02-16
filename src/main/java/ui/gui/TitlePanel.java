@@ -20,7 +20,7 @@ public class TitlePanel extends JPanel {
         this.add(addTitleShadow());
         this.add(addStartButton());
         this.add(addExitButton());
-        this.add(addSoundButton());
+        this.add(addSettingsButton());
         this.add(background());
     }
 
@@ -30,13 +30,13 @@ public class TitlePanel extends JPanel {
         return label;
     }
 
-    private JButton addSoundButton() {
-        JButton soundBtn = new SoundButton();
-        soundBtn.setBounds(5,SCREEN_HEIGHT-55,100,50);
-        soundBtn.setBackground(Color.ORANGE);
-        soundBtn.setOpaque(true);
-        //soundBtn.setBorderPainted(false);
-        return soundBtn;
+    private JButton addSettingsButton() {
+        SettingsButton setting = new SettingsButton();
+        setting.setBounds(5, TitlePanel.SCREEN_HEIGHT-55,100,50);
+        setting.setBackground(Color.ORANGE);
+        setting.setOpaque(true);
+        setting.setBorderPainted(false);
+        return setting;
     }
 
     private JButton addExitButton() {

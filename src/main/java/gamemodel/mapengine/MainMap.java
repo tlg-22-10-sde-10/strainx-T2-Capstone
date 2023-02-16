@@ -181,6 +181,7 @@ public class MainMap {
   }
 
   //can be optimized
+  // Generate
   public void gameMapInitialize() {
     generateBoss();
     customSpawnItems();
