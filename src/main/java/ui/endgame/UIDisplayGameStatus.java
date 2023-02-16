@@ -6,7 +6,7 @@ public class UIDisplayGameStatus {
 
   private static int x_axis = 96;
 
-  public static void displayInfo(String title) {
+  public static String displayInfo(String title) {
     Random rg = new Random();
 
     String colorPlaceHolderEnd = "\33[0m";
@@ -20,5 +20,6 @@ public class UIDisplayGameStatus {
 
     title = colorPlaceHolderStart + title + colorPlaceHolderEnd;
     System.out.println(title);
+    return title;
   }
 }

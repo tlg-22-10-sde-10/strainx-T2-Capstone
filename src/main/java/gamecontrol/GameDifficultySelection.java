@@ -38,7 +38,7 @@ public class GameDifficultySelection {
     }
   }
 
-  private static void uiMainGameControlInitialize() {
+  public static void uiMainGameControlInitialize() {
     uiMainGameControl.put("1", GameDifficulty.Easy);
     uiMainGameControl.put("2", GameDifficulty.Medium);
     uiMainGameControl.put("3", GameDifficulty.Hard);

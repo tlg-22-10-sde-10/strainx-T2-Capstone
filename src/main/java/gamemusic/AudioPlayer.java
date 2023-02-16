@@ -60,13 +60,15 @@ public class AudioPlayer {
 
   public static void changeVolume(int input) {
 //    setVolume((input == 1) ? (volume+=VOLUME_ADJUST_VALUE) : (volume-=VOLUME_ADJUST_VALUE));
-    FloatControl gain = (FloatControl) clip.getControl(Type.MASTER_GAIN);
-    if (input == 1) {
-      setVolume(volume += VOLUME_ADJUST_VALUE);
-    } else if (input == 2) {
-      setVolume(volume -= VOLUME_ADJUST_VALUE);
+    if (clip != null) {
+      FloatControl gain = (FloatControl) clip.getControl(Type.MASTER_GAIN);
+      if (input == 1) {
+        setVolume(volume += VOLUME_ADJUST_VALUE);
+      } else if (input == 2) {
+        setVolume(volume -= VOLUME_ADJUST_VALUE);
+      }
+      gain.setValue(volume);
     }
-    gain.setValue(volume);
   }
 
   public static Float getVolume() {
@@ -74,6 +76,20 @@ public class AudioPlayer {
   }
 
   public static void setVolume(Float volume) {
-    AudioPlayer.volume = volume;
+    if(volume < -80.0f) {
+      AudioPlayer.volume = -80.0f;
+    } else if (volume > 6.0206f) {
+      AudioPlayer.volume = 6.0206f;
+    } else {
+      AudioPlayer.volume = volume;
+    }
+  }
+
+  public static Clip getClip() {
+    return clip;
+  }
+
+  public static void setClip(Clip clip) {
+    AudioPlayer.clip = clip;
   }
 }
