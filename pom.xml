@@ -7,7 +7,7 @@
 
     <artifactId>strainx</artifactId>
 
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -29,8 +29,7 @@
         <jackson.version>2.14.2</jackson.version>
 
         <!--
-        TODO: Replace "replace.me.project.Main" with the fully qualified class name of the project's main class,
-         without any quotes, as the content of the <main-class.name> element.
+        TODO: Replace main-class.name when final entry point is setup
         -->
         <main-class.name>client.StrainXMain</main-class.name>
 
