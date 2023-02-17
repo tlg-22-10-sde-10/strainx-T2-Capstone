@@ -28,11 +28,11 @@ public class UIEnterGame {
     while(!exit) {
       String command;
 
-//      UIDisplayGameStatus.displayInfo(UITitlePage.displayTitle());
+      UIDisplayGameStatus.displayInfo(UITitlePage.displayTitle());
 
-//      drawFooter();
-//
-//      displayGameControl();
+      drawFooter();
+
+      displayGameControl();
 
       while(true) {
 
