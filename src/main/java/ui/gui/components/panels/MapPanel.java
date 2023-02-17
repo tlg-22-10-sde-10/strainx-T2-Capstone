@@ -13,7 +13,6 @@ public class MapPanel extends JPanel{
     //TODO ADD background image for the map
 
     public MapPanel(){
-        setBackground(Color.PINK);
         setLayout(getDimensions());
         appendAreaPanels(this);
     }
