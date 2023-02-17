@@ -1,6 +1,7 @@
 package ui.gui.components.panels;
 
 import gamemodel.mapengine.SubArea;
+import ui.gui.components.SubareaButton;
 import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
