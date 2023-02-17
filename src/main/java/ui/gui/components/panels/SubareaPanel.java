@@ -28,12 +28,10 @@ public class SubareaPanel extends JPanel {
     }
 
     private ComponentAdapter onSubareaExpand(SubareaPanel thisPanel){
-        // component will only grow never shrinks
         return new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                System.out.println("COMPONENT EXPANDED");
                 addContainerPanel(thisPanel);
             }
         };
