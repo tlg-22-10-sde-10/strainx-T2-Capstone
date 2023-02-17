@@ -1,8 +1,10 @@
-package ui.gui.components;
+package ui.gui.components.buttons;
 
 import gamecontrol.GameDifficulty;
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.MainMap;
+import ui.gui.components.dialogs.DifficultyDialog;
+import ui.gui.components.panels.DrawIntro;
 
 import javax.swing.*;
 import java.awt.event.*;
