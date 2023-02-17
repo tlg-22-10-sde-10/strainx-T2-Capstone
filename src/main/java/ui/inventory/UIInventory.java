@@ -174,55 +174,6 @@ public class UIInventory {
         }
     }
 
-    //display inventory list for GUI
-    public static String displayInventoryListUI() {
-        var weapons = InventoryMap.values().stream()
-                .filter(i->i.getClass().equals(Weapon.class))
-                .collect(Collectors.toList());
-        var medicals = InventoryMap.values().stream()
-                .filter(i->i.getClass().equals(Medical.class))
-                .collect(Collectors.toList());
-        var keys = InventoryMap.values().stream()
-                .filter(i->i.getClass().equals(KeyItem.class))
-                .collect(Collectors.toList());
-
-        int rows = Math.max(weapons.size(), medicals.size());
-        if(rows < keys.size()) {
-            rows = keys.size();
-        }
-
-        for(int i = 0; i< rows; i++){
-            outputString.setLength(0);
-
-            String col1="";
-            String col2 ="";
-            String col3="";
-
-            if(i<weapons.size()) {
-                col1 = weapons.get(i).getName() + " x"+weapons.get(i).getQty();
-            }
-            if(i<medicals.size()) {
-                col2 = medicals.get(i).getName() + " x"+medicals.get(i).getQty();
-            }
-            if(i<keys.size()) {
-                col3 = keys.get(i).getName() + " x" + keys.get(i).getQty();
-            }
-
-            int space = (x_axis_inventory - COL_1.length() - COL_2.length() -COL_3.length()-COL_4.length())/3;
-
-            int space1 = COL_1.length() + space - col1.length();
-            int space2 = COL_2.length() + space - col2.length();
-
-            outputString.append(col1);
-            outputString.append(" ".repeat(space1));
-            outputString.append(col2);
-            outputString.append(" ".repeat(space2));
-            outputString.append(col3);
-        }
-        return outputString.toString();
-    }
-
-
     public static void useItems(String itemName) {
         if(InventoryMap.containsKey(itemName)) {
             var item = InventoryMap.get(itemName);
