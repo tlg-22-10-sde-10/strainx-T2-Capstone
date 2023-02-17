@@ -1,6 +1,7 @@
 package gamemodel.combatengine;
 
 import gamemodel.mapengine.SubArea;
+import ui.gui.ConstructHTMLString;
 import ui.gui.components.panels.CombatPanel;
 import ui.gui.components.panels.SubareaPanel;
 
@@ -17,7 +18,7 @@ public class GUICombatEngine {
 
     public GUICombatEngine(CombatPanel combatPanel) {
         setCombatPanel(combatPanel);
-        setRound(0);
+        setRound(1);
     }
 
 
@@ -42,11 +43,21 @@ public class GUICombatEngine {
     }
 
     public void autoCombat() {
+        String initiative = initiativeResultString();
+        if(getRoundInitiative()>0) {
+            EngageEnemy.playerAutoCombat(-1);
+            EngageEnemy.restOfMySquadMove();
+            EngageEnemy.enemySquadMove();
 
+        } else {
+            EngageEnemy.enemySquadMove();
+            EngageEnemy.playerAutoCombat(-1);
+            EngageEnemy.restOfMySquadMove();
+        }
     }
 
     public String getResultText() {
-        return UICombat.reportCombatProcess(getRoundInitiative());
+        return ConstructHTMLString.parseCombatTextString(UICombat.reportCombatProcess(getRoundInitiative()));
     }
 
     private int determineRoundInitiative() {

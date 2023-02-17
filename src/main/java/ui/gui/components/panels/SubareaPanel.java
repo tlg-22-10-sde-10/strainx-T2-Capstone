@@ -1,5 +1,6 @@
 package ui.gui.components.panels;
 
+import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
 import ui.gui.components.buttons.SubareaButton;
@@ -98,6 +99,7 @@ public class SubareaPanel extends JPanel {
 
     private ActionListener handleGoToCombat(JPanel subareaPanel) {
         return e -> {
+            GlobalVariables.enemySquad = getSubArea().getContents().enemies;
             JFrame ancestor = (JFrame) subareaPanel.getTopLevelAncestor();
             ancestor.getContentPane().removeAll();
             ancestor.add(new CombatPanel(this));

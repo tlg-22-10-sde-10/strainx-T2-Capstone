@@ -51,6 +51,7 @@ public class UICombat {
         return respond + "\n";
     }
 
+    // Refactored to return a string with the details of the combat round
     public static String reportCombatProcess(int mySquadInitiative) {
         StringBuilder returnString = new StringBuilder();
         if (mySquadInitiative > 0) {
@@ -182,7 +183,7 @@ public class UICombat {
             outputString.append("); ");
         }
         System.out.println(outputString);
-        returnString.append(outputString);
+        returnString.append(outputString).append("\n");
         outputString.setLength(0);
 
         if (UIKIAList.size() > 0) {

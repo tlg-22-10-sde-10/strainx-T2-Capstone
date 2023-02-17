@@ -18,7 +18,7 @@ public class CombatPanel extends JPanel {
     GUICombatEngine combat;
     private JTextArea roundInfo;
     private JTextArea initiativeInfo;
-    private JTextArea roundStatusInfo;
+    private JLabel roundStatusInfo;
 
 
     public CombatPanel(SubareaPanel subareaPanel) {
@@ -68,7 +68,7 @@ public class CombatPanel extends JPanel {
         initiativeInfo.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,100));
         panel.add(initiativeInfo);
 
-        roundStatusInfo = new JTextArea(combat.getResultText());
+        roundStatusInfo = new JLabel(combat.getResultText());
         roundStatusInfo.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,150));
         panel.add(roundStatusInfo);
 
@@ -103,23 +103,13 @@ public class CombatPanel extends JPanel {
         JButton btn = new JButton("Auto Combat");
         // TODO implement functionality
         btn.addActionListener(e -> {
-            GlobalVariables.enemySquad = getSubareaPanel().getSubArea().getContents().enemies;
-            if(GlobalVariables.enemySquad.size() >0) {
-                String initiative = combat.initiativeResultString();
-                if(combat.getRoundInitiative()>0) {
-                    EngageEnemy.playerAutoCombat(-1);
-                    EngageEnemy.restOfMySquadMove();
-                    EngageEnemy.enemySquadMove();
 
-                } else {
-                    EngageEnemy.enemySquadMove();
-                    EngageEnemy.playerAutoCombat(-1);
-                    EngageEnemy.restOfMySquadMove();
-                }
+            if(GlobalVariables.enemySquad.size() >0) {
+                combat.autoCombat();
 
                 combat.setRound(combat.getRound()+1);
                 roundInfo.setText(combat.getRoundText());
-                initiativeInfo.setText(initiative);
+                initiativeInfo.setText(combat.initiativeResultString());
                 refreshFiller();
                 roundInfo.repaint();
                 initiativeInfo.repaint();

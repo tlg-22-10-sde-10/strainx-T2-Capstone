@@ -198,6 +198,7 @@ public class GlobalVariables {
 
         try (InputStream input = JsonParsing.openResource("JSON/items.json")) {
             itemTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
+            System.out.println();
         }
     }
 
