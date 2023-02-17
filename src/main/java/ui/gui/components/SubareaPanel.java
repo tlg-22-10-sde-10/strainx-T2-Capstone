@@ -5,11 +5,10 @@ import gamemodel.mapengine.SubArea;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SubareaPanel extends JPanel {
-    private SubArea subArea;
+    public SubArea subArea;
 
     public SubareaPanel(SubArea subArea){
         setBorder(new LineBorder(Color.RED));
@@ -37,6 +36,4 @@ public class SubareaPanel extends JPanel {
         };
     }
 
-    public SubArea getSubArea() { return subArea; }
-    public void setSubArea(SubArea subArea) { this.subArea = subArea; }
 }

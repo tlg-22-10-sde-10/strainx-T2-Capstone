@@ -15,40 +15,52 @@ public class SubareaButton extends JButton {
         setAlignmentY(Component.CENTER_ALIGNMENT);
         setAlignmentX(Component.CENTER_ALIGNMENT);
         add(new JLabel(subArea.getName()));
-        setName(subArea.getName()); // give the btn a name
+        setName(subArea.getName());
         addActionListener(toggleShowSubareaPanel( subareaPanel, subArea ));
     }
 
     private Integer adjustToolTipText(SubArea subArea){
         String info = "<html>Threat Level:???<br/>Items Inside:???</html>";
 
-        if(subArea.getVisited()) setToolTipText(formatString(info,subArea));
+        if(subArea.getVisited()) setToolTipText(parseHTMLString(info,subArea));
         else defaultToolTipText(info);
 
         return 1;
     }
-    private String formatString(String str, SubArea subArea){
+    private String parseHTMLString(String str, SubArea subArea){
         StringBuilder info = new StringBuilder(str);
-        String items = String.valueOf(subArea.getContents().items.size());
-        String threatLevel = UIEnterMainMap.displayThreatLvl(subArea);
-        ArrayList<String> threatInfo = convertANSICode(threatLevel);
-
-        String txt = "";
-        String color = "";
-        if(!threatInfo.isEmpty()){
-            txt = threatInfo.get(0);
-            color = threatInfo.get(1);
-        }
-        String colorCodeThreat = "<span style='color: black;'>.</span>";
-        colorCodeThreat = colorCodeThreat.replace("black",color);
-        colorCodeThreat = colorCodeThreat.replace(".",txt);
 
         int last = str.lastIndexOf("???");
         int first = str.indexOf("???");
-        info.replace(last,last+3,items);
-        info.replace(first,first+3, colorCodeThreat);
+        info.replace(last,last+3, numberOfItemsInSubarea(subArea));
+        info.replace(first,first+3, colorCodeThreatHTMLSpanTag(subArea));
 
         return info.toString();
+    }
+    private String numberOfItemsInSubarea(SubArea subArea){
+        String items = "";
+        if(!subArea.getContents().items.isEmpty()){
+            items = String.valueOf(subArea.getContents().items.size());
+        }
+        return items;
+    }
+    private String colorCodeThreatHTMLSpanTag(SubArea subArea){
+        String colorCodeThreat = "<span style='color: black;'>.</span>";
+        String threatLevel = UIEnterMainMap.displayThreatLvl(subArea);
+
+        String txt = "";
+        String color = "";
+
+        if(!convertANSICode(threatLevel).isEmpty()){
+            ArrayList<String> threatInfo = convertANSICode(threatLevel);
+            txt = threatInfo.get(0);
+            color = threatInfo.get(1);
+        }
+
+        colorCodeThreat = colorCodeThreat.replace("black",color);
+        colorCodeThreat = colorCodeThreat.replace(".",txt);
+
+        return colorCodeThreat;
     }
     private ArrayList<String> convertANSICode(String ansi){
         // TODO refactor: convert/parse ANSI code to string
@@ -76,7 +88,6 @@ public class SubareaButton extends JButton {
         return 1;
     }
     private ActionListener toggleShowSubareaPanel(JPanel subarea, SubArea currArea){
-        // test button click event
         // toggle show/hide subarea panel
         return e -> {
             // toggle visibility
