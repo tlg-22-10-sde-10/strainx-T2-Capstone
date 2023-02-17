@@ -28,7 +28,7 @@ public class SubareaButton extends JButton {
 
         return 1;
     }
-    private String parseHTMLString(String str, SubArea subArea){
+    public String parseHTMLString(String str, SubArea subArea){
         StringBuilder info = new StringBuilder(str);
 
         int last = str.lastIndexOf("???");
