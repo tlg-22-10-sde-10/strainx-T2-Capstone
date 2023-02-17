@@ -1,12 +1,12 @@
 package ui.gui.components.panels;
 
 import gamemodel.mapengine.SubArea;
+import ui.gui.components.buttons.SubareaButton;
 import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class AreaPanel extends JPanel {
