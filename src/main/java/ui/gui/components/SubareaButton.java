@@ -1,14 +1,12 @@
 package ui.gui.components;
 
-import gamecontrol.GlobalVariables;
-import gamemodel.mapengine.Content;
 import gamemodel.mapengine.SubArea;
 import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class SubareaButton extends JButton {
 
@@ -22,7 +20,6 @@ public class SubareaButton extends JButton {
     }
 
     private Integer adjustToolTipText(SubArea subArea){
-        //<span style='color: red;'>This is red text</span>
         String info = "<html>Threat Level:???<br/>Items Inside:???</html>";
 
         if(subArea.getVisited()) setToolTipText(formatString(info,subArea));
@@ -32,15 +29,46 @@ public class SubareaButton extends JButton {
     }
     private String formatString(String str, SubArea subArea){
         StringBuilder info = new StringBuilder(str);
-        // TODO convert/parse ANSI code to string
+        String items = String.valueOf(subArea.getContents().items.size());
         String threatLevel = UIEnterMainMap.displayThreatLvl(subArea);
-        String itemsInside = String.valueOf(subArea.getContents().items.size());
+        ArrayList<String> threatInfo = convertANSICode(threatLevel);
+
+        String txt = "";
+        String color = "";
+        if(!threatInfo.isEmpty()){
+            txt = threatInfo.get(0);
+            color = threatInfo.get(1);
+        }
+        String colorCodeThreat = "<span style='color: black;'>.</span>";
+        colorCodeThreat = colorCodeThreat.replace("black",color);
+        colorCodeThreat = colorCodeThreat.replace(".",txt);
 
         int last = str.lastIndexOf("???");
         int first = str.indexOf("???");
-        info.replace(last,last+3,itemsInside);
-        info.replace(first,first+3,threatLevel);
-        return String.valueOf(info);
+        info.replace(last,last+3,items);
+        info.replace(first,first+3, colorCodeThreat);
+        return info.toString();
+    }
+    private ArrayList<String> convertANSICode(String ansi){
+        // TODO refactor: convert/parse ANSI code to string
+        ArrayList<String> data = new ArrayList<>();
+        if(ansi.contains("\033[31mHigh\33[0m")){
+            data.add("High");
+            data.add("red");
+        }
+        else if(ansi.contains("\033[33mMedium\33[0m")){
+            data.add("Medium");
+            data.add("orange");
+        }
+        else if(ansi.contains("\033[32mLow\33[0m")){
+            data.add("Low");
+            data.add("green");
+        }
+        else if(ansi.contains("\033[34mSafe\33[0m")){
+            data.add("Safe");
+            data.add("blue");
+        }
+        return data;
     }
     private Integer defaultToolTipText(String info){
         setToolTipText(info);
