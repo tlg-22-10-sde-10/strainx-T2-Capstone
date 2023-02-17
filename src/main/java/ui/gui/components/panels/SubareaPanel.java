@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class SubareaPanel extends JPanel {
-    private SubArea subArea;
+    public SubArea subArea;
 
     public SubareaPanel(SubArea subArea){
         this.subArea = subArea;
@@ -56,6 +56,7 @@ public class SubareaPanel extends JPanel {
             ancestor.pack();
         };
     }
+
 
     public SubArea getSubArea() { return subArea; }
 }

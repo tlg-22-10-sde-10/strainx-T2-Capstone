@@ -14,8 +14,14 @@ public class MapPanel extends JPanel{
 
     public MapPanel(){
         setBackground(Color.PINK);
-        setLayout(new GridLayout(GlobalVariables.inGameMap.getDimensionX(),GlobalVariables.inGameMap.getDimensionY()));
+        setLayout(getDimensions());
         appendAreaPanels(this);
+    }
+
+    private GridLayout getDimensions(){
+        int x = GlobalVariables.inGameMap.getDimensionX();
+        int y = GlobalVariables.inGameMap.getDimensionY();
+        return new GridLayout(x,y);
     }
 
     private Integer appendAreaPanels(JPanel mainMapPanel) {

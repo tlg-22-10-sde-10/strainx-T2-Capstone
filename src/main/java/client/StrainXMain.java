@@ -1,5 +1,7 @@
 package client;
 
+import gamemusic.AudioPlayer;
+import ui.UIEnterGame;
 import ui.gui.GUIEntry;
 import java.io.IOException;
 
@@ -9,6 +11,5 @@ public class StrainXMain {
 
 //        UIEnterGame.displayEnterGame();
         GUIEntry.start();
-
     }
 }
