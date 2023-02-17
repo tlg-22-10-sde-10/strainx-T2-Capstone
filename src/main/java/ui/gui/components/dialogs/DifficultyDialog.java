@@ -1,6 +1,8 @@
-package ui.gui.components;
+package ui.gui.components.dialogs;
 
 import gamecontrol.GameDifficulty;
+import ui.gui.components.buttons.DifficultyButton;
+
 import javax.swing.*;
 import java.awt.*;
 

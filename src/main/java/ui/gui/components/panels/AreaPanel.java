@@ -1,4 +1,4 @@
-package ui.gui.components;
+package ui.gui.components.panels;
 
 import gamemodel.mapengine.SubArea;
 import ui.maps.UIEnterMainMap;

@@ -1,4 +1,4 @@
-package ui.gui.components;
+package ui.gui.components.panels;
 
 import gamemodel.mapengine.SubArea;
 
@@ -57,6 +57,6 @@ public class SubareaPanel extends JPanel {
         };
     }
 
-    public SubArea getSubArea() {return subArea;}
-    public void setSubArea(SubArea subArea) {this.subArea = subArea;}
+
+    public SubArea getSubArea() { return subArea; }
 }

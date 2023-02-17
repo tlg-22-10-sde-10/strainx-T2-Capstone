@@ -1,6 +1,7 @@
-package ui.gui.components;
+package ui.gui.components.panels;
 
 import gamecontrol.GlobalVariables;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
