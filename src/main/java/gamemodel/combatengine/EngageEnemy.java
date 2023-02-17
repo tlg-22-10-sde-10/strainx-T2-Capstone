@@ -218,7 +218,7 @@ public class EngageEnemy {
         }
     }
 
-    private static void restOfMySquadMove() {
+    public static void restOfMySquadMove() {
         for (int i = 1; i < mySquad.size(); i++) {
             if (enemySquad.size() == 0) {
                 break;
@@ -240,7 +240,7 @@ public class EngageEnemy {
         }
     }
 
-    private static void enemySquadMove() {
+    public static void enemySquadMove() {
         for (Enemy en : enemySquad) {
             if (mySquad.get(0).getHP() <= 0) {
                 UIEnterSubarea.setExitSubAreaUI(true);

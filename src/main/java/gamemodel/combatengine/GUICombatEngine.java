@@ -1,24 +1,36 @@
 package gamemodel.combatengine;
 
 import gamemodel.mapengine.SubArea;
+import ui.gui.components.panels.CombatPanel;
+import ui.gui.components.panels.SubareaPanel;
+
+import java.util.Random;
 
 public class GUICombatEngine {
 
-    private SubArea subArea;
+    private CombatPanel combatPanel;
     private int round;
 
-    public GUICombatEngine(SubArea subArea) {
-        setSubArea(subArea);
+    private int roundInitiative;
+
+    private Random random = new Random();
+
+    public GUICombatEngine(CombatPanel combatPanel) {
+        setCombatPanel(combatPanel);
         setRound(0);
     }
 
 
     // This will be called by the setText() of the CombatPanel when you enter combat
     public String enterCombat() {
-
+        StringBuilder returnString = new StringBuilder();
         // Determine who has initiative
-        // determineRoundInitiative();
+        setRoundInitiative(determineRoundInitiative());
+        returnString.append(initiativeResultString());
         // If enemies get initiative append to returnString "Enemy squad has won the initiative and attacks first."
+        if(getRoundInitiative()==0) {
+            EngageEnemy.enemySquadMove();
+        }
         // else Your squad has won the initiative and attacks first.
         // If enemies have initiative, they attack when you enter the combat
         //      Enemies attack at random: target = (currentHp - attack)
@@ -29,26 +41,41 @@ public class GUICombatEngine {
         return "";
     }
 
+    public void autoCombat() {
+
+    }
+
+    public String getResultText() {
+        return UICombat.reportCombatProcess(getRoundInitiative());
+    }
+
     private int determineRoundInitiative() {
-        int roundInitiative;
-
-        return -1;
+        return random.nextInt(3);
     }
 
-
-    public SubArea getSubArea() {
-        return subArea;
+    public String initiativeResultString() {
+        return UICombat.reportInitiativeStatus(determineRoundInitiative());
     }
 
-    public void setSubArea(SubArea subArea) {
-        this.subArea = subArea;
+    public String getRoundText() {
+        return String.format("Round: %s", getRound());
+    }
+
+    public CombatPanel getCombatPanel() {
+        return combatPanel;
+    }
+
+    public void setCombatPanel(CombatPanel combatPanel) {
+        this.combatPanel = combatPanel;
     }
 
     public int getRound() {
         return round;
     }
-
     public void setRound(int round) {
         this.round = round;
     }
+    public int getRoundInitiative() { return roundInitiative; }
+    public void setRoundInitiative(int roundInitiative) { this.roundInitiative = roundInitiative; }
+
 }

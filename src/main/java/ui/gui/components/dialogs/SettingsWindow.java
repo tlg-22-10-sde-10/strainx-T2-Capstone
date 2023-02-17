@@ -12,10 +12,11 @@ public class SettingsWindow extends JDialog {
     public SettingsWindow(JFrame frame) {
         super(frame);
         setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-        setLocationRelativeTo(frame);
 
-        setSize(new Dimension(300,150));
+        setBounds(200,200,150,150);
+//        setSize(new Dimension(300,150));
         setResizable(false);
+        setLocationRelativeTo(frame);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Settings");
         add(new SoundButton());

@@ -31,10 +31,13 @@ public class SubareaPanel extends JPanel {
     private Integer goToCombat(JPanel subareaPanel) {
         JButton btn = new JButton("Enter Combat");
         btn.addActionListener(handleGoToCombat(subareaPanel));
+        btn.setEnabled(true);
+        btn.setVisible(true);
+        subareaPanel.add(btn);
+
         if(subArea.getContents().enemies.isEmpty()) {
             btn.setEnabled(false);
         }
-        subareaPanel.add(btn);
         return 1;
     }
 

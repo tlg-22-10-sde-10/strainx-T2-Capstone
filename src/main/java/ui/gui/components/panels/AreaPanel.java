@@ -3,6 +3,7 @@ package ui.gui.components.panels;
 import gamemodel.mapengine.SubArea;
 import ui.gui.components.buttons.SubareaButton;
 import ui.maps.UIEnterMainMap;
+import ui.gui.components.buttons.SubareaButton;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
