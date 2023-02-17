@@ -1,4 +1,4 @@
-package ui.gui.components;
+package ui.gui.components.panels;
 
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;

@@ -1,9 +1,9 @@
-package ui.gui.components;
+package ui.gui.components.panels;
 
 import gamecontrol.GlobalVariables;
 import gamemodel.combatengine.EngageEnemy;
 import gamemodel.mapengine.SubArea;
-import ui.gui.TitlePanel;
+import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
 import java.awt.*;

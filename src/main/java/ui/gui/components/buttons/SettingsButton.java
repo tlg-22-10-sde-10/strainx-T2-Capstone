@@ -1,9 +1,8 @@
-package ui.gui.components;
+package ui.gui.components.buttons;
 
-import ui.gui.TitlePanel;
+import ui.gui.components.dialogs.SettingsWindow;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class SettingsButton extends JButton{
     private SettingsWindow settingWindow;

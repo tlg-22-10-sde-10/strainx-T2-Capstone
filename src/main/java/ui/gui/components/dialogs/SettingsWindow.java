@@ -1,4 +1,8 @@
-package ui.gui.components;
+package ui.gui.components.dialogs;
+
+import ui.gui.components.buttons.SoundButton;
+import ui.gui.components.buttons.VolumeButton;
+import ui.gui.components.buttons.ExitButton;
 
 import javax.swing.*;
 import java.awt.*;

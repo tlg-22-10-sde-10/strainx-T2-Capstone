@@ -1,6 +1,10 @@
-package ui.gui;
+package ui.gui.components.panels;
 
-import ui.gui.components.*;
+import ui.gui.components.buttons.ExitButton;
+import ui.gui.components.buttons.SettingsButton;
+import ui.gui.components.buttons.StartButton;
+import ui.gui.components.labels.BackgroundImageLabel;
+import ui.gui.components.textareas.TitleText;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +29,7 @@ public class TitlePanel extends JPanel {
     }
 
     private JLabel background() {
-        BackgroundImageLabel label = new BackgroundImageLabel("overhead.jpg",SCREEN_WIDTH,SCREEN_HEIGHT);
+        BackgroundImageLabel label = new BackgroundImageLabel("images/overhead.jpg",SCREEN_WIDTH,SCREEN_HEIGHT);
         label.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         return label;
     }
