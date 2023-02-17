@@ -186,7 +186,7 @@ public class GlobalVariables {
     private static void subMapInitialize() throws IOException {
         subAreaTemplatesCollection.clear();
 
-        try (InputStream input = JsonParsing.openResource("locations.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/locations.json")) {
             subAreaTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
 
             subAreaTemplatesCollection.forEach(a->a.setDescription(convertDescription(a.getDescription())));
@@ -196,7 +196,7 @@ public class GlobalVariables {
     private static void inventoryTemplateInitialize() throws IOException {
         itemTemplatesCollection = new Inventory();
 
-        try (InputStream input = JsonParsing.openResource("items.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/items.json")) {
             itemTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
@@ -219,7 +219,7 @@ public class GlobalVariables {
     private static void mySquadTemplateInitialize() throws IOException {
         mySquadTemplate.clear();
 
-        try (InputStream input = JsonParsing.openResource("crew.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/crew.json")) {
             mySquadTemplate = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
@@ -259,7 +259,7 @@ public class GlobalVariables {
 
     public static void enemiesTemplateInitialize() throws IOException {
         enemiesTemplateCollection.clear();
-        try (InputStream input = JsonParsing.openResource("enemies.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/enemies.json")) {
             enemiesTemplateCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }

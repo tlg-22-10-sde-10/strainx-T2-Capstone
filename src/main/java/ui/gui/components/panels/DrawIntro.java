@@ -1,6 +1,6 @@
-package ui.gui.components;
+package ui.gui.components.panels;
 
-import ui.gui.TitlePanel;
+import ui.gui.components.buttons.ContinueButton;
 
 import javax.swing.*;
 import java.awt.*;

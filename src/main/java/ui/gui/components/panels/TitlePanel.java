@@ -1,6 +1,10 @@
-package ui.gui;
+package ui.gui.components.panels;
 
-import ui.gui.components.*;
+import ui.gui.components.buttons.ExitButton;
+import ui.gui.components.buttons.SettingsButton;
+import ui.gui.components.buttons.StartButton;
+import ui.gui.components.labels.BackgroundImageLabel;
+import ui.gui.components.textareas.TitleText;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +13,6 @@ public class TitlePanel extends JPanel {
 
     public final static int SCREEN_WIDTH = 1024;
     public final static int SCREEN_HEIGHT = 768;
-    private SettingsWindow settingWindow;
 
 
     public TitlePanel() {
@@ -26,24 +29,17 @@ public class TitlePanel extends JPanel {
     }
 
     private JLabel background() {
-        BackgroundImageLabel label = new BackgroundImageLabel("overhead.jpg",SCREEN_WIDTH,SCREEN_HEIGHT);
+        BackgroundImageLabel label = new BackgroundImageLabel("images/overhead.jpg",SCREEN_WIDTH,SCREEN_HEIGHT);
         label.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         return label;
     }
 
     private JButton addSettingsButton() {
-        JButton setting = new JButton();
-        setting.setText("Settings");
-        setting.setBounds(5,SCREEN_HEIGHT-55,100,50);
+        SettingsButton setting = new SettingsButton();
+        setting.setBounds(5, TitlePanel.SCREEN_HEIGHT-55,100,50);
         setting.setBackground(Color.ORANGE);
         setting.setOpaque(true);
         setting.setBorderPainted(false);
-        setting.addActionListener(e -> {
-            if (settingWindow == null || !settingWindow.isDisplayable()) {
-                System.out.println(this.getTopLevelAncestor());
-                settingWindow = new SettingsWindow((JFrame) this.getTopLevelAncestor());
-            }
-        });
         return setting;
     }
 

@@ -1,19 +1,12 @@
 package ui.gui;
 
-import gamecontrol.GameDifficulty;
-import gamecontrol.GlobalVariables;
-import gamemodel.mapengine.MainMap;
-import gamemusic.AudioPlayer;
-import ui.gui.components.MapPanel;
-import ui.gui.components.StatusPanel;
-import ui.gui.components.WrapperPanel;
+import ui.gui.components.panels.TitlePanel;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 
 public class GUIEntry {
-    public static void start() throws IOException {
+
+    public static void start() {
 
         // TEST StatsPanel
         JFrame jFrame = new JFrame();
@@ -27,6 +20,6 @@ public class GUIEntry {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();
         jFrame.setVisible(true);
-//        jFrame.add(wrapperPanel);
+
     }
 }

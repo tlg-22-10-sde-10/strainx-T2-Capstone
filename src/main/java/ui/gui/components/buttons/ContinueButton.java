@@ -1,4 +1,6 @@
-package ui.gui.components;
+package ui.gui.components.buttons;
+
+import ui.gui.components.panels.WrapperPanel;
 
 import javax.swing.*;
 import java.awt.*;

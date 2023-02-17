@@ -87,14 +87,10 @@ public class EngageEnemy {
             rounds += 1;
         }
 
-        if(!retreat) {
-            reportCombatProcess(mySquadInitiative);
-        }
+        if(!retreat) { reportCombatProcess(mySquadInitiative); }
         reportEngage();
 
-        if(mySquad.get(0).getHP() <= 0) {
-            reportDefeated();
-        }
+        if(mySquad.get(0).getHP() <= 0) { reportDefeated(); }
 
         System.out.println("Press any key to continue...");
         s1.nextLine();
@@ -199,7 +195,7 @@ public class EngageEnemy {
         reportRetreatResults(retreat);
     }
 
-    private static void playerAutoCombat(int target) {
+    public static void playerAutoCombat(int target) {
         if(target == -1) {
             target = rg.nextInt(enemySquad.size());
         }

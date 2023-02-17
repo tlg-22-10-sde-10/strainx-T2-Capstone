@@ -30,7 +30,7 @@ public class AudioPlayer {
 
   public void playAudio() {
 
-    try (InputStream input = MusicHelper.openMusic("Horror-Game-Intro.wav")) {
+    try (InputStream input = MusicHelper.openMusic("sound/Horror-Game-Intro.wav")) {
       if (clip != null) {
         clip.stop();
         clip.flush();
