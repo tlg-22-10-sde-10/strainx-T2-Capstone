@@ -5,6 +5,7 @@ import ui.gui.components.panels.TitlePanel;
 import javax.swing.*;
 
 public class GUIEntry {
+
     public static void start() {
 
         // TEST StatsPanel
@@ -19,5 +20,6 @@ public class GUIEntry {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();
         jFrame.setVisible(true);
+
     }
 }
