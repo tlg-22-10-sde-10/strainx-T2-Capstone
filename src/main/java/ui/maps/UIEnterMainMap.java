@@ -32,7 +32,8 @@ public class UIEnterMainMap {
 
   private static boolean exit = false;
 
-  private static void threatLvlMapInitialize() {
+  // GUI needs access
+  public static void threatLvlMapInitialize() {
     threatLvlMap.put(3, "\033[31mHigh\33[0m");
     threatLvlMap.put(2, "\033[33mMedium\33[0m");
     threatLvlMap.put(1, "\033[32mLow\33[0m");
