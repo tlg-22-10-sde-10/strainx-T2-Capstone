@@ -1,4 +1,4 @@
-package ui.gui.components;
+package ui.gui.components.buttons;
 
 import gamemodel.mapengine.SubArea;
 import ui.gui.components.panels.SubareaPanel;
