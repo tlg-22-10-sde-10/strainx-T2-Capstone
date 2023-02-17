@@ -47,6 +47,7 @@ public class SubareaButton extends JButton {
         int first = str.indexOf("???");
         info.replace(last,last+3,items);
         info.replace(first,first+3, colorCodeThreat);
+
         return info.toString();
     }
     private ArrayList<String> convertANSICode(String ansi){
@@ -80,9 +81,9 @@ public class SubareaButton extends JButton {
         return e -> {
             // toggle visibility
             subarea.setVisible(!subarea.isVisible());
-            // expand subarea (this) panel
+            // expand subarea/this panel
             if(subarea.isVisible()){
-                currArea.setVisited(!currArea.getVisited());
+                if( !currArea.getVisited() ) currArea.setVisited(!currArea.getVisited());
                 JPanel tempParent = (JPanel) getParent().getParent().getParent();
                 tempParent.remove(1);
                 tempParent.add(subarea);
