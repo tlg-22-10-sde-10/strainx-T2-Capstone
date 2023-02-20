@@ -168,7 +168,7 @@ public class CombatPanel extends JPanel {
         return retreatBtn;
     }
 
-    private void backToMap() {
+    public void backToMap() {
         JFrame ancestor = (JFrame) getTopLevelAncestor();
         ancestor.getContentPane().removeAll();
         ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);

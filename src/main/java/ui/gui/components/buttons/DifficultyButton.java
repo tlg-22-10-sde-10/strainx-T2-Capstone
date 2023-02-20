@@ -28,7 +28,7 @@ public class DifficultyButton extends JButton implements ActionListener {
             GlobalVariables.inGameMap = new MainMap(s);
             GlobalVariables.gameInitialization();
             DifficultyDialog d = (DifficultyDialog) this.getTopLevelAncestor();
-            CheckHealth.healthTimer(d.getFrame());
+            //CheckHealth.healthTimer(d.getFrame());
         }
         System.out.println(GlobalVariables.getPassWord());
         System.out.println(GlobalVariables.InventoryMap);
