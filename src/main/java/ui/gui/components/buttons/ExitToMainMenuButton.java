@@ -26,8 +26,7 @@ public class ExitToMainMenuButton extends JButton {
             JFrame parentFrame = window.getParentFrame();
             window.dispose();
 
-            // TODO Implement proper reset of the game
-            GlobalVariables.mySquad.get(0).setHP(100);
+            GlobalVariables.resetGlobalVariables();
             parentFrame.getContentPane().removeAll();
             parentFrame.repaint();
             parentFrame.add(new TitlePanel());

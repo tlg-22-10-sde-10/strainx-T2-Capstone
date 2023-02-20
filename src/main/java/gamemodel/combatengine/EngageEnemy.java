@@ -291,7 +291,10 @@ public class EngageEnemy {
         }
     }
 
-    public static List<Enemy> getEnemyKIAList() {
-        return enemyKIAList;
-    }
+    public static List<Enemy> getEnemyKIAList() {return enemyKIAList;}
+    public static List<CrewMember> getKIAList() {return KIAList;}
+    public static void setKIAList(List<CrewMember> KIAList) {EngageEnemy.KIAList = KIAList;}
+    public static void setEnemyKIAList(List<Enemy> enemyKIAList) {EngageEnemy.enemyKIAList = enemyKIAList;}
+    public static List<Enemy> getSummonedMinion() {return summonedMinion;}
+    public static void setSummonedMinion(List<Enemy> summonedMinion) {EngageEnemy.summonedMinion = summonedMinion;}
 }
