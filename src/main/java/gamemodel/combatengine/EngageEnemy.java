@@ -190,9 +190,10 @@ public class EngageEnemy {
         UIInventory.displayInventoryList();
     }
 
-    private static void playerRetreat() {
+    // Refactored to return a string as well
+    private static String playerRetreat() {
         retreat = rg.nextBoolean();
-        reportRetreatResults(retreat);
+        return reportRetreatResults(retreat);
     }
 
     public static void playerAutoCombat(int target) {
@@ -288,5 +289,9 @@ public class EngageEnemy {
                 }
             }
         }
+    }
+
+    public static List<Enemy> getEnemyKIAList() {
+        return enemyKIAList;
     }
 }

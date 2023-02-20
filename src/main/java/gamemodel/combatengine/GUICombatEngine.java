@@ -1,9 +1,6 @@
 package gamemodel.combatengine;
-
-import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
 import ui.gui.components.panels.CombatPanel;
-import ui.gui.components.panels.SubareaPanel;
 
 import java.util.Random;
 
@@ -23,27 +20,16 @@ public class GUICombatEngine {
 
 
     // This will be called by the setText() of the CombatPanel when you enter combat
-    public String enterCombat() {
-        StringBuilder returnString = new StringBuilder();
-        // Determine who has initiative
+    public void enterCombat() {
         setRoundInitiative(determineRoundInitiative());
-        returnString.append(initiativeResultString());
-        // If enemies get initiative append to returnString "Enemy squad has won the initiative and attacks first."
+        initiativeResultString();
         if(getRoundInitiative()==0) {
             EngageEnemy.enemySquadMove();
         }
-        // else Your squad has won the initiative and attacks first.
-        // If enemies have initiative, they attack when you enter the combat
-        //      Enemies attack at random: target = (currentHp - attack)
-        // Determine the damage for the round to display (how much each character took)
-
-        // Set round to 1;
-        // Returns a string with what happened upon entering combat
-        return "";
     }
 
     public void autoCombat() {
-        String initiative = initiativeResultString();
+        initiativeResultString();
         if(getRoundInitiative()>0) {
             EngageEnemy.playerAutoCombat(-1);
             EngageEnemy.restOfMySquadMove();
@@ -55,6 +41,21 @@ public class GUICombatEngine {
             EngageEnemy.restOfMySquadMove();
         }
     }
+
+    public void targetedCombat(int target) {
+        initiativeResultString();
+        if(getRoundInitiative()>0) {
+            EngageEnemy.playerAutoCombat(target);
+            EngageEnemy.restOfMySquadMove();
+            EngageEnemy.enemySquadMove();
+
+        } else {
+            EngageEnemy.enemySquadMove();
+            EngageEnemy.playerAutoCombat(target);
+            EngageEnemy.restOfMySquadMove();
+        }
+    }
+
 
     public String getResultText() {
         return ConstructHTMLString.parseCombatTextString(UICombat.reportCombatProcess(getRoundInitiative()));
