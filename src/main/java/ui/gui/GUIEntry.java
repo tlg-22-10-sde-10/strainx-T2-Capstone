@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import static java.lang.System.exit;
+
 public class GUIEntry {
 
     public static void start() {
@@ -28,6 +30,7 @@ public class GUIEntry {
                 int i = JOptionPanes.confirmExit(jFrame);
                 if(i == JOptionPane.YES_OPTION){
                     e.getWindow().dispose();
+                    exit(0);
                 }
             }
         });
