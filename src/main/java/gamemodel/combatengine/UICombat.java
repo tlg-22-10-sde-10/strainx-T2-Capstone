@@ -88,11 +88,14 @@ public class UICombat {
         return outputString.toString();
     }
 
-    public static void reportRetreatResults(boolean retreat) {
+    // Refactored to return a string as well
+    public static String reportRetreatResults(boolean retreat) {
         if (retreat) {
             System.out.println("Your squad retreated from the combat in one piece.");
+            return "Your squad retreated from the combat in one piece.";
         } else {
             System.out.println("The enemy presses the attack, retreat failed!");
+            return "The enemy presses the attack, retreat failed!";
         }
     }
 

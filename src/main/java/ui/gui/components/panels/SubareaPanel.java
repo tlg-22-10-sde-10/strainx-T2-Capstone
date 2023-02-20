@@ -3,15 +3,12 @@ package ui.gui.components.panels;
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
-import ui.gui.components.buttons.SubareaButton;
-import ui.maps.UIEnterMainMap;
+import ui.gui.components.buttons.SettingsButton;
 
-import javax.accessibility.AccessibleContext;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 
 public class SubareaPanel extends JPanel {
     public SubArea subArea;
@@ -25,6 +22,7 @@ public class SubareaPanel extends JPanel {
         add(goToMapButton(this));
         add(goToLootButton(this));
         add(goToCombatButton(this));
+        add(new SettingsButton());
         addComponentListener( onSubareaExpand(this) );
     }
 
@@ -117,12 +115,7 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleGoToLoot(){
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("LOOTING");
-            }
-        };
+        return e -> System.out.println("LOOTING");
     }
 
     public SubArea getSubArea() { return subArea; }

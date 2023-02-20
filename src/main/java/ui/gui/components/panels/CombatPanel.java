@@ -3,17 +3,19 @@ package ui.gui.components.panels;
 import gamecontrol.GlobalVariables;
 import gamemodel.combatengine.EngageEnemy;
 import gamemodel.combatengine.GUICombatEngine;
+import gamemodel.combatengine.UICombat;
 import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Random;
 
 
 public class CombatPanel extends JPanel {
 
-    private JPanel filler;
+    private JPanel statuses;
     SubareaPanel subareaPanel;
     GUICombatEngine combat;
     private JTextArea roundInfo;
@@ -37,23 +39,28 @@ public class CombatPanel extends JPanel {
     }
 
     private void populateFillerPanel() {
-        filler = new JPanel();
-        filler.setBackground(Color.LIGHT_GRAY);
-        filler.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
-        filler.add(new EnemyStatusPanel(getSubareaPanel().getSubArea().getContents().enemies),BorderLayout.CENTER);
-        filler.addComponentListener(adjustSubPanelDimensions(filler,.40,.60));
+        statuses = new JPanel();
+        statuses.setBackground(Color.LIGHT_GRAY);
+        statuses.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+        statuses.add(new EnemyStatusPanel(getSubareaPanel().getSubArea().getContents().enemies),BorderLayout.CENTER);
+        statuses.addComponentListener(adjustSubPanelDimensions(statuses,.40,.60));
 
-        add(filler,BorderLayout.NORTH);
+        add(statuses,BorderLayout.NORTH);
     }
 
-    private void refreshFiller() {
-        Dimension preferred = filler.getPreferredSize();
-        filler.removeAll();
-        filler.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+    private void refreshStatuses() {
+        Dimension preferred = statuses.getPreferredSize();
+        statuses.removeAll();
 
-        filler.add(new EnemyStatusPanel(getSubareaPanel().getSubArea().getContents().enemies),BorderLayout.CENTER);
-        filler.setPreferredSize(preferred);
-        filler.repaint();
+        JPanel status = new StatusPanel(GlobalVariables.mySquad);
+        status.setPreferredSize(new Dimension(preferred.width,(int)(preferred.height *.4)));
+        statuses.add(status,BorderLayout.NORTH);
+
+        JPanel enemies = new EnemyStatusPanel(getSubareaPanel().getSubArea().getContents().enemies);
+        enemies.setPreferredSize(new Dimension(preferred.width,(int)(preferred.height *.6)));
+        statuses.add(enemies,BorderLayout.CENTER);
+
+        statuses.repaint();
     }
     private JPanel areaTextPanel() {
         JPanel panel = new JPanel();
@@ -71,7 +78,7 @@ public class CombatPanel extends JPanel {
         roundStatusInfo = new JLabel(combat.getResultText());
         roundStatusInfo.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,150));
         panel.add(roundStatusInfo);
-
+        EngageEnemy.enemyDmgMap.clear();
         return panel;
     }
     private ComponentAdapter adjustSubPanelDimensions(JPanel parent, double modifier1, double modifier2) {
@@ -103,29 +110,15 @@ public class CombatPanel extends JPanel {
         JButton btn = new JButton("Auto Combat");
         // TODO implement functionality
         btn.addActionListener(e -> {
-
+            btn.setEnabled(false);
             if(GlobalVariables.enemySquad.size() >0) {
                 combat.autoCombat();
-
-                combat.setRound(combat.getRound()+1);
-                roundInfo.setText(combat.getRoundText());
-                initiativeInfo.setText(combat.initiativeResultString());
-                refreshFiller();
-                roundInfo.repaint();
-                initiativeInfo.repaint();
-                roundStatusInfo.setText(combat.getResultText());
-                EngageEnemy.enemyDmgMap.clear();
-                roundStatusInfo.repaint();
+                refreshStatuses();
+                advanceRound();
+                btn.setEnabled(true);
             } else {
-                JOptionPane.showMessageDialog(this,"No Enemies Remaining","No Enemies", JOptionPane.ERROR_MESSAGE);
-                btn.setEnabled(false);
+                retreatButton();
             }
-
-            // Remove and Rebuild entire scene
-            //JFrame ancestor = (JFrame) this.getTopLevelAncestor();
-
-            //ancestor.repaint();
-            //ancestor.pack();
         });
         return btn;
     }
@@ -133,6 +126,22 @@ public class CombatPanel extends JPanel {
     private JButton targetEnemyAttackButton() {
         JButton btn = new JButton("Attack Target");
         // TODO implement functionality
+        btn.addActionListener(e -> {
+            btn.setEnabled(false);
+            if(GlobalVariables.enemySquad.size() > 0) {
+                int target = parseUserInput();
+
+                combat.targetedCombat(target);
+
+                refreshStatuses();
+                advanceRound();
+
+                btn.setEnabled(true);
+            } else {
+                retreatButton();
+            }
+
+        });
         return btn;
     }
 
@@ -144,15 +153,62 @@ public class CombatPanel extends JPanel {
     private JButton retreatButton() {
         JButton retreatBtn = new JButton("Retreat");
         retreatBtn.addActionListener(e ->{
-            JFrame ancestor = (JFrame) getTopLevelAncestor();
-            ancestor.getContentPane().removeAll();
-            ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
-            ancestor.add(subareaPanel);
-            ancestor.setPreferredSize(new Dimension(1024,768));
-            ancestor.repaint();
-            ancestor.pack();
+            boolean retreat = new Random().nextBoolean();
+            if(GlobalVariables.enemySquad.size() == 0) {
+                JOptionPane.showMessageDialog(this, "No enemies remain!","Successful Combat",JOptionPane.INFORMATION_MESSAGE);
+                backToMap();
+            } else if(retreat) {
+                JOptionPane.showMessageDialog(this, UICombat.reportRetreatResults(true),"Successful Retreat!",JOptionPane.INFORMATION_MESSAGE);
+                backToMap();
+            } else {
+                JOptionPane.showMessageDialog(this, UICombat.reportRetreatResults(false),"Retreat Failed!",JOptionPane.INFORMATION_MESSAGE);
+                advanceRound();
+            }
         });
         return retreatBtn;
+    }
+
+    private void backToMap() {
+        JFrame ancestor = (JFrame) getTopLevelAncestor();
+        ancestor.getContentPane().removeAll();
+        ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+        ancestor.add(subareaPanel);
+        ancestor.setPreferredSize(new Dimension(1024,768));
+        ancestor.repaint();
+        ancestor.pack();
+    }
+
+    private void advanceRound() {
+        combat.setRound(combat.getRound()+1);
+        roundInfo.setText(combat.getRoundText());
+        initiativeInfo.setText(combat.initiativeResultString());
+        roundStatusInfo.setText(combat.getResultText());
+
+        roundInfo.repaint();
+        initiativeInfo.repaint();
+        roundStatusInfo.repaint();
+
+        EngageEnemy.enemyDmgMap.clear(); // Clears the list of cumulative damage done each round.
+    }
+
+    private int parseUserInput() {
+        String userInput;
+        int target = 0;
+
+        while (target < 1 || target > GlobalVariables.enemySquad.size()) {
+            try {
+                userInput = JOptionPane.showInputDialog(this,"Choose a target number to attack: ","Select Target Number",JOptionPane.INFORMATION_MESSAGE);
+                target = Integer.parseInt(userInput);
+                if(target < 1 || target > GlobalVariables.enemySquad.size()) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,"Error that input is not a valid number!","Invalid Input Error",JOptionPane.ERROR_MESSAGE);
+                target = -1;
+            }
+        }
+        target--;
+        return target;
     }
 
     public SubareaPanel getSubareaPanel() {
