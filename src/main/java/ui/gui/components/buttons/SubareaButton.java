@@ -42,8 +42,10 @@ public class SubareaButton extends JButton {
             if(subarea.isVisible()){
                 if( !currArea.getVisited() ) currArea.setVisited(!currArea.getVisited());
                 JPanel tempParent = (JPanel) getParent().getParent().getParent();
+
                 tempParent.remove(1);
                 tempParent.add(subarea);
+
                 tempParent.revalidate();
                 tempParent.repaint();
                 subarea.setPreferredSize(new Dimension(tempParent.getWidth(),tempParent.getHeight()));
