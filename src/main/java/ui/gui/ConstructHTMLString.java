@@ -9,6 +9,7 @@ public class ConstructHTMLString {
 
     public static final String THREAT_LEVEL_HTML = "<html>Threat Level:???<br/>Items Inside:???</html>";
     private static final String THREAT_LEVEL_SPAN_TAG = "<span style='color: black;'>.</span>";
+    public static Boolean HAS_PASSWORD = false;
 
     public static String parseThreatLevelHTMLString(SubArea subArea){
         StringBuilder info = new StringBuilder(THREAT_LEVEL_HTML);

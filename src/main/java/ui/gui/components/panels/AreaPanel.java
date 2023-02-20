@@ -24,8 +24,8 @@ public class AreaPanel extends JPanel {
         for (SubArea subArea : subAreaList) {
 
             SubareaPanel subareaPanel = new SubareaPanel(subArea);// pass subarea obj to subarea panel
-            area.add(subareaPanel);// btn to toggle show/hide subarea panel
-            JButton toggleSubarea = new SubareaButton(subArea,subareaPanel);
+            area.add(subareaPanel);
+            JButton toggleSubarea = new SubareaButton(subArea,subareaPanel); // btn to toggle show/hide subarea panel
             subareaPanel.add(toggleSubarea);
 
             area.add(toggleSubarea);
