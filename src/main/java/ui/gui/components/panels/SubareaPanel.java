@@ -60,7 +60,8 @@ public class SubareaPanel extends JPanel {
         btn.setVisible(true);
         subareaPanel.add(btn);
 
-        if(subArea.getContents().enemies.isEmpty()) {
+        if(subArea.getContents().enemies.isEmpty() ||
+                (subArea.getName().equals(GlobalVariables.DESTINATION) && !ConstructHTMLString.HAS_PASSWORD)) {
             btn.setEnabled(false);
         }
         return btn;
