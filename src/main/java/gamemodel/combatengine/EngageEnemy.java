@@ -190,9 +190,10 @@ public class EngageEnemy {
         UIInventory.displayInventoryList();
     }
 
-    private static void playerRetreat() {
+    // Refactored to return a string as well
+    private static String playerRetreat() {
         retreat = rg.nextBoolean();
-        reportRetreatResults(retreat);
+        return reportRetreatResults(retreat);
     }
 
     public static void playerAutoCombat(int target) {
@@ -214,7 +215,7 @@ public class EngageEnemy {
         }
     }
 
-    private static void restOfMySquadMove() {
+    public static void restOfMySquadMove() {
         for (int i = 1; i < mySquad.size(); i++) {
             if (enemySquad.size() == 0) {
                 break;
@@ -236,7 +237,7 @@ public class EngageEnemy {
         }
     }
 
-    private static void enemySquadMove() {
+    public static void enemySquadMove() {
         for (Enemy en : enemySquad) {
             if (mySquad.get(0).getHP() <= 0) {
                 UIEnterSubarea.setExitSubAreaUI(true);
@@ -288,5 +289,9 @@ public class EngageEnemy {
                 }
             }
         }
+    }
+
+    public static List<Enemy> getEnemyKIAList() {
+        return enemyKIAList;
     }
 }

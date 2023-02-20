@@ -12,7 +12,6 @@ public class SettingsButton extends JButton{
         settingWindow = null;
         addActionListener(e -> {
             if (settingWindow == null || !settingWindow.isDisplayable()) {
-                System.out.println(this.getTopLevelAncestor());
                 settingWindow = new SettingsWindow((JFrame) this.getTopLevelAncestor());
             }
         });

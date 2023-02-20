@@ -8,7 +8,6 @@ import java.util.List;
 
 public class EnemyStatusPanel extends JPanel {
 
-
     public EnemyStatusPanel(List<Enemy> enemies ){
         super(new GridLayout(3,2));
         populateEnemyList(enemies);
@@ -16,13 +15,15 @@ public class EnemyStatusPanel extends JPanel {
     }
 
     private Integer populateEnemyList(List<Enemy> enemies) {
+        int enemyNumber = 1;
         for(Enemy e : enemies) {
             JPanel ePanel = new JPanel(new FlowLayout());
-            ePanel.add(new JLabel(String.format("%s %s",e.getName(),e.getEnemyType())));
-            ePanel.add(new JLabel(String.format("HP: %d/%d",e.getHP(),e.getMaxHP())));
-            ePanel.add(new JLabel(String.format("Attack: %d",e.getAttack())));
+            JLabel eLabel = new JLabel(String.format("%d. %s %s HP: %d/%d Attack: %d", enemyNumber,
+                    e.getEnemyType(),e.getName(),e.getHP(),e.getMaxHP(),e.getAttack()
+            ));
+            ePanel.add(eLabel);
             ePanel.setBackground(Color.LIGHT_GRAY);
-            //ePanel.setPreferredSize(new Dimension(40,50));
+            enemyNumber++;
             this.add(ePanel);
         }
         return 1;

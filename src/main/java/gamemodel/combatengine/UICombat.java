@@ -38,7 +38,9 @@ public class UICombat {
         drawFooter();
     }
 
-    public static void reportInitiativeStatus(int mySquadInitiative) {
+
+    // Refactored to Return String
+    public static String reportInitiativeStatus(int mySquadInitiative) {
         var respond = "";
         if (mySquadInitiative > 0) {
             respond = "Your squad has won the initiative and attacks first.";
@@ -46,31 +48,35 @@ public class UICombat {
             respond = "Enemy squad has won the initiative and attacks first.";
         }
         System.out.println(respond + "\n");
+        return respond + "\n";
     }
 
-    public static void reportCombatProcess(int mySquadInitiative) {
+    // Refactored to return a string with the details of the combat round
+    public static String reportCombatProcess(int mySquadInitiative) {
+        StringBuilder returnString = new StringBuilder();
         if (mySquadInitiative > 0) {
             if(mySquadAttacked) {
-                reportMySquadMove();
+                returnString.append(reportMySquadMove());
             }
             if(enemyDmgMap.size() > 0) {
-                reportEnemyMove();
+                returnString.append(reportEnemyMove());
             }
         } else {
             if(enemyDmgMap.size() > 0) {
-                reportEnemyMove();
+                returnString.append(reportEnemyMove());
             }
             if(mySquadAttacked) {
-                reportMySquadMove();
+                returnString.append(reportMySquadMove());
             }
         }
         if(enemySquad.size() == 0) {
-            reportWinning();
+            returnString.append(reportWinning());
         }
         drawFooter();
+        return returnString.toString();
     }
 
-    private static void reportWinning() {
+    private static String reportWinning() {
         outputString.setLength(0);
         String winningStatement = "\33[33mYou Win!\33[0m";
         int space = (x_axis - winningStatement.length()) / 2 + 6;
@@ -79,13 +85,17 @@ public class UICombat {
         outputString.append(winningStatement);
 
         System.out.println(outputString);
+        return outputString.toString();
     }
 
-    public static void reportRetreatResults(boolean retreat) {
+    // Refactored to return a string as well
+    public static String reportRetreatResults(boolean retreat) {
         if (retreat) {
             System.out.println("Your squad retreated from the combat in one piece.");
+            return "Your squad retreated from the combat in one piece.";
         } else {
             System.out.println("The enemy presses the attack, retreat failed!");
+            return "The enemy presses the attack, retreat failed!";
         }
     }
 
@@ -163,7 +173,8 @@ public class UICombat {
         reportEngageStatusBody();
     }
 
-    public static void reportEnemyMove() {
+    public static String reportEnemyMove() {
+        StringBuilder returnString = new StringBuilder();
         outputString.setLength(0);
         outputString.append("DMG Received since last action:\n");
 
@@ -175,7 +186,7 @@ public class UICombat {
             outputString.append("); ");
         }
         System.out.println(outputString);
-
+        returnString.append(outputString).append("\n");
         outputString.setLength(0);
 
         if (UIKIAList.size() > 0) {
@@ -196,10 +207,12 @@ public class UICombat {
         summonedMinion.clear();
 
         System.out.println(outputString);
+        returnString.append(outputString);
         outputString.setLength(0);
+        return returnString.toString();
     }
 
-    public static void reportMySquadMove() {
+    public static String reportMySquadMove() {
         outputString.setLength(0);
 
         if (UIEnemyKIAList.size() == 0) {
@@ -213,8 +226,8 @@ public class UICombat {
             UIEnemyKIAList.clear();
         }
         System.out.println(outputString);
-
-        outputString.setLength(0);
+        return outputString.toString();
+        //outputString.setLength(0);
     }
 
     public static void reportMySquadStatus() {

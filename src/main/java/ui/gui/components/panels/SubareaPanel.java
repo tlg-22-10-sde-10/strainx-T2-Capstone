@@ -3,6 +3,7 @@ package ui.gui.components.panels;
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -20,6 +21,7 @@ public class SubareaPanel extends JPanel {
         add(goToMapButton(this));
         add(goToLootButton(this));
         add(goToCombatButton(this));
+        add(new SettingsButton());
         addComponentListener( onSubareaExpand(this) );
     }
 
@@ -54,7 +56,12 @@ public class SubareaPanel extends JPanel {
     private JButton goToCombatButton(JPanel subareaPanel) {
         JButton btn = new JButton("Enter Combat");
         btn.addActionListener(handleGoToCombat(subareaPanel));
-        if(subArea.getContents().enemies.isEmpty()) {
+        btn.setEnabled(true);
+        btn.setVisible(true);
+        subareaPanel.add(btn);
+
+        if(subArea.getContents().enemies.isEmpty() ||
+                (subArea.getName().equals(GlobalVariables.DESTINATION) && !ConstructHTMLString.HAS_PASSWORD)) {
             btn.setEnabled(false);
         }
         return btn;
@@ -67,6 +74,7 @@ public class SubareaPanel extends JPanel {
 
     private ActionListener handleGoToCombat(JPanel subareaPanel) {
         return e -> {
+            GlobalVariables.enemySquad = getSubArea().getContents().enemies;
             JFrame ancestor = (JFrame) subareaPanel.getTopLevelAncestor();
             ancestor.getContentPane().removeAll();
             ancestor.add(new CombatPanel(this));
@@ -84,12 +92,7 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleGoToLoot(){
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("LOOTING");
-            }
-        };
+        return e -> System.out.println("LOOTING");
     }
 
     public SubArea getSubArea() { return subArea; }
