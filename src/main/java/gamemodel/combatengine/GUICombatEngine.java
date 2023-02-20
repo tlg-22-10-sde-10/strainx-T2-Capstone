@@ -1,7 +1,10 @@
 package gamemodel.combatengine;
+import gamecontrol.GlobalVariables;
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.JOptionPanes;
 import ui.gui.components.panels.CombatPanel;
 
+import javax.swing.*;
 import java.util.Random;
 
 public class GUICombatEngine {
@@ -21,7 +24,6 @@ public class GUICombatEngine {
 
     // This will be called by the setText() of the CombatPanel when you enter combat
     public void enterCombat() {
-        setRoundInitiative(determineRoundInitiative());
         initiativeResultString();
         if(getRoundInitiative()==0) {
             EngageEnemy.enemySquadMove();
@@ -66,7 +68,16 @@ public class GUICombatEngine {
     }
 
     public String initiativeResultString() {
-        return UICombat.reportInitiativeStatus(determineRoundInitiative());
+        JFrame frame = (JFrame) getCombatPanel().getTopLevelAncestor();
+        if(GlobalVariables.enemySquad.isEmpty()) {
+            JOptionPanes.combatWon(frame);
+            getCombatPanel().backToMap();
+        } else {
+            JOptionPanes.youLosePane(frame);
+            JOptionPanes.youWinPane(frame);
+        }
+        setRoundInitiative(determineRoundInitiative());
+        return UICombat.reportInitiativeStatus(getRoundInitiative());
     }
 
     public String getRoundText() {
