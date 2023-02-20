@@ -69,12 +69,11 @@ public class GUICombatEngine {
 
     public String initiativeResultString() {
         JFrame frame = (JFrame) getCombatPanel().getTopLevelAncestor();
-        if(GlobalVariables.enemySquad.isEmpty()) {
+        boolean lose = JOptionPanes.youLosePane(frame);
+        boolean win = JOptionPanes.youWinPane(frame);
+        if(GlobalVariables.enemySquad.isEmpty() && !lose && !win) {
             JOptionPanes.combatWon(frame);
             getCombatPanel().backToMap();
-        } else {
-            JOptionPanes.youLosePane(frame);
-            JOptionPanes.youWinPane(frame);
         }
         setRoundInitiative(determineRoundInitiative());
         return UICombat.reportInitiativeStatus(getRoundInitiative());
