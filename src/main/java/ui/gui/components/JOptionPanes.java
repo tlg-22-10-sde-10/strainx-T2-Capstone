@@ -50,4 +50,10 @@ public class JOptionPanes {
     public static void combatWon(JFrame frame) {
         JOptionPane.showMessageDialog(frame,"You won the combat! The area is now safe!","Combat Won",JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public static int confirmExit(JFrame frame) {
+        int a = JOptionPane.showConfirmDialog(frame,"Are you sure you want to exit?");
+
+        return a;
+    }
 }
