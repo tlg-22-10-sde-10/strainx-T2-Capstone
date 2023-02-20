@@ -13,7 +13,7 @@ public class WrapperPanel extends JPanel {
     public WrapperPanel(){
         setBorder(new LineBorder(Color.CYAN));
         setPreferredSize( new Dimension(1024,768));
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout());
         add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
         add(new MapPanel(),BorderLayout.CENTER);
         addComponentListener( adjustSubPanelDimensions(this) );
@@ -25,10 +25,11 @@ public class WrapperPanel extends JPanel {
             public void componentResized(ComponentEvent e) {
                 int thisHeight = parent.getHeight();
                 int thisWidth = parent.getWidth();
-
-                parent.getComponent(0).setPreferredSize(new Dimension(thisWidth, (int) ((thisHeight)*.10)));
+                System.out.println("LISTEN 1");
+                parent.getComponent(0).setPreferredSize(new Dimension(thisWidth-2, (int) ((thisHeight)*.10)));
                 parent.getComponent(1).setPreferredSize(new Dimension(thisWidth, (int) (thisHeight*.90)));
                 parent.revalidate();
+                parent.repaint();
             }
         };
     }
