@@ -12,6 +12,9 @@ import java.awt.event.*;
 
 public class SubareaPanel extends JPanel {
     public SubArea subArea;
+    private JButton combatButton;
+    private JButton lootButton;
+
     public SubareaPanel(SubArea subArea){
         this.subArea = subArea;
         setBorder(new LineBorder(Color.RED));
@@ -54,22 +57,25 @@ public class SubareaPanel extends JPanel {
         return btn;
     }
     private JButton goToCombatButton(JPanel subareaPanel) {
-        JButton btn = new JButton("Enter Combat");
-        btn.addActionListener(handleGoToCombat(subareaPanel));
-        btn.setEnabled(true);
-        btn.setVisible(true);
-        subareaPanel.add(btn);
+        combatButton = new JButton("Enter Combat");
+        combatButton.addActionListener(handleGoToCombat(subareaPanel));
+        combatButton.setEnabled(true);
+        combatButton.setVisible(true);
+        subareaPanel.add(combatButton);
 
         if(subArea.getContents().enemies.isEmpty() ||
                 (subArea.getName().equals(GlobalVariables.DESTINATION) && !ConstructHTMLString.HAS_PASSWORD)) {
-            btn.setEnabled(false);
+            combatButton.setEnabled(false);
         }
-        return btn;
+        return combatButton;
     }
     private JButton goToLootButton(JPanel subareaPanel){
-        JButton btn = new JButton("Loot");
-        btn.addActionListener(handleGoToLoot());
-        return btn;
+        lootButton = new JButton("Loot");
+        lootButton.addActionListener(handleGoToLoot());
+        if(getSubArea().getContents().enemies.size() > 0) {
+            lootButton.setEnabled(false);
+        }
+        return lootButton;
     }
 
     private ActionListener handleGoToCombat(JPanel subareaPanel) {
@@ -96,4 +102,6 @@ public class SubareaPanel extends JPanel {
     }
 
     public SubArea getSubArea() { return subArea; }
+    public JButton getCombatButton() { return combatButton; }
+    public JButton getLootButton() { return lootButton; }
 }

@@ -172,6 +172,10 @@ public class CombatPanel extends JPanel {
         JFrame ancestor = (JFrame) getTopLevelAncestor();
         ancestor.getContentPane().removeAll();
         ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+        if(GlobalVariables.enemySquad.isEmpty()) {
+            getSubareaPanel().getCombatButton().setEnabled(false);
+            getSubareaPanel().getLootButton().setEnabled(true);
+        }
         ancestor.add(subareaPanel);
         ancestor.setPreferredSize(new Dimension(1024,768));
         ancestor.repaint();
