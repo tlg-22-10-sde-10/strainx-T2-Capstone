@@ -19,15 +19,15 @@ public class StatusPanel extends JPanel{
         setLayout(new BorderLayout());
         add(addContainerPlayerSubPanels(players), BorderLayout.WEST);
         add(addContainerOfButtons(this), BorderLayout.EAST);
-        // TODO: NOT RESIZING
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                playerContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.9),getParent().getHeight()));
-                buttonContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.1),getParent().getHeight()));
-            }
-        });
+        // TODO: BUG -> NOT RESIZING/WIPES MAIN MAP COMPONENT
+//        addComponentListener(new ComponentAdapter() {
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                super.componentResized(e);
+//                playerContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.9),getParent().getHeight()));
+//                buttonContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.1),getParent().getHeight()));
+//            }
+//        });
     }
 
     private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){

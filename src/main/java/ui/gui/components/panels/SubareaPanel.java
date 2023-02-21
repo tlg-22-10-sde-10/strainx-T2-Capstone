@@ -107,7 +107,7 @@ public class SubareaPanel extends JPanel {
             if(getSubArea().getContents().enemies.isEmpty()) {
                 outputMessage.append(addItemsToInventory(getSubArea().getContents()));
             }
-            JOptionPane.showMessageDialog(null,outputMessage);
+            JOptionPane.showMessageDialog(this,outputMessage);
         };
     }
     private String addItemsToInventory(Content content) {
