@@ -25,11 +25,9 @@ public class StatusPanel extends JPanel{
                 super.componentResized(e);
                 playerContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.9),getParent().getHeight()));
                 buttonContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.1),getParent().getHeight()));
-
             }
         });
     }
-
     
     private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){
         JPanel playerContainer = new JPanel();
@@ -63,7 +61,6 @@ public class StatusPanel extends JPanel{
     }
     private JPanel addCrew(List<CrewMember> players, JPanel container){
         for (CrewMember crewMember : players) {
-
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
             JLabel label = new JLabel(String.format("%s %s HP : %d/%d Attack %d",

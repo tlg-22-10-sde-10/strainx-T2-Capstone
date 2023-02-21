@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -171,12 +172,13 @@ public class CombatPanel extends JPanel {
     public void backToMap() {
         JFrame ancestor = (JFrame) getTopLevelAncestor();
         ancestor.getContentPane().removeAll();
-        ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+//        ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
+        ancestor.add(new WrapperPanel()); // TODO:SHARE -> add Wrapper instead of StatusPanel to fix Map not being loaded on return
         if(GlobalVariables.enemySquad.isEmpty()) {
             getSubareaPanel().getCombatButton().setEnabled(false);
             getSubareaPanel().getLootButton().setEnabled(true);
         }
-        ancestor.add(subareaPanel);
+//        ancestor.add(subareaPanel); // No need because of new WrapperPanel
         ancestor.setPreferredSize(new Dimension(1024,768));
         ancestor.repaint();
         ancestor.pack();

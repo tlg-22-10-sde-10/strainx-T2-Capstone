@@ -11,7 +11,6 @@ import java.awt.event.ComponentEvent;
 public class WrapperPanel extends JPanel {
 
     public WrapperPanel(){
-        setBorder(new LineBorder(Color.CYAN));
         setPreferredSize( new Dimension(1024,768));
         setLayout(new FlowLayout());
         add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);
