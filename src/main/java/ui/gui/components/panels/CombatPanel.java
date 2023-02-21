@@ -71,7 +71,7 @@ public class CombatPanel extends JPanel {
         roundInfo.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,100));
         panel.add(roundInfo);
 
-        initiativeInfo = new JTextArea(combat.initiativeResultString());
+        initiativeInfo = new JTextArea();
         initiativeInfo.setFont(new Font("DialogInput",Font.PLAIN,24));
         initiativeInfo.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,100));
         panel.add(initiativeInfo);
@@ -219,5 +219,9 @@ public class CombatPanel extends JPanel {
 
     public SubareaPanel getSubareaPanel() {
         return subareaPanel;
+    }
+
+    public JTextArea getInitiativeInfo() {
+        return initiativeInfo;
     }
 }

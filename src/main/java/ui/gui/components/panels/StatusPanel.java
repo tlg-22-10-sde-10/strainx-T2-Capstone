@@ -3,6 +3,7 @@ package ui.gui.components.panels;
 import gamecontrol.contents.CrewMember;
 import ui.gui.components.HealthBar;
 import ui.gui.components.InventoryDialog;
+import ui.gui.components.LoadImage;
 import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
@@ -60,6 +61,7 @@ public class StatusPanel extends JPanel{
             JLabel nameLabel = new JLabel(String.format("%s %s | Attack : %d | HP: ",
                     crewMember.getRank(),crewMember.getName(),
                     crewMember.getAttack()));
+            nameLabel.setIcon(LoadImage.getIcon("images/soldier.png",p.getHeight()));
             p.add(nameLabel);
             if(crewMember.getHP() < 0) { crewMember.setHP(0);}
             p.add(new HealthBar(crewMember));
