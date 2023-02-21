@@ -1,11 +1,11 @@
 package ui.gui.components.panels;
 
 import gamecontrol.contents.CrewMember;
+import ui.gui.components.HealthBar;
 import ui.gui.components.InventoryDialog;
+import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -20,14 +20,6 @@ public class StatusPanel extends JPanel{
         add(addContainerPlayerSubPanels(players), BorderLayout.WEST);
         add(addContainerOfButtons(this), BorderLayout.EAST);
         // TODO: NOT RESIZING
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                playerContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.9),getParent().getHeight()));
-                buttonContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.1),getParent().getHeight()));
-            }
-        });
     }
 
     private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){
@@ -41,8 +33,8 @@ public class StatusPanel extends JPanel{
         JPanel container = new JPanel();
         container.setLayout(new GridLayout(3, 1));
         container.add(inventoryButton(statusPanel));
-        container.add(new JButton("Test"));
-        container.add(new JButton("Test"));
+        container.add(new JButton("Help"));
+        container.add(new SettingsButton());
 
         setButtonContainer(container);
         return container;
@@ -64,10 +56,12 @@ public class StatusPanel extends JPanel{
         for (CrewMember crewMember : players) {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            JLabel label = new JLabel(String.format("%s %s HP : %d/%d Attack %d",
-                    crewMember.getRank(),crewMember.getName(),crewMember.getHP(),crewMember.getMaxHP(),
+            JLabel nameLabel = new JLabel(String.format("%s %s | Attack : %d | HP: ",
+                    crewMember.getRank(),crewMember.getName(),
                     crewMember.getAttack()));
-            p.add(label);
+            p.add(nameLabel);
+            if(crewMember.getHP() < 0) { crewMember.setHP(0);}
+            p.add(new HealthBar(crewMember));
             container.add(p);
         }
         return container;
