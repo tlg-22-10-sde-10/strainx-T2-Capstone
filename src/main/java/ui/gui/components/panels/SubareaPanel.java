@@ -66,7 +66,7 @@ public class SubareaPanel extends JPanel {
         combatButton.setEnabled(true);
         combatButton.setVisible(true);
         subareaPanel.add(combatButton);
-
+        
         if(subArea.getContents().enemies.isEmpty() ||
                 (subArea.getName().equals(GlobalVariables.DESTINATION) && !ConstructHTMLString.HAS_PASSWORD)) {
             combatButton.setEnabled(false);
@@ -107,7 +107,7 @@ public class SubareaPanel extends JPanel {
             if(getSubArea().getContents().enemies.isEmpty()) {
                 outputMessage.append(addItemsToInventory(getSubArea().getContents()));
             }
-            JOptionPane.showMessageDialog(null,outputMessage);
+            JOptionPane.showMessageDialog(this,outputMessage);
         };
     }
     private String addItemsToInventory(Content content) {

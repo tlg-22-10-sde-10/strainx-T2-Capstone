@@ -6,6 +6,8 @@ import ui.gui.components.InventoryDialog;
 import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -19,7 +21,6 @@ public class StatusPanel extends JPanel{
         setLayout(new BorderLayout());
         add(addContainerPlayerSubPanels(players), BorderLayout.WEST);
         add(addContainerOfButtons(this), BorderLayout.EAST);
-        // TODO: NOT RESIZING
     }
 
     private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){
