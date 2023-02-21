@@ -42,6 +42,7 @@ public class JOptionPanes {
                 frame.getContentPane().removeAll();
                 frame.add(new TitlePanel());
                 frame.repaint();
+
                 frame.pack();
             } else {
                 exit(0);
@@ -60,4 +61,7 @@ public class JOptionPanes {
 
         return a;
     }
+
+    // inventory message option msg
+
 }

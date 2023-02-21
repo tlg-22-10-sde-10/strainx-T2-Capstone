@@ -4,36 +4,50 @@ import gamecontrol.contents.CrewMember;
 import ui.gui.components.InventoryDialog;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.List;
 
 public class StatusPanel extends JPanel{
 
+    private JPanel playerContainer;
+    private JPanel buttonContainer;
 
     public StatusPanel(List<CrewMember> players ){
-//        super(new GridLayout(2,2));
-        super(new FlowLayout());
-        add(setSubPanelDefaults(players));
-//        displayInventoryButton(this);
-
-        add(test());
+        setLayout(new BorderLayout());
+        add(addContainerPlayerSubPanels(players), BorderLayout.WEST);
+        add(addContainerOfButtons(this), BorderLayout.EAST);
+        // TODO: BUG -> NOT RESIZING/WIPES MAIN MAP COMPONENT
+//        addComponentListener(new ComponentAdapter() {
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                super.componentResized(e);
+//                playerContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.9),getParent().getHeight()));
+//                buttonContainer.setPreferredSize(new Dimension((int) (getParent().getWidth()*.1),getParent().getHeight()));
+//            }
+//        });
     }
 
-    private JPanel test(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
-        panel.setBorder(new LineBorder(Color.RED));
-        panel.add(new JButton("Test"));
-        panel.add(new JButton("Test"));
-        panel.add(new JButton("Test"));
-//        panel.setPreferredSize(new Dimension((int)(getParent().getWidth()*.9), getParent().getHeight()));
-        return panel;
+    private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){
+        JPanel playerContainer = new JPanel();
+        playerContainer.setLayout(new GridLayout(2, 2));
+        JPanel container = addCrew(players, playerContainer);
+        setPlayerContainer(container);
+        return container;
     }
+    private JPanel addContainerOfButtons(StatusPanel statusPanel){
+        JPanel container = new JPanel();
+        container.setLayout(new GridLayout(3, 1));
+        container.add(inventoryButton(statusPanel));
+        container.add(new JButton("Test"));
+        container.add(new JButton("Test"));
 
-    private void displayInventoryButton(StatusPanel statusPanel) {
+        setButtonContainer(container);
+        return container;
+    }
+    private JButton inventoryButton(StatusPanel statusPanel) {
         JButton invButton = new JButton();
         invButton.setText("Inventory");
         invButton.setVisible(true);
@@ -44,25 +58,21 @@ public class StatusPanel extends JPanel{
                 new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor());
             }
         });
+        return invButton;
     }
-
-    private JPanel setSubPanelDefaults(List<CrewMember> players){
-        JPanel playerContainer = new JPanel(new GridLayout(2, 2));
-//        playerContainer.setPreferredSize(new Dimension((int)(getParent().getWidth()*.9), getParent().getHeight()));
+    private JPanel addCrew(List<CrewMember> players, JPanel container){
         for (CrewMember crewMember : players) {
-
             JPanel p = new JPanel();
-
             p.setLayout(new FlowLayout());
-
             JLabel label = new JLabel(String.format("%s %s HP : %d/%d Attack %d",
                     crewMember.getRank(),crewMember.getName(),crewMember.getHP(),crewMember.getMaxHP(),
                     crewMember.getAttack()));
             p.add(label);
-
-            p.setBackground(Color.GRAY);
-            playerContainer.add(p);
+            container.add(p);
         }
-        return playerContainer;
+        return container;
     }
+
+    public void setPlayerContainer(JPanel playerContainer) {this.playerContainer = playerContainer;}
+    public void setButtonContainer(JPanel buttonContainer) {this.buttonContainer = buttonContainer;}
 }
