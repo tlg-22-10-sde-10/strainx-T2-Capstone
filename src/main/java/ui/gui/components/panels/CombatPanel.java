@@ -132,11 +132,14 @@ public class CombatPanel extends JPanel {
             if(GlobalVariables.enemySquad.size() > 0) {
                 int target = parseUserInput();
 
-                combat.targetedCombat(target);
+                if (target > -1) {
+                    combat.targetedCombat(target);
 
-                refreshStatuses();
-                advanceRound();
-
+                    refreshStatuses();
+                    advanceRound();
+                } else {
+                    JOptionPane.showMessageDialog(this,"You canceled your attack.","Attack Canceled",JOptionPane.INFORMATION_MESSAGE);
+                }
                 btn.setEnabled(true);
             } else {
                 retreatButton();
@@ -204,6 +207,9 @@ public class CombatPanel extends JPanel {
         while (target < 1 || target > GlobalVariables.enemySquad.size()) {
             try {
                 userInput = JOptionPane.showInputDialog(this,"Choose a target number to attack: ","Select Target Number",JOptionPane.INFORMATION_MESSAGE);
+                if(userInput == null) {
+                    return -2;
+                }
                 target = Integer.parseInt(userInput);
                 if(target < 1 || target > GlobalVariables.enemySquad.size()) {
                     throw new NumberFormatException();
