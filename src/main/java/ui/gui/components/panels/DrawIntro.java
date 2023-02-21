@@ -24,7 +24,8 @@ public class DrawIntro {
             "Your mission begins from Area 1, the base is arranged in a grid of numbered Areas containing\n",
             "enter-able subareas (buildings). You recall your commander telling you the famed\n",
             "\"Schrader Lab\" might be a good place to check for Patient Zero...\n\n",
-            "If at any point you need help remembering game controls, press help. Good luck!"
+            "If at any point you need help remembering game controls, press help in the top right.\n\n",
+            "Good luck!"
     };
     public static JPanel drawIntro() {
         JPanel panel = new JPanel(null);

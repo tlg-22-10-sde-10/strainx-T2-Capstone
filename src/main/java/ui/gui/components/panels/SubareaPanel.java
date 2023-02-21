@@ -87,9 +87,12 @@ public class SubareaPanel extends JPanel {
             GlobalVariables.enemySquad = getSubArea().getContents().enemies;
             JFrame ancestor = (JFrame) subareaPanel.getTopLevelAncestor();
             ancestor.getContentPane().removeAll();
-            ancestor.add(new CombatPanel(this));
+            CombatPanel combatPanel = new CombatPanel(this);
+            ancestor.add(combatPanel);
             ancestor.repaint();
             ancestor.pack();
+            combatPanel.getInitiativeInfo().setText(combatPanel.combat.initiativeResultString());
+            combatPanel.getInitiativeInfo().repaint();
         };
     }
     private ActionListener handleReturnToMap(JPanel subareaPanel){
