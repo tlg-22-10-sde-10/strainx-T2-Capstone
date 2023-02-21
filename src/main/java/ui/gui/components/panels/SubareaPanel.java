@@ -1,9 +1,13 @@
 package ui.gui.components.panels;
 
 import gamecontrol.GlobalVariables;
+import gamecontrol.contents.Item;
+import gamemodel.mapengine.Content;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.JOptionPanes;
 import ui.gui.components.buttons.SettingsButton;
+import ui.inventory.UIInventory;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -71,7 +75,7 @@ public class SubareaPanel extends JPanel {
     }
     private JButton goToLootButton(JPanel subareaPanel){
         lootButton = new JButton("Loot");
-        lootButton.addActionListener(handleGoToLoot());
+        lootButton.addActionListener(handleLoot());
         if(getSubArea().getContents().enemies.size() > 0) {
             lootButton.setEnabled(false);
         }
@@ -97,8 +101,26 @@ public class SubareaPanel extends JPanel {
             ancestor.pack();
         };
     }
-    private ActionListener handleGoToLoot(){
-        return e -> System.out.println("LOOTING");
+    private ActionListener handleLoot(){
+        return e -> {
+            StringBuilder outputMessage = new StringBuilder();
+            if(getSubArea().getContents().enemies.isEmpty()) {
+                outputMessage.append(addItemsToInventory(getSubArea().getContents()));
+            }
+            JOptionPane.showMessageDialog(null,outputMessage);
+        };
+    }
+    private String addItemsToInventory(Content content) {
+        StringBuilder outputMessage = new StringBuilder();
+        if (content.items.size() > 0) {
+            for (Item i : content.items) {
+                UIInventory.pickUpItem(i);
+                outputMessage.append(i.getName());
+            }
+            content.items.clear();
+        }
+        else outputMessage.append("Rummaging around you find there's nothing of value.");
+        return outputMessage.toString();
     }
 
     public SubArea getSubArea() { return subArea; }

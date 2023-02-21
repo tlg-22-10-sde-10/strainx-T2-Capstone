@@ -19,6 +19,7 @@ public class StatusPanel extends JPanel{
         setLayout(new BorderLayout());
         add(addContainerPlayerSubPanels(players), BorderLayout.WEST);
         add(addContainerOfButtons(this), BorderLayout.EAST);
+        // TODO: NOT RESIZING
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -28,7 +29,7 @@ public class StatusPanel extends JPanel{
             }
         });
     }
-    
+
     private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){
         JPanel playerContainer = new JPanel();
         playerContainer.setLayout(new GridLayout(2, 2));

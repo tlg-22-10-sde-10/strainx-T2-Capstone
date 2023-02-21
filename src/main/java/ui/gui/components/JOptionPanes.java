@@ -61,4 +61,7 @@ public class JOptionPanes {
 
         return a;
     }
+
+    // inventory message option msg
+
 }
