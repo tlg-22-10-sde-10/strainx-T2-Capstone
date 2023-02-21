@@ -2,6 +2,7 @@ package ui.gui.components.panels;
 
 import gamecontrol.contents.CrewMember;
 import ui.gui.components.HealthBar;
+import ui.gui.components.HelpMapDialog;
 import ui.gui.components.InventoryDialog;
 import ui.gui.components.buttons.SettingsButton;
 
@@ -34,12 +35,27 @@ public class StatusPanel extends JPanel{
         JPanel container = new JPanel();
         container.setLayout(new GridLayout(3, 1));
         container.add(inventoryButton(statusPanel));
-        container.add(new JButton("Help"));
+        container.add(helpButton(statusPanel));
         container.add(new SettingsButton());
 
         setButtonContainer(container);
         return container;
     }
+
+    private JButton helpButton(StatusPanel statusPanel){
+        JButton helpButton = new JButton();
+        helpButton.setText("Help");
+        helpButton.setVisible(true);
+        add(helpButton);
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new HelpMapDialog((JFrame) statusPanel.getTopLevelAncestor());
+            }
+        });
+        return helpButton;
+    }
+
     private JButton inventoryButton(StatusPanel statusPanel) {
         JButton invButton = new JButton();
         invButton.setText("Inventory");
