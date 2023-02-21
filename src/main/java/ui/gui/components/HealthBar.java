@@ -19,7 +19,7 @@ public class HealthBar extends JSlider {
         setPaintTrack(true);
         setPaintLabels(true);
         setEnabled(false);
-        setMajorTickSpacing(25);
+        setMajorTickSpacing((getMaxHealth()/4));
         setMinorTickSpacing(5);
         setToolTipText(Integer.toString(crewMember.getHP()));
     }
@@ -33,7 +33,7 @@ public class HealthBar extends JSlider {
         setPaintTrack(true);
         setPaintLabels(true);
         setEnabled(false);
-        setMajorTickSpacing(25);
+        setMajorTickSpacing((getMaxHealth()/4));
         setMinorTickSpacing(5);
         setToolTipText(Integer.toString(enemy.getHP()));
     }
