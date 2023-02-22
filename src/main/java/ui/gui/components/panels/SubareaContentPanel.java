@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+import static gamecontrol.GlobalVariables.DESTINATION;
+
 public class SubareaContentPanel extends JPanel {
 
     public SubareaContentPanel(SubareaPanel parentPanel, Dimension dimension) {
@@ -22,15 +24,16 @@ public class SubareaContentPanel extends JPanel {
     private Integer appendSubcomponents(SubareaPanel parentPanel, SubareaContentPanel thisPanel){
         JTextArea subareaDescriptionTA;
         String output
-                = (parentPanel.getSubArea().getName().equals(GlobalVariables.DESTINATION))
+                = (parentPanel.getSubArea().getName().equals(DESTINATION))
                 ? handleSchradersLab( parentPanel.getSubArea())
                 : parentPanel.getSubArea().getDescription();
+
         subareaDescriptionTA = new SubareaTextArea(output);
         thisPanel.add(new SubareaTitleLabel(parentPanel.getSubArea().getName()));
         thisPanel.add(new SubareaContentLabel(parentPanel));
         thisPanel.add(subareaDescriptionTA);
 
-        if(!ConstructHTMLString.HAS_PASSWORD && parentPanel.getSubArea().getName().equals(GlobalVariables.DESTINATION)){
+        if(!ConstructHTMLString.HAS_PASSWORD && parentPanel.getSubArea().getName().equals(DESTINATION)){
             JButton passwordBtn = new JButton("Enter Password");
             passwordBtn.addActionListener(e -> handleInputPassword(parentPanel, subareaDescriptionTA, passwordBtn) );
             parentPanel.add(passwordBtn);
@@ -40,7 +43,7 @@ public class SubareaContentPanel extends JPanel {
 
     private String handleSchradersLab(SubArea subArea){
         StringBuilder output = new StringBuilder();
-        if( subArea.getName().equals(GlobalVariables.DESTINATION) && GlobalVariables.firstVisitToLab ){
+        if( subArea.getName().equals(DESTINATION) && GlobalVariables.firstVisitToLab ){
             output.append("Upon finally reaching the lab, you start making your way toward its Entry Control Point.\n"
                     + "Inside, there is a massive blast proof door with a panel to the right prompting for a password.\n"
                     + "\"Of course there was no mention of this in the mission briefing notes...\" you think to yourself.\n"

@@ -12,6 +12,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
+
+import static gamecontrol.GlobalVariables.mySquad;
 
 public class SubareaPanel extends JPanel {
     public SubArea subArea;
@@ -41,8 +44,7 @@ public class SubareaPanel extends JPanel {
         };
     }
     private Integer addSubareaContentAreaPanel(SubareaPanel thisPanel){
-        // TODO set this containers size relative to main map
-        // TODO add background image/wallpaper
+        // TODO 1309 add background image/wallpaper, set this containers size relative to main map
 
         int w = thisPanel.getWidth();
         int h = (int) (thisPanel.getHeight()*.90);
@@ -102,9 +104,8 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleLoot(){
-        // TODO auto-loot items after win in combat
-        // TODO refresh contents subpanel
-        return e -> {loot();};
+        // DONE 1281 refresh contents subpanel
+        return e -> loot();
     }
     public Integer loot(){
         StringBuilder outputMessage = new StringBuilder();
@@ -112,6 +113,11 @@ public class SubareaPanel extends JPanel {
             outputMessage.append(addItemsToInventory(getSubArea().getContents()));
         }
         JOptionPane.showMessageDialog(this,outputMessage);
+
+        this.remove(this.getComponent(4));
+        this.add( new SubareaContentPanel(this, new Dimension(this.getWidth(),(int) (this.getHeight()*.90))));
+        this.revalidate();
+        this.repaint();
         return 1;
     }
     private String addItemsToInventory(Content content) {
