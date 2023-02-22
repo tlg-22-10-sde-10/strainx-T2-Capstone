@@ -1,20 +1,16 @@
-package ui.gui.components;
-
-import gamecontrol.GlobalVariables;
+package ui.gui.components.dialogs;
 import gamecontrol.contents.*;
 import ui.inventory.UIInventory;
+import static gamecontrol.GlobalVariables.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static gamecontrol.GlobalVariables.InventoryMap;
-import static gamecontrol.GlobalVariables.mySquad;
+
 
 public class InventoryDialog extends JDialog {
 
@@ -35,15 +31,16 @@ public class InventoryDialog extends JDialog {
     }
 
     private JList<String> createJList(){
-        JList<String> jlist = new JList<>(getInventoryList());
-        jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jlist.addListSelectionListener(e -> {
+        // TODO Figure out why the tooltip isn't showing
+        jList = new JList<>(getInventoryList());
+        jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jList.addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()) {
                 handleSelection(getJList().getSelectedValue());
                 this.dispose(); // auto close dialog
             }
         });
-        return jlist;
+        return jList;
     }
 
     private Integer handleSelection(String selected){
@@ -112,9 +109,9 @@ public class InventoryDialog extends JDialog {
             mySquad.get(0).setWeapon(weaponFromInv);
             String message = "<html> Equipped: "+
                     weaponFromInv.getName() +
-                    "Base DMG: "+
+                    "<br>Base DMG: "+
                     weaponFromInv.getWeapon_base_dmg()+
-                    "</html>";
+                    "<br>" + weaponFromInv.getDescription();
             JOptionPane.showMessageDialog(this,message);
         };
         return 1;

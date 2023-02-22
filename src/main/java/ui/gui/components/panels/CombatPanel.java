@@ -4,13 +4,12 @@ import gamecontrol.GlobalVariables;
 import gamemodel.combatengine.EngageEnemy;
 import gamemodel.combatengine.GUICombatEngine;
 import gamemodel.combatengine.UICombat;
-import ui.gui.components.InventoryDialog;
+import ui.gui.components.dialogs.InventoryDialog;
 import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import java.util.Random;
 
 
