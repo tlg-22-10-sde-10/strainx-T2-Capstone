@@ -71,9 +71,11 @@ public class StatusPanel extends JPanel{
         return invButton;
     }
     private JPanel addCrew(List<CrewMember> players, JPanel container){
+        int n = 0;
         for (CrewMember crewMember : players) {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
+
             JLabel nameLabel = new JLabel(String.format("%s %s | Attack : %d | HP: ",
                     crewMember.getRank(),crewMember.getName(),
                     crewMember.getAttack()));

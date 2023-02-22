@@ -30,13 +30,11 @@ public class UIInventoryWeapons {
             outputString.append(" ".repeat(line1_space));
             outputString.append(currentWeaponDmg);
             System.out.println(outputString);
-
             var weapons = InventoryMap.values().stream()
                     .filter(i->i.getClass().equals(Weapon.class))
                     .collect(Collectors.toList());
 
             int i = 1;
-
             for(var k : weapons) {
                 drawFooter();
                 Weapon weapon = (Weapon) k;
@@ -77,7 +75,6 @@ public class UIInventoryWeapons {
 
             Scanner s = new Scanner(System.in);
             int thisCommandCode;
-
             while(true) {
                 String userInput = s.nextLine().toLowerCase();
 
@@ -89,7 +86,6 @@ public class UIInventoryWeapons {
                 }
                 System.out.println("Invalid Selection!");
             }
-
             if(thisCommandCode == 0 || thisCommandCode == 22) {
                 break;
             } else {

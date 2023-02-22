@@ -4,12 +4,12 @@ import gamecontrol.GlobalVariables;
 import gamemodel.combatengine.EngageEnemy;
 import gamemodel.combatengine.GUICombatEngine;
 import gamemodel.combatengine.UICombat;
+import ui.gui.components.InventoryDialog;
 import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -150,10 +150,12 @@ public class CombatPanel extends JPanel {
     }
 
     private JButton useItemsButton() {
+        // TODO: auto refresh stats panel after complete
         JButton btn = new JButton("Use Items");
-        // TODO implement functionality
+        btn.addActionListener(e -> new InventoryDialog((JFrame) getTopLevelAncestor()));
         return btn;
     }
+
     private JButton retreatButton() {
         JButton retreatBtn = new JButton("Retreat");
         retreatBtn.addActionListener(e ->{
