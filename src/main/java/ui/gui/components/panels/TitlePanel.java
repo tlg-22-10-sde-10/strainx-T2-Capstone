@@ -8,11 +8,13 @@ import ui.gui.components.textareas.TitleText;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class TitlePanel extends JPanel {
 
     public final static int SCREEN_WIDTH = 1024;
     public final static int SCREEN_HEIGHT = 768;
+    public static Timer titleStrobe;
 
 
     public TitlePanel() {
@@ -63,8 +65,16 @@ public class TitlePanel extends JPanel {
 
 
     private JTextArea addTitleText() {
+        Random rg = new Random();
         TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 580, 150);
-        title.setForeground(Color.RED);
+        title.setForeground(new Color(rg.nextInt(256),rg.nextInt(256),rg.nextInt(256)));
+        titleStrobe = new Timer(100, e -> {
+            title.setForeground(new Color(rg.nextInt(256), rg.nextInt(256), rg.nextInt(256)));
+        });
+
+        titleStrobe.setRepeats(true);
+        titleStrobe.setCoalesce(true);
+        titleStrobe.start();
         return title;
     }
 
