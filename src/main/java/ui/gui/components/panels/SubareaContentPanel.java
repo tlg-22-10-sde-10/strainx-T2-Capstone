@@ -3,6 +3,7 @@ package ui.gui.components.panels;
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.dialogs.PasswordDialog;
 import ui.gui.components.labels.SubareaContentLabel;
 import ui.gui.components.labels.SubareaTitleLabel;
 import ui.gui.components.textareas.SubareaTextArea;
@@ -57,37 +58,7 @@ public class SubareaContentPanel extends JPanel {
 
     private Boolean handleInputPassword(SubareaPanel subareaPanel, JTextArea textAreaComponent, JButton pwButton){
 
-        // TODO: create Class for subcomponents
-        JDialog dialog = new JDialog((Frame) subareaPanel.getTopLevelAncestor(), "Enter Password", true);
-        JPanel jPanel = new JPanel(new GridLayout(0, 2));
-        JPasswordField pwfield = new JPasswordField(10);
-        JButton btnSubmit = new JButton("Submit");
-
-        btnSubmit.addActionListener( e -> {
-            String given = GlobalVariables.getPassWord();
-            String actual = new String(pwfield.getPassword());
-            if(actual.equals(given)) {
-                ConstructHTMLString.HAS_PASSWORD = !ConstructHTMLString.HAS_PASSWORD;
-                textAreaComponent.setText("Password Accepted!!\n"+subareaPanel.getSubArea().getDescription() );
-                subareaPanel.remove(pwButton);
-                subareaPanel.revalidate();
-                subareaPanel.repaint();
-            }
-            else textAreaComponent.setText("INCORRECT");
-            dialog.dispose();
-        });
-
-        // Add to Dialog Container
-        jPanel.add(new JLabel("password"));
-        jPanel.setBorder(new LineBorder(Color.PINK));
-        jPanel.add(pwfield);
-        jPanel.add(btnSubmit);
-
-        // add to frame
-        dialog.getContentPane().add(jPanel);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        new PasswordDialog(subareaPanel,textAreaComponent,pwButton);
 
         return ConstructHTMLString.HAS_PASSWORD;
     };
