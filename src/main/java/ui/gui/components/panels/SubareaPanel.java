@@ -12,9 +12,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
-
-import static gamecontrol.GlobalVariables.mySquad;
 
 public class SubareaPanel extends JPanel {
     public SubArea subArea;
