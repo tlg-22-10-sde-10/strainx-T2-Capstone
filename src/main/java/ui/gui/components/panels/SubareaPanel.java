@@ -104,14 +104,15 @@ public class SubareaPanel extends JPanel {
     private ActionListener handleLoot(){
         // TODO auto-loot items after win in combat
         // TODO refresh contents subpanel
-        System.out.println("2  "+this.getLootButton().isEnabled());
-        return e -> {
-            StringBuilder outputMessage = new StringBuilder();
-            if(getSubArea().getContents().enemies.isEmpty()) {
-                outputMessage.append(addItemsToInventory(getSubArea().getContents()));
-            }
-            JOptionPane.showMessageDialog(this,outputMessage);
-        };
+        return e -> {loot();};
+    }
+    public Integer loot(){
+        StringBuilder outputMessage = new StringBuilder();
+        if(getSubArea().getContents().enemies.isEmpty()) {
+            outputMessage.append(addItemsToInventory(getSubArea().getContents()));
+        }
+        JOptionPane.showMessageDialog(this,outputMessage);
+        return 1;
     }
     private String addItemsToInventory(Content content) {
         StringBuilder outputMessage = new StringBuilder();
