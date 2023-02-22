@@ -75,9 +75,7 @@ public class SubareaPanel extends JPanel {
     private JButton goToLootButton(JPanel subareaPanel){
         lootButton = new JButton("Loot");
         lootButton.addActionListener(handleLoot());
-        if(getSubArea().getContents().enemies.size() > 0) {
-            lootButton.setEnabled(false);
-        }
+        if(!getSubArea().getContents().enemies.isEmpty()) lootButton.setEnabled(false); //disable when enemies present
         return lootButton;
     }
 
@@ -104,8 +102,9 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleLoot(){
-        // TODO FIX -> Will not handle win in combat, add loot items
+        // TODO auto-loot items after win in combat
         // TODO refresh contents subpanel
+        System.out.println("2  "+this.getLootButton().isEnabled());
         return e -> {
             StringBuilder outputMessage = new StringBuilder();
             if(getSubArea().getContents().enemies.isEmpty()) {
