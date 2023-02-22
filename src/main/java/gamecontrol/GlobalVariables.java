@@ -5,6 +5,7 @@ import gamecontrol.contents.CrewMember;
 import gamecontrol.contents.Enemy;
 import gamecontrol.contents.Inventory;
 import gamecontrol.contents.Item;
+import gamemodel.combatengine.EngageEnemy;
 import gamemodel.mapengine.MainMap;
 import gamemodel.mapengine.SubArea;
 
@@ -19,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import ui.gui.ConstructHTMLString;
 import ui.maps.UIEnterSubarea;
 
 
@@ -31,7 +34,7 @@ public class GlobalVariables {
 
     public static final String DESTINATION = "Schrader Lab";
 
-    public static final Enemy FINAL_BOSS =
+    public static Enemy FINAL_BOSS =
         new Enemy("patient zero", 1200, 20, "zombie");
 
     public static boolean defeatBoss = false;
@@ -186,7 +189,7 @@ public class GlobalVariables {
     private static void subMapInitialize() throws IOException {
         subAreaTemplatesCollection.clear();
 
-        try (InputStream input = JsonParsing.openResource("locations.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/locations.json")) {
             subAreaTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
 
             subAreaTemplatesCollection.forEach(a->a.setDescription(convertDescription(a.getDescription())));
@@ -196,7 +199,7 @@ public class GlobalVariables {
     private static void inventoryTemplateInitialize() throws IOException {
         itemTemplatesCollection = new Inventory();
 
-        try (InputStream input = JsonParsing.openResource("items.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/items.json")) {
             itemTemplatesCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
@@ -219,7 +222,7 @@ public class GlobalVariables {
     private static void mySquadTemplateInitialize() throws IOException {
         mySquadTemplate.clear();
 
-        try (InputStream input = JsonParsing.openResource("crew.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/crew.json")) {
             mySquadTemplate = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
@@ -259,7 +262,7 @@ public class GlobalVariables {
 
     public static void enemiesTemplateInitialize() throws IOException {
         enemiesTemplateCollection.clear();
-        try (InputStream input = JsonParsing.openResource("enemies.json")) {
+        try (InputStream input = JsonParsing.openResource("JSON/enemies.json")) {
             enemiesTemplateCollection = JsonParsing.getObjectMapper().readValue(input, new TypeReference<>() {});
         }
     }
@@ -280,5 +283,33 @@ public class GlobalVariables {
             miniBoss = inGameMap.newEnemy(miniBossTemplate.getName());
             enemiesTemplateCollection.remove(miniBossTemplate);
         }
+    }
+
+    public static void resetGlobalVariables() {
+        FINAL_BOSS = new Enemy("patient zero", 1200, 20, "zombie");
+        defeatBoss = false;
+        miniBoss = new Enemy();
+        finalBoss = new Enemy();
+        DROP_RATE_MAP = new HashMap<>();
+        inGameCommands = new HashMap<>();
+        currentSubAreaContents = new SubArea();
+        inGameMap = null;
+        InventoryMap = new HashMap<>();
+        mySquad = new ArrayList<>();
+        enemySquad = new ArrayList<>();
+        subAreaTemplatesCollection = new ArrayList<>();
+        enemiesTemplateCollection = new ArrayList<>();
+        mySquadTemplate = new ArrayList<>();
+        itemTemplatesCollection = new Inventory();
+        combatCommandDescription = new HashMap<>();
+        passWord = null;
+
+        // ui.gui
+        ConstructHTMLString.HAS_PASSWORD = false;
+
+        // gamemodel.combatengine
+        EngageEnemy.setKIAList(new ArrayList<>());
+        EngageEnemy.setEnemyKIAList(new ArrayList<>());
+        EngageEnemy.setSummonedMinion(new ArrayList<>());
     }
 }
