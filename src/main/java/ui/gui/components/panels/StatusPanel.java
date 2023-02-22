@@ -72,11 +72,12 @@ public class StatusPanel extends JPanel{
     }
     private JPanel addCrew(List<CrewMember> players, JPanel container){
         int n = 0;
+        int playerNum = 1;
         for (CrewMember crewMember : players) {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            JLabel nameLabel = new JLabel(String.format("%s %s | Attack : %d | HP: ",
+            JLabel nameLabel = new JLabel(String.format(playerNum + ". %s %s | Attack : %d | HP: ",
                     crewMember.getRank(),crewMember.getName(),
                     (crewMember.getAttack() + crewMember.getWeapon().getWeapon_base_dmg())));
             nameLabel.setIcon(LoadImage.getIcon("images/soldier.png",p.getHeight()));
@@ -84,6 +85,7 @@ public class StatusPanel extends JPanel{
             if(crewMember.getHP() < 0) { crewMember.setHP(0);}
             p.add(new HealthBar(crewMember));
             container.add(p);
+            playerNum++;
         }
         return container;
     }
