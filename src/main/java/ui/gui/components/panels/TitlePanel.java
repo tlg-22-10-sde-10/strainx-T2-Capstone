@@ -1,9 +1,11 @@
 package ui.gui.components.panels;
 
+import ui.gui.components.LoadImage;
 import ui.gui.components.buttons.ExitButton;
 import ui.gui.components.buttons.SettingsButton;
 import ui.gui.components.buttons.StartButton;
 import ui.gui.components.labels.BackgroundImageLabel;
+import ui.gui.components.labels.ZombieLabel;
 import ui.gui.components.textareas.TitleText;
 
 import javax.swing.*;
@@ -27,6 +29,9 @@ public class TitlePanel extends JPanel {
         this.add(addStartButton());
         this.add(addExitButton());
         this.add(addSettingsButton());
+        for (int i = 0; i < 30;i++) {
+            this.add(wanderingZombie());
+        }
         this.add(background());
     }
 
@@ -82,6 +87,11 @@ public class TitlePanel extends JPanel {
         TitleText shadow = new TitleText((SCREEN_WIDTH - 577) / 2, SCREEN_HEIGHT/2-147, 580, 150);
         shadow.setForeground(Color.BLACK);
         return shadow;
+    }
+
+    private ZombieLabel wanderingZombie() {
+        ZombieLabel zombie = new ZombieLabel();
+        return zombie;
     }
 
 

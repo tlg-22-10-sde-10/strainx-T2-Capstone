@@ -2,6 +2,7 @@ package ui.gui.components.dialogs;
 
 import gamecontrol.GameDifficulty;
 import ui.gui.components.buttons.DifficultyButton;
+import ui.gui.components.labels.ZombieLabel;
 import ui.gui.components.panels.TitlePanel;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class DifficultyDialog extends JDialog implements WindowConstants,RootPan
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         TitlePanel.titleStrobe.stop();
+        ZombieLabel.timer.stop();
     }
 
     private JPanel label() {
