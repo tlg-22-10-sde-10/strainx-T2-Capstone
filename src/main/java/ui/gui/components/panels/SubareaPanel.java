@@ -104,7 +104,8 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleLoot(){
-        // TODO:FIX -> Will not handle win in combat, add loot items
+        // TODO FIX -> Will not handle win in combat, add loot items
+        // TODO refresh contents subpanel
         return e -> {
             StringBuilder outputMessage = new StringBuilder();
             if(getSubArea().getContents().enemies.isEmpty()) {
@@ -118,7 +119,7 @@ public class SubareaPanel extends JPanel {
         if (content.items.size() > 0) {
             for (Item i : content.items) {
                 UIInventory.pickUpItem(i);
-                outputMessage.append(i.getName());
+                outputMessage.append(i.getName()).append("\n");
             }
             content.items.clear();
         }
