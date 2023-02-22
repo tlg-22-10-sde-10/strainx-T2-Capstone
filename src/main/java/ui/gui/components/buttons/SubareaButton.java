@@ -1,15 +1,14 @@
 package ui.gui.components.buttons;
 
+import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
-import ui.gui.components.panels.SubareaPanel;
-import ui.maps.UIEnterMainMap;
+import ui.gui.components.panels.StatusPanel;
 import ui.gui.components.panels.SubareaPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class SubareaButton extends JButton {
 
@@ -42,8 +41,9 @@ public class SubareaButton extends JButton {
             if(subarea.isVisible()){
                 if( !currArea.getVisited() ) currArea.setVisited(!currArea.getVisited());
                 JPanel tempParent = (JPanel) getParent().getParent().getParent();
+                tempParent.removeAll();
 
-                tempParent.remove(1);
+                tempParent.add(new StatusPanel(GlobalVariables.mySquad));
                 tempParent.add(subarea);
 
                 tempParent.revalidate();
