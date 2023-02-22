@@ -5,6 +5,7 @@ import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
 import ui.gui.components.panels.StatusPanel;
 import ui.gui.components.panels.SubareaPanel;
+import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,34 +13,60 @@ import java.awt.event.ActionListener;
 
 public class SubareaButton extends JButton {
 
-    public SubareaButton(SubArea subArea, SubareaPanel subareaPanel){
+    public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
         adjustToolTipText(subArea);
         setAlignmentY(Component.CENTER_ALIGNMENT);
         setAlignmentX(Component.CENTER_ALIGNMENT);
         add(new JLabel(subArea.getName()));
         setName(subArea.getName());
-        addActionListener(toggleShowSubareaPanel( subareaPanel, subArea ));
+        setButtonThreatColor(this, subArea);
+        addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
     }
 
-    private Integer adjustToolTipText(SubArea subArea){
+    /* Sub area button color changes based on threat level */
+    private JButton setButtonThreatColor(SubareaButton subareaButton, SubArea subArea) {
+        if (subArea.getVisited()) {
+            System.out.println(UIEnterMainMap.displayThreatLvl(subArea));
+            System.out.println("Contains Low: " + UIEnterMainMap.displayThreatLvl(subArea).contains("Low"));
+            if (UIEnterMainMap.displayThreatLvl(subArea).contains("Low")) {
+                subareaButton.setBackground(Color.GREEN);
+            } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Safe")) {
+                subareaButton.setBackground(Color.CYAN);
+            } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Medium")) {
+                subareaButton.setBackground(Color.ORANGE);
+            } else {
+                subareaButton.setBackground(Color.RED);
+            }
+            subareaButton.setOpaque(true);
+            subareaButton.setBorderPainted(false);
+        }
+        return subareaButton;
+    }
 
-        if(subArea.getVisited()) setToolTipText(ConstructHTMLString.parseThreatLevelHTMLString(subArea));
-        else defaultToolTipText();
+    private Integer adjustToolTipText(SubArea subArea) {
+
+        if (subArea.getVisited()) {
+            setToolTipText(ConstructHTMLString.parseThreatLevelHTMLString(subArea));
+        } else {
+            defaultToolTipText();
+        }
 
         return 1;
     }
-    private Integer defaultToolTipText(){
+
+    private Integer defaultToolTipText() {
         setToolTipText(ConstructHTMLString.THREAT_LEVEL_HTML);
         return 1;
     }
-    private ActionListener toggleShowSubareaPanel(JPanel subarea, SubArea currArea){
+
+    private ActionListener toggleShowSubareaPanel(JPanel subarea, SubArea currArea) {
         // toggle show/hide subarea panel
         return e -> {
             // toggle visibility
             subarea.setVisible(!subarea.isVisible());
             // expand subarea/this panel
-            if(subarea.isVisible()){
-                if( !currArea.getVisited() ) currArea.setVisited(!currArea.getVisited());
+            if (subarea.isVisible()) {
+                if (!currArea.getVisited()) currArea.setVisited(!currArea.getVisited());
                 JPanel tempParent = (JPanel) getParent().getParent().getParent();
                 tempParent.removeAll();
 
@@ -48,7 +75,7 @@ public class SubareaButton extends JButton {
 
                 tempParent.revalidate();
                 tempParent.repaint();
-                subarea.setPreferredSize(new Dimension(tempParent.getWidth(),tempParent.getHeight()));
+                subarea.setPreferredSize(new Dimension(tempParent.getWidth(), tempParent.getHeight()));
             }
             subarea.revalidate();
             subarea.repaint();
