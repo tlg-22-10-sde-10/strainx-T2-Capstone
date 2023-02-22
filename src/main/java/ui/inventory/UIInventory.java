@@ -173,7 +173,6 @@ public class UIInventory {
             }
         }
     }
-
     public static void useItems(String itemName) {
         if(InventoryMap.containsKey(itemName)) {
             var item = InventoryMap.get(itemName);

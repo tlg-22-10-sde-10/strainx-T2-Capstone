@@ -5,7 +5,6 @@ import gamecontrol.contents.Item;
 import gamemodel.mapengine.Content;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
-import ui.gui.components.JOptionPanes;
 import ui.gui.components.buttons.SettingsButton;
 import ui.inventory.UIInventory;
 
@@ -102,6 +101,7 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleLoot(){
+        // TODO:FIX -> Will not handle win in combat, add loot items
         return e -> {
             StringBuilder outputMessage = new StringBuilder();
             if(getSubArea().getContents().enemies.isEmpty()) {
