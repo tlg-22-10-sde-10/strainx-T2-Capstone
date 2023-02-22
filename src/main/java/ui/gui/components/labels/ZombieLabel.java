@@ -36,21 +36,31 @@ public class ZombieLabel extends JLabel {
 
     private void addTimer() {
         timer = new Timer(5,e -> {
-            if(xPosition >= MAX_X_VALUE) {
-                xMove = -1;
+            try {
+                Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+                int mouseX = (int)mousePoint.getX() - 10;
+                int mouseY = (int)mousePoint.getY() - 75;
+                if(xPosition >= mouseX) {
+                    xMove = -1 * rg.nextInt(10);
+                }
+                if(xPosition <= mouseX) {
+                    xMove = rg.nextInt(10);
+                }
+                if(yPosition >= mouseY) {
+                    yMove = -1 * rg.nextInt(10);
+                }
+                if(yPosition <= mouseY) {
+                    yMove = rg.nextInt(10);
+                }
+                xPosition = xPosition+xMove;
+                yPosition = yPosition+yMove;
+                if(xPosition < MIN_X_VALUE) xPosition = MIN_X_VALUE;
+                if(xPosition > MAX_X_VALUE) xPosition = MAX_X_VALUE;
+                if(yPosition < MIN_Y_VALUE) yPosition = MIN_Y_VALUE;
+                if(yPosition > MAX_Y_VALUE) yPosition = MAX_Y_VALUE;
+                setBounds(xPosition,yPosition,20,20);
+            } catch (NullPointerException ex) {
             }
-            if(xPosition <= MIN_X_VALUE) {
-                xMove = 1;
-            }
-            if(yPosition >= MAX_Y_VALUE) {
-                yMove = -1;
-            }
-            if(yPosition <= MIN_Y_VALUE) {
-                yMove = 1;
-            }
-            xPosition = xPosition+xMove;
-            yPosition = yPosition+yMove;
-            setBounds(xPosition,yPosition,20,20);
         });
         timer.setRepeats(true);
         timer.setCoalesce(true);

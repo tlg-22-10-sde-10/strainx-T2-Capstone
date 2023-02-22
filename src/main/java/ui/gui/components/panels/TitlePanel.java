@@ -1,5 +1,6 @@
 package ui.gui.components.panels;
 
+import gamemusic.AudioPlayer;
 import ui.gui.components.LoadImage;
 import ui.gui.components.buttons.ExitButton;
 import ui.gui.components.buttons.SettingsButton;
@@ -29,10 +30,13 @@ public class TitlePanel extends JPanel {
         this.add(addStartButton());
         this.add(addExitButton());
         this.add(addSettingsButton());
-        for (int i = 0; i < 30;i++) {
+        for (int i = 0; i < 2500;i++) {
             this.add(wanderingZombie());
         }
         this.add(background());
+        AudioPlayer player = new AudioPlayer();
+        AudioPlayer.setVolume(-5.0f);
+        player.playAudio("sound/titlemusic.wav");
     }
 
     private JLabel background() {
