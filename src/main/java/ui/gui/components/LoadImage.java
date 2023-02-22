@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class LoadImage {
 
-    public static ImageIcon getIcon(String fileName, int height) {
+    public static ImageIcon getIcon(String fileName) {
         ImageIcon icon;
         try {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(StrainXMain.class
