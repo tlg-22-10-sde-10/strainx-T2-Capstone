@@ -90,11 +90,15 @@ public class InventoryDialog extends JDialog {
         Item medItem = findInventoryItem(medicals, selected);
         Medical newMeds = (Medical)(medItem);
 
-        int inputNumber = parseUserInput();
-        CrewMember soldier = mySquad.get(inputNumber);
-        int HP = Math.min(soldier.getMaxHP(), soldier.getHP() + newMeds.getValue());
-        soldier.setHP(HP);
-        UIInventory.useItems(newMeds.getName());
+        try {
+            int inputNumber = parseUserInput();
+            CrewMember soldier = mySquad.get(inputNumber);
+            int HP = Math.min(soldier.getMaxHP(), soldier.getHP() + newMeds.getValue());
+            soldier.setHP(HP);
+            UIInventory.useItems(newMeds.getName());
+        } catch(IndexOutOfBoundsException e){
+            return -1;
+        }
         return 1;
     }
     private Integer handleEquipWeapon(String selected){
