@@ -78,7 +78,7 @@ public class StatusPanel extends JPanel{
 
             JLabel nameLabel = new JLabel(String.format("%s %s | Attack : %d | HP: ",
                     crewMember.getRank(),crewMember.getName(),
-                    crewMember.getAttack()));
+                    (crewMember.getAttack() + crewMember.getWeapon().getWeapon_base_dmg())));
             nameLabel.setIcon(LoadImage.getIcon("images/soldier.png",p.getHeight()));
             p.add(nameLabel);
             if(crewMember.getHP() < 0) { crewMember.setHP(0);}
