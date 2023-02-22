@@ -1,9 +1,5 @@
 package ui.gui.components.dialogs;
-
-import ui.gui.components.buttons.ExitToMainMenuButton;
-import ui.gui.components.buttons.SoundButton;
-import ui.gui.components.buttons.VolumeButton;
-import ui.gui.components.buttons.ExitButton;
+import ui.gui.components.buttons.*;
 
 import javax.swing.*;
 
@@ -16,12 +12,13 @@ public class SettingsWindow extends JDialog {
 
         setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
-        setBounds(200,200,150,180);
+        setBounds(200,200,150,220);
 //        setSize(new Dimension(300,150));
         setResizable(false);
         setLocationRelativeTo(frame);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Settings");
+        add(new GodModeButton("Cheats"));
         add(new SoundButton());
         add(new VolumeButton(1));
         add(new VolumeButton(2));
