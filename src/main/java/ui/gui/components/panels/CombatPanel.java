@@ -114,8 +114,9 @@ public class CombatPanel extends JPanel {
             btn.setEnabled(false);
             if(GlobalVariables.enemySquad.size() >0) {
                 combat.autoCombat();
-                refreshStatuses();
+
                 advanceRound();
+                refreshStatuses();
                 btn.setEnabled(true);
             } else {
                 retreatButton();
@@ -135,8 +136,9 @@ public class CombatPanel extends JPanel {
                 if (target > -1) {
                     combat.targetedCombat(target);
 
-                    refreshStatuses();
+
                     advanceRound();
+                    refreshStatuses();
                 } else {
                     JOptionPane.showMessageDialog(this,"You canceled your attack.","Attack Canceled",JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -168,6 +170,8 @@ public class CombatPanel extends JPanel {
                 backToMap();
             } else {
                 JOptionPane.showMessageDialog(this, UICombat.reportRetreatResults(false),"Retreat Failed!",JOptionPane.INFORMATION_MESSAGE);
+                EngageEnemy.enemySquadMove();
+                refreshStatuses();
                 advanceRound();
             }
         });
