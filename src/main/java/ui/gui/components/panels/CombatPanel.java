@@ -184,6 +184,7 @@ public class CombatPanel extends JPanel {
         if(GlobalVariables.enemySquad.isEmpty()) {
             getSubareaPanel().getCombatButton().setEnabled(false);
             getSubareaPanel().getLootButton().setEnabled(true);
+            getSubareaPanel().loot();
         }
         ancestor.add(subareaPanel);
         ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);

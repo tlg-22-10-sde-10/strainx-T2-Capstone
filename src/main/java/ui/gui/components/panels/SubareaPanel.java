@@ -41,8 +41,7 @@ public class SubareaPanel extends JPanel {
         };
     }
     private Integer addSubareaContentAreaPanel(SubareaPanel thisPanel){
-        // TODO set this containers size relative to main map
-        // TODO add background image/wallpaper
+        // TODO 1309 add background image/wallpaper, set this containers size relative to main map
 
         int w = thisPanel.getWidth();
         int h = (int) (thisPanel.getHeight()*.90);
@@ -75,9 +74,7 @@ public class SubareaPanel extends JPanel {
     private JButton goToLootButton(JPanel subareaPanel){
         lootButton = new JButton("Loot");
         lootButton.addActionListener(handleLoot());
-        if(getSubArea().getContents().enemies.size() > 0) {
-            lootButton.setEnabled(false);
-        }
+        if(!getSubArea().getContents().enemies.isEmpty()) lootButton.setEnabled(false); //disable when enemies present
         return lootButton;
     }
 
@@ -104,21 +101,28 @@ public class SubareaPanel extends JPanel {
         };
     }
     private ActionListener handleLoot(){
-        // TODO:FIX -> Will not handle win in combat, add loot items
-        return e -> {
-            StringBuilder outputMessage = new StringBuilder();
-            if(getSubArea().getContents().enemies.isEmpty()) {
-                outputMessage.append(addItemsToInventory(getSubArea().getContents()));
-            }
-            JOptionPane.showMessageDialog(this,outputMessage);
-        };
+        // DONE 1281 refresh contents subpanel
+        return e -> loot();
+    }
+    public Integer loot(){
+        StringBuilder outputMessage = new StringBuilder();
+        if(getSubArea().getContents().enemies.isEmpty()) {
+            outputMessage.append(addItemsToInventory(getSubArea().getContents()));
+        }
+        JOptionPane.showMessageDialog(this,outputMessage);
+
+        this.remove(this.getComponent(4));
+        this.add( new SubareaContentPanel(this, new Dimension(this.getWidth(),(int) (this.getHeight()*.90))));
+        this.revalidate();
+        this.repaint();
+        return 1;
     }
     private String addItemsToInventory(Content content) {
         StringBuilder outputMessage = new StringBuilder();
         if (content.items.size() > 0) {
             for (Item i : content.items) {
                 UIInventory.pickUpItem(i);
-                outputMessage.append(i.getName());
+                outputMessage.append(i.getName()).append("\n");
             }
             content.items.clear();
         }

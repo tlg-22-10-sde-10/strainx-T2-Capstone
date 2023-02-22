@@ -74,7 +74,7 @@ public class InventoryDialog extends JDialog {
             out = "<html>" +
                     ki.getName().toUpperCase() + " <br>" +
                     "Damage: "+ki.getDamage() + " <br>" +
-                    "HP:     "+ki.getHealth() + " <br>" +
+                    "max HP: "+ki.getHealth() + " <br>" +
                     "</html>";
         }
         JOptionPane.showMessageDialog(this, out);
