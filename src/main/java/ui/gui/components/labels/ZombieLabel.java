@@ -56,16 +56,16 @@ public class ZombieLabel extends JLabel {
                     previousX = mouseX;
                     previousY = mouseY;
                     if (xPosition >= mouseX) {
-                        xMove = -1 * rg.nextInt(8);
+                        xMove = -1 * (rg.nextInt(8)+ 1);
                     }
                     if (xPosition <= mouseX) {
-                        xMove = rg.nextInt(8);
+                        xMove = (rg.nextInt(8)+ 1);
                     }
                     if (yPosition >= mouseY) {
-                        yMove = -1 * rg.nextInt(8);
+                        yMove = -1 * (rg.nextInt(8)+ 1);
                     }
                     if (yPosition <= mouseY) {
-                        yMove = rg.nextInt(8);
+                        yMove = (rg.nextInt(8)+ 1);
                     }
                     xPosition = xPosition + xMove;
                     yPosition = yPosition + yMove;
@@ -87,10 +87,10 @@ public class ZombieLabel extends JLabel {
 
     private void setDirection() {
         if(xMove == previousXMove) {
-            xMove = rg.nextInt(8) * ((xMove < 0) ? -1 : 1);
+            xMove = (rg.nextInt(8)+ 1) * ((xMove < 0) ? -1 : 1);
         }
         if(yMove == previousYMove) {
-            yMove = rg.nextInt(8) * ((yMove < 0) ? -1 : 1);
+            yMove = (rg.nextInt(8)+ 1) * ((yMove < 0) ? -1 : 1);
         }
         xPosition = xPosition + xMove;
         yPosition = yPosition + yMove;

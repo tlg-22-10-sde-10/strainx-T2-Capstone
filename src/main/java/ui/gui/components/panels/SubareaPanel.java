@@ -5,7 +5,6 @@ import gamecontrol.contents.Item;
 import gamemodel.mapengine.Content;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
-import ui.gui.components.buttons.SettingsButton;
 import ui.inventory.UIInventory;
 
 import javax.swing.*;
