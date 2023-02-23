@@ -52,6 +52,30 @@ public class AudioPlayer {
     }
   }
 
+  public void playAudio(String fileName) {
+
+    try (InputStream input = MusicHelper.openMusic(fileName)) {
+      if (clip != null) {
+        clip.stop();
+        clip.flush();
+      }
+      BufferedInputStream bufferedIn = new BufferedInputStream(input);
+      AudioInputStream stream = AudioSystem.getAudioInputStream(bufferedIn);
+      AudioFormat format = stream.getFormat();
+      Info info = new Info(Clip.class, format);
+      clip = (Clip) AudioSystem.getLine(info);
+      clip.open(stream);
+      FloatControl gain = (FloatControl) clip.getControl(Type.MASTER_GAIN);
+      gain.setValue(volume);
+      clip.setFramePosition(0);
+      clip.start();
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+    } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void stopAudio() {
     clip.stop();
     clip.flush();

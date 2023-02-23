@@ -9,8 +9,8 @@ public class TitleText extends JTextArea {
 
     public TitleText(){
         this.setText(UITitlePage.displayTitle());
-        this.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        this.setPreferredSize(new Dimension(600, 150));
+        this.setFont(new Font("Courier New", Font.PLAIN, 12));
+        this.setPreferredSize(new Dimension(700, 150));
         this.setOpaque(false);
         this.setEditable(false);
     }

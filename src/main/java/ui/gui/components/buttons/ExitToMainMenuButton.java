@@ -29,7 +29,7 @@ public class ExitToMainMenuButton extends JButton {
             GlobalVariables.resetGlobalVariables();
             parentFrame.getContentPane().removeAll();
             parentFrame.repaint();
-            parentFrame.add(new TitlePanel());
+            parentFrame.add(new TitlePanel(parentFrame));
             parentFrame.repaint();
             parentFrame.pack();
         }

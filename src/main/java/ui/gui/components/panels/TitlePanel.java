@@ -1,21 +1,28 @@
 package ui.gui.components.panels;
 
+import gamemusic.AudioPlayer;
+import ui.gui.components.LoadImage;
 import ui.gui.components.buttons.ExitButton;
 import ui.gui.components.buttons.SettingsButton;
 import ui.gui.components.buttons.StartButton;
 import ui.gui.components.labels.BackgroundImageLabel;
+import ui.gui.components.labels.ZombieLabel;
 import ui.gui.components.textareas.TitleText;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class TitlePanel extends JPanel {
 
     public final static int SCREEN_WIDTH = 1024;
     public final static int SCREEN_HEIGHT = 768;
+    private static Timer titleStrobe;
 
+    public JFrame jFrame;
 
-    public TitlePanel() {
+    public TitlePanel(JFrame jFrame) {
+        this.jFrame = jFrame;
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setLayout(null);
         this.setBackground(Color.CYAN);
@@ -25,7 +32,13 @@ public class TitlePanel extends JPanel {
         this.add(addStartButton());
         this.add(addExitButton());
         this.add(addSettingsButton());
+        for (int i = 0; i < 2500;i++) {
+            this.add(wanderingZombie());
+        }
         this.add(background());
+        AudioPlayer player = new AudioPlayer();
+        AudioPlayer.setVolume(-5.0f);
+        player.playAudio("sound/titlemusic.wav");
     }
 
     private JLabel background() {
@@ -63,8 +76,16 @@ public class TitlePanel extends JPanel {
 
 
     private JTextArea addTitleText() {
-        TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 580, 150);
-        title.setForeground(Color.RED);
+        Random rg = new Random();
+        TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 700, 200);
+        title.setForeground(new Color(rg.nextInt(256),rg.nextInt(256),rg.nextInt(256)));
+        titleStrobe = new Timer(100, e -> {
+            title.setForeground(new Color(rg.nextInt(256), rg.nextInt(256), rg.nextInt(256)));
+        });
+
+        titleStrobe.setRepeats(true);
+        titleStrobe.setCoalesce(true);
+        titleStrobe.start();
         return title;
     }
 
@@ -74,7 +95,14 @@ public class TitlePanel extends JPanel {
         return shadow;
     }
 
+    private ZombieLabel wanderingZombie() {
+        ZombieLabel zombie = new ZombieLabel(jFrame);
+        return zombie;
+    }
 
+    public static Timer getTitleStrobe() {
+        return titleStrobe;
+    }
 
     @Deprecated
     public static void main(String[] args) {
@@ -83,7 +111,7 @@ public class TitlePanel extends JPanel {
         window.setResizable(false);
         window.setTitle("Strain X");
 
-        TitlePanel title = new TitlePanel();
+        TitlePanel title = new TitlePanel(window);
         window.add(title);
 
         window.pack();

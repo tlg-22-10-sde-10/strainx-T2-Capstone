@@ -101,7 +101,6 @@ public class CombatPanel extends JPanel {
         panel.add(autoCombatButton());
         panel.add(targetEnemyAttackButton());
         panel.add(useItemsButton());
-        panel.add(new SettingsButton());
         panel.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,(int) (TitlePanel.SCREEN_HEIGHT*.20)));
         return panel;
     }
@@ -153,7 +152,11 @@ public class CombatPanel extends JPanel {
     private JButton useItemsButton() {
         // TODO: auto refresh stats panel after complete
         JButton btn = new JButton("Use Items");
-        btn.addActionListener(e -> new InventoryDialog((JFrame) getTopLevelAncestor()));
+        btn.addActionListener(e -> {
+            if (StatusPanel.getInventoryDialog() == null || !StatusPanel.getInventoryDialog().isDisplayable()) {
+                StatusPanel.setInventoryDialog(new InventoryDialog((JFrame) getTopLevelAncestor()));
+            }
+        });
         return btn;
     }
 
