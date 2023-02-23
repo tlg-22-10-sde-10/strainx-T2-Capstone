@@ -18,6 +18,7 @@ public class BackgroundImageLabel extends JLabel {
         try {
 //            URL imgURL = StrainXMain.class.getClassLoader().getResource(fileName);
             //noinspection DataFlowIssue
+            //TODO: load utility to get resource
             BufferedImage image = ImageIO.read(StrainXMain.class.getClassLoader().getResource(fileName));
             Image img = image.getScaledInstance(width,height,Image.SCALE_DEFAULT);
             JLabel temp = new JLabel(new ImageIcon(img));

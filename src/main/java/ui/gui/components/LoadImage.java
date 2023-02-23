@@ -14,7 +14,7 @@ public class LoadImage {
         ImageIcon icon;
         try {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(StrainXMain.class
-                    .getClassLoader().getResource(fileName)));
+                    .getClassLoader().getResourceAsStream(fileName)));
             icon = new ImageIcon(image);
 
             return icon;
