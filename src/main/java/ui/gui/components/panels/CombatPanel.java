@@ -101,7 +101,6 @@ public class CombatPanel extends JPanel {
         panel.add(autoCombatButton());
         panel.add(targetEnemyAttackButton());
         panel.add(useItemsButton());
-        panel.add(new SettingsButton());
         panel.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,(int) (TitlePanel.SCREEN_HEIGHT*.20)));
         return panel;
     }

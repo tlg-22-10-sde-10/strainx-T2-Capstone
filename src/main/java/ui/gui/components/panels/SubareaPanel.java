@@ -27,7 +27,6 @@ public class SubareaPanel extends JPanel {
         add(goToMapButton(this));
         add(goToLootButton(this));
         add(goToCombatButton(this));
-        add(new SettingsButton());
         addComponentListener( onSubareaExpand(this) );
     }
 
