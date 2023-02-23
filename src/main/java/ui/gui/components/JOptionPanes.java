@@ -13,6 +13,7 @@ public class JOptionPanes {
 
     public static boolean youLosePane(JFrame frame) {
         if(GlobalVariables.mySquad.get(0).getHP() <= 0) {
+            if (GUISoundEffects.isSoundOn()) GUISoundEffects.playSound("sound/game-over.wav");
             int i = JOptionPane.showConfirmDialog(frame,
                     "You died! Do you want to play again?",
                     "You Lose!",
@@ -33,6 +34,7 @@ public class JOptionPanes {
 
     public static boolean youWinPane(JFrame frame) {
         if(EngageEnemy.getEnemyKIAList().stream().anyMatch(ex -> ex.getName().equals(FINAL_BOSS.getName()))) {
+            if (GUISoundEffects.isSoundOn()) GUISoundEffects.playSound("sound/victory.wav");
             int i = JOptionPane.showConfirmDialog(frame,
                     "You won! You found and defeated Patient Zero!\nDo you want to play again?",
                     "You Win!",

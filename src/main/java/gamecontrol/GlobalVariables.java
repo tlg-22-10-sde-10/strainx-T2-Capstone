@@ -164,7 +164,9 @@ public class GlobalVariables {
     }
 
     public static void titleMusicInitialize() {
-        AudioPlayer.getInstance().playAudio();
+        if (AudioPlayer.isSoundOn()) {
+            AudioPlayer.getInstance().playAudio();
+        }
     }
 
     public static void titleMusicStop() {

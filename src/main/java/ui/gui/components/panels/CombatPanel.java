@@ -5,7 +5,6 @@ import gamemodel.combatengine.EngageEnemy;
 import gamemodel.combatengine.GUICombatEngine;
 import gamemodel.combatengine.UICombat;
 import ui.gui.components.dialogs.InventoryDialog;
-import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -185,8 +184,10 @@ public class CombatPanel extends JPanel {
         ancestor.getContentPane().removeAll();
         if(GlobalVariables.enemySquad.isEmpty()) {
             getSubareaPanel().getCombatButton().setEnabled(false);
-            getSubareaPanel().getLootButton().setEnabled(true);
-            getSubareaPanel().loot();
+            if (!getSubareaPanel().getSubArea().getContents().items.isEmpty()) {
+                getSubareaPanel().getLootButton().setEnabled(true);
+                getSubareaPanel().loot();
+            }
         }
         ancestor.add(subareaPanel);
         ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);

@@ -2,7 +2,9 @@ package ui.gui.components.buttons;
 
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
+import gamemusic.AudioPlayer;
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.GUISoundEffects;
 import ui.gui.components.LoadImage;
 import ui.gui.components.panels.StatusPanel;
 import ui.gui.components.panels.SubareaPanel;
@@ -72,6 +74,7 @@ public class SubareaButton extends JButton {
     private ActionListener toggleShowSubareaPanel(JPanel subarea, SubArea currArea) {
         // toggle show/hide subarea panel
         return e -> {
+            if (GUISoundEffects.isSoundOn()) GUISoundEffects.playSound("sound/running.wav");
             // toggle visibility
             subarea.setVisible(!subarea.isVisible());
             // expand subarea/this panel

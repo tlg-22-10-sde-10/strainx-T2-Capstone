@@ -29,6 +29,9 @@ public class GodModeButton extends JButton {
                     case "iddqd":
                         populateGodMode();
                         break;
+                    case "idkfa":
+                        getAllWeapons();
+                        break;
                     default:
                         break;
                 }
@@ -56,7 +59,13 @@ public class GodModeButton extends JButton {
             c.setHP(999);
             c.setAttack(100);
         }
+    }
 
-
+    private void getAllWeapons() {
+        Weapon crystalFemur = new Weapon("Crystal Femur",899,"unique","It is painfully clear that this Amethyst Crystal Femur is shaped like a human femur, it is also painfully clear that these aliens must be cheap because Amethyst crystals are some of the cheapest crystals you can get in the market these days.");
+        UIInventory.pickUpItem(crystalFemur);
+        for(Weapon w : GlobalVariables.itemTemplatesCollection.getWeapons().values()) {
+            UIInventory.pickUpItem(w);
+        }
     }
 }

@@ -107,9 +107,9 @@ public class SubareaPanel extends JPanel {
         if(getSubArea().getContents().enemies.isEmpty()) {
             outputMessage.append(addItemsToInventory(getSubArea().getContents()));
         }
-        JOptionPane.showMessageDialog(this,outputMessage);
+        JOptionPane.showMessageDialog(TitlePanel.getjFrame(),outputMessage);
 
-        this.remove(this.getComponent(4));
+        this.remove(this.getComponent(3));
         this.add( new SubareaContentPanel(this, new Dimension(this.getWidth(),(int) (this.getHeight()*.90))));
         this.revalidate();
         this.repaint();
