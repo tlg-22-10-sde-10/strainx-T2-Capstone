@@ -55,7 +55,6 @@ public class AudioPlayer {
   }
 
   public void playAudio(String fileName) {
-
     try (InputStream input = MusicHelper.openMusic(fileName)) {
       if (clip != null) {
         clip.stop();

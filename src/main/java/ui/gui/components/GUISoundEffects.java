@@ -2,30 +2,33 @@ package ui.gui.components;
 
 import client.StrainXMain;
 import gamemusic.AudioPlayer;
+import gamemusic.MusicHelper;
 
 import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class GUISoundEffects {
 
     private static boolean soundOn = true;
 
     public static void playSound(String filePath) {
-        try {
+        try (InputStream input = MusicHelper.openMusic(filePath)) {
             Clip clip;
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(StrainXMain.class.getClassLoader().getResourceAsStream(filePath));
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            FloatControl gainControl =
-                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(AudioPlayer.getVolume()); // Reduce volume by 10 decibels.
+            BufferedInputStream bufferedIn = new BufferedInputStream(input);
+            AudioInputStream stream = AudioSystem.getAudioInputStream(bufferedIn);
+            AudioFormat format = stream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gain.setValue(AudioPlayer.getVolume());
+            clip.start();
             clip.loop(0);
-        } catch (UnsupportedAudioFileException e) {
-            System.out.println("Error: Unsupported audio file format.");
-        } catch (IOException e) {
-            System.out.println("Error: Could not read audio file.");
-        } catch (LineUnavailableException e) {
-            System.out.println("Error: Could not play audio clip.");
+
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
         }
     }
 
