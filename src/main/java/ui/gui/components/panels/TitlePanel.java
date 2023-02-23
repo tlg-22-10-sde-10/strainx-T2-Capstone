@@ -19,7 +19,7 @@ public class TitlePanel extends JPanel {
     public final static int SCREEN_HEIGHT = 768;
     private static Timer titleStrobe;
 
-    public JFrame jFrame;
+    private static JFrame jFrame;
 
     public TitlePanel(JFrame jFrame) {
         this.jFrame = jFrame;
@@ -36,9 +36,10 @@ public class TitlePanel extends JPanel {
             this.add(wanderingZombie());
         }
         this.add(background());
-        AudioPlayer player = new AudioPlayer();
-        AudioPlayer.setVolume(-5.0f);
-        player.playAudio("sound/titlemusic.wav");
+        if (AudioPlayer.isSoundOn()) {
+            AudioPlayer.setVolume(-5.0f);
+            AudioPlayer.getInstance().playAudio("sound/titlemusic.wav");
+        }
     }
 
     private JLabel background() {
@@ -102,6 +103,10 @@ public class TitlePanel extends JPanel {
 
     public static Timer getTitleStrobe() {
         return titleStrobe;
+    }
+
+    public static JFrame getjFrame() {
+        return jFrame;
     }
 
     @Deprecated

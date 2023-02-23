@@ -12,7 +12,7 @@ public class SettingsWindow extends JDialog {
 
         setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
-        setBounds(200,200,150,220);
+        setBounds(200,200,150,260);
 //        setSize(new Dimension(300,150));
         setResizable(false);
         setLocationRelativeTo(frame);
@@ -20,6 +20,7 @@ public class SettingsWindow extends JDialog {
         setTitle("Settings");
         add(new GodModeButton("Cheats"));
         add(new SoundButton());
+        add(new MusicButton());
         add(new VolumeButton(1));
         add(new VolumeButton(2));
         add(new ExitToMainMenuButton());
