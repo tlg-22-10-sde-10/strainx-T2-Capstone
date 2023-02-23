@@ -77,7 +77,7 @@ public class TitlePanel extends JPanel {
 
     private JTextArea addTitleText() {
         Random rg = new Random();
-        TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 580, 150);
+        TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 700, 200);
         title.setForeground(new Color(rg.nextInt(256),rg.nextInt(256),rg.nextInt(256)));
         titleStrobe = new Timer(100, e -> {
             title.setForeground(new Color(rg.nextInt(256), rg.nextInt(256), rg.nextInt(256)));
