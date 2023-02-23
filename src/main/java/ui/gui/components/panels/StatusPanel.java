@@ -17,7 +17,7 @@ public class StatusPanel extends JPanel{
     private JPanel playerContainer;
     private JPanel buttonContainer;
 
-    private InventoryDialog inventoryDialog;
+    private static InventoryDialog inventoryDialog;
 
     private HelpMapDialog helpMapDialog;
 
@@ -69,8 +69,8 @@ public class StatusPanel extends JPanel{
         invButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (inventoryDialog == null || !inventoryDialog.isDisplayable()) {
-                    inventoryDialog = new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor());
+                if (getInventoryDialog() == null || !getInventoryDialog().isDisplayable()) {
+                    setInventoryDialog(new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor()));
                 }
             }
         });
@@ -98,4 +98,6 @@ public class StatusPanel extends JPanel{
 
     public void setPlayerContainer(JPanel playerContainer) {this.playerContainer = playerContainer;}
     public void setButtonContainer(JPanel buttonContainer) {this.buttonContainer = buttonContainer;}
+    public static InventoryDialog getInventoryDialog() { return inventoryDialog; }
+    public static void setInventoryDialog(InventoryDialog inventoryDialog) { StatusPanel.inventoryDialog = inventoryDialog; }
 }
