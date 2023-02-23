@@ -20,7 +20,7 @@ public class JOptionPanes {
             if(i == JOptionPane.YES_OPTION) {
                 GlobalVariables.resetGlobalVariables();
                 frame.getContentPane().removeAll();
-                frame.add(new TitlePanel());
+                frame.add(new TitlePanel(frame));
                 frame.repaint();
                 frame.pack();
             } else {
@@ -40,7 +40,7 @@ public class JOptionPanes {
             if(i == JOptionPane.YES_OPTION) {
                 GlobalVariables.resetGlobalVariables();
                 frame.getContentPane().removeAll();
-                frame.add(new TitlePanel());
+                frame.add(new TitlePanel(frame));
                 frame.repaint();
 
                 frame.pack();
