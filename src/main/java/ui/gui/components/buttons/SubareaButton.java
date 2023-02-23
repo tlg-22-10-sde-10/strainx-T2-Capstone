@@ -15,25 +15,23 @@ import java.awt.event.ActionListener;
 public class SubareaButton extends JButton {
 
     public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
-//        super(LoadImage.getIcon("images/zombie.png"));
         adjustToolTipText(subArea);
         setAlignmentY(Component.CENTER_ALIGNMENT);
         setAlignmentX(Component.CENTER_ALIGNMENT);
-//        add(new JLabel(subArea.getName()));
         setButtonIcon(this, subArea);
         setText(subArea.getName());
         setButtonThreatColor(this, subArea);
         addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
     }
 
-    //        System.out.println(subArea.getName());
     private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
-        String imagePath = "images/" + subArea.getName() + ".png";
+        String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
         try {
             if (subArea.getName() != null) {
                 subareaButton.setIcon(LoadImage.getIcon(imagePath));
             }
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+        }
         return subareaButton;
     }
 
