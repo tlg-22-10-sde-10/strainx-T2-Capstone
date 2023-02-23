@@ -22,8 +22,8 @@ public class DifficultyDialog extends JDialog implements WindowConstants,RootPan
         add(buttons(),BorderLayout.CENTER);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        TitlePanel.titleStrobe.stop();
-        ZombieLabel.timer.stop();
+        TitlePanel.getTitleStrobe().stop();
+        ZombieLabel.getTimer().stop();
     }
 
     private JPanel label() {

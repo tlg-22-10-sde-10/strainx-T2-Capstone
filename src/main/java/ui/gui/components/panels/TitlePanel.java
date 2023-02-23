@@ -17,10 +17,12 @@ public class TitlePanel extends JPanel {
 
     public final static int SCREEN_WIDTH = 1024;
     public final static int SCREEN_HEIGHT = 768;
-    public static Timer titleStrobe;
+    private static Timer titleStrobe;
 
+    public JFrame jFrame;
 
-    public TitlePanel() {
+    public TitlePanel(JFrame jFrame) {
+        this.jFrame = jFrame;
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setLayout(null);
         this.setBackground(Color.CYAN);
@@ -94,11 +96,13 @@ public class TitlePanel extends JPanel {
     }
 
     private ZombieLabel wanderingZombie() {
-        ZombieLabel zombie = new ZombieLabel();
+        ZombieLabel zombie = new ZombieLabel(jFrame);
         return zombie;
     }
 
-
+    public static Timer getTitleStrobe() {
+        return titleStrobe;
+    }
 
     @Deprecated
     public static void main(String[] args) {
@@ -107,7 +111,7 @@ public class TitlePanel extends JPanel {
         window.setResizable(false);
         window.setTitle("Strain X");
 
-        TitlePanel title = new TitlePanel();
+        TitlePanel title = new TitlePanel(window);
         window.add(title);
 
         window.pack();

@@ -15,7 +15,7 @@ public class GUIEntry {
 
         JFrame jFrame = new JFrame();
 
-        jFrame.add(new TitlePanel());
+        jFrame.add(new TitlePanel(jFrame));
 
         jFrame.setResizable(false);
         jFrame.setTitle("StrainX");
