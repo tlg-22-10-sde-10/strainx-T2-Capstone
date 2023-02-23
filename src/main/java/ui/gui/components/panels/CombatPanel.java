@@ -152,7 +152,11 @@ public class CombatPanel extends JPanel {
     private JButton useItemsButton() {
         // TODO: auto refresh stats panel after complete
         JButton btn = new JButton("Use Items");
-        btn.addActionListener(e -> new InventoryDialog((JFrame) getTopLevelAncestor()));
+        btn.addActionListener(e -> {
+            if (StatusPanel.getInventoryDialog() == null || !StatusPanel.getInventoryDialog().isDisplayable()) {
+                StatusPanel.setInventoryDialog(new InventoryDialog((JFrame) getTopLevelAncestor()));
+            }
+        });
         return btn;
     }
 
