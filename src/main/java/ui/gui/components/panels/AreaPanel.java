@@ -13,7 +13,7 @@ import java.util.List;
 public class AreaPanel extends JPanel {
 
     public AreaPanel(Integer keyNumber, List<SubArea> subareasList){
-        setBorder(new LineBorder(Color.GREEN.darker()));
+        setBorder(new LineBorder(Color.darkGray));
         createSubareaPanels(this,subareasList, keyNumber);
         setLayout(new BoxLayout( this,BoxLayout.Y_AXIS));
     }
