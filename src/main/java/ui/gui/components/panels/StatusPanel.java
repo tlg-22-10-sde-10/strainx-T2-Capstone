@@ -10,14 +10,19 @@ import ui.gui.components.buttons.SettingsButton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StatusPanel extends JPanel{
 
     private JPanel playerContainer;
     private JPanel buttonContainer;
 
+    public static StatusPanel statusPanel;
+
     private static InventoryDialog inventoryDialog;
+    private static HashMap<CrewMember,JPanel> crewLabels = new HashMap<>();
 
     private HelpMapDialog helpMapDialog;
 
@@ -25,6 +30,27 @@ public class StatusPanel extends JPanel{
         setLayout(new BorderLayout());
         add(addContainerPlayerSubPanels(players), BorderLayout.WEST);
         add(addContainerOfButtons(this), BorderLayout.EAST);
+        statusPanel = this;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(Map.Entry<CrewMember,JPanel> entry : crewLabels.entrySet()) {
+            CrewMember crewMember = entry.getKey();
+            JPanel panel = entry.getValue();
+            try {
+                JLabel label = (JLabel) panel.getComponent(0);
+                HealthBar healthBar = (HealthBar) panel.getComponent(1);
+//                panel.remove(1);
+                label.setText(String.format(label.getText().charAt(0) + ". %s %s | Attack : %d | HP: ",
+                        crewMember.getRank(),crewMember.getName(),
+                        (crewMember.getAttack() + crewMember.getWeapon().getWeapon_base_dmg())));
+//                panel.add(new HealthBar(crewMember));
+                healthBar.setValue(crewMember.getHP());
+            } catch (IndexOutOfBoundsException ignored) {
+            }
+        }
     }
 
     private JPanel addContainerPlayerSubPanels(List<CrewMember> players ){
@@ -40,7 +66,6 @@ public class StatusPanel extends JPanel{
         container.add(inventoryButton(statusPanel));
         container.add(helpButton(statusPanel));
         container.add(new SettingsButton());
-
         setButtonContainer(container);
         return container;
     }
@@ -92,6 +117,7 @@ public class StatusPanel extends JPanel{
             p.add(new HealthBar(crewMember));
             container.add(p);
             playerNum++;
+            crewLabels.put(crewMember,p);
         }
         return container;
     }
@@ -100,4 +126,6 @@ public class StatusPanel extends JPanel{
     public void setButtonContainer(JPanel buttonContainer) {this.buttonContainer = buttonContainer;}
     public static InventoryDialog getInventoryDialog() { return inventoryDialog; }
     public static void setInventoryDialog(InventoryDialog inventoryDialog) { StatusPanel.inventoryDialog = inventoryDialog; }
+    public static HashMap<CrewMember, JPanel> getCrewLabels() {return crewLabels;}
+    public static void setCrewLabels(HashMap<CrewMember, JPanel> crewLabels) {StatusPanel.crewLabels = crewLabels;}
 }

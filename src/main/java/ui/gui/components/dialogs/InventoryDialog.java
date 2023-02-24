@@ -1,5 +1,6 @@
 package ui.gui.components.dialogs;
 import gamecontrol.contents.*;
+import ui.gui.components.panels.StatusPanel;
 import ui.inventory.UIInventory;
 import static gamecontrol.GlobalVariables.*;
 
@@ -51,7 +52,7 @@ public class InventoryDialog extends JDialog {
         if( type.getClass().equals(Weapon.class) ) handleEquipWeapon(selected);
         if( type.getClass().equals(Medical.class) ) handleEquipMedicals(selected);
         if( type.getClass().equals(KeyItem.class) ) handleKeyItems(selected);
-
+        StatusPanel.statusPanel.repaint();
         return 1;
     }
     private Integer handleKeyItems(String selected){

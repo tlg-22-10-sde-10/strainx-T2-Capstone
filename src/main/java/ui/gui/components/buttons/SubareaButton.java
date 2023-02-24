@@ -29,8 +29,8 @@ public class SubareaButton extends JButton {
     }
 
     private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
-        String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
         try {
+            String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
             if (subArea.getName() != null) {
                 subareaButton.setIcon(LoadImage.getIcon(imagePath));
             }
