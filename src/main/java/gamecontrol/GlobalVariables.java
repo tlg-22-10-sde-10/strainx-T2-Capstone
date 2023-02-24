@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import ui.gui.ButtonCoordinates;
 import ui.gui.ConstructHTMLString;
 import ui.maps.UIEnterSubarea;
 
@@ -313,5 +314,6 @@ public class GlobalVariables {
         EngageEnemy.setKIAList(new ArrayList<>());
         EngageEnemy.setEnemyKIAList(new ArrayList<>());
         EngageEnemy.setSummonedMinion(new ArrayList<>());
+        ButtonCoordinates.buttonLocations = null;
     }
 }

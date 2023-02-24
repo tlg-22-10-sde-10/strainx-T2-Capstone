@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.List;
 
 import static gamecontrol.GlobalVariables.inGameMap;
 
@@ -23,7 +24,7 @@ public class ButtonCoordinates {
         ArrayList<Point> points;
         Random random = new Random();
 
-        for (java.util.List<SubArea> mapIdx : inGameMap.gameMap.values()) {
+        for (List<SubArea> mapIdx : inGameMap.gameMap.values()) {
             // Get Unique N Points base on Current List of Size N
             while(selected.size() < mapIdx.size() ){
                 int r = random.nextInt(coords.size());
@@ -58,13 +59,16 @@ public class ButtonCoordinates {
         coordinates.put(9,new Point(2*w,2*h));
         return coordinates;
     }
-    private static Dimension buttonDimension(){
+    public static Dimension buttonDimension(){
         int width = 1024;
         int height = (int) (768 * .9);
         int cellWidth = (width / inGameMap.getDimensionY());
+        System.out.println(inGameMap.getDimensionY() + " " + cellWidth);
+
         int cellHeight = (height / inGameMap.getDimensionX());
-        int w = (cellWidth / 3);
-        int h = (cellHeight / 3);
+        System.out.println(inGameMap.getDimensionX() + " " + cellHeight);
+        w = (cellWidth / 3);
+        h = (cellHeight / 3);
 
        return new Dimension(w,h);
     }
