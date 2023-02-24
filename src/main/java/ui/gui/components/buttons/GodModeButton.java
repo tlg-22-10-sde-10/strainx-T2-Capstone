@@ -3,7 +3,9 @@ package ui.gui.components.buttons;
 import gamecontrol.GlobalVariables;
 import gamecontrol.contents.CrewMember;
 import gamecontrol.contents.KeyItem;
+import gamecontrol.contents.Medical;
 import gamecontrol.contents.Weapon;
+import ui.gui.components.panels.StatusPanel;
 import ui.inventory.UIInventory;
 
 import javax.swing.*;
@@ -59,6 +61,7 @@ public class GodModeButton extends JButton {
             c.setHP(999);
             c.setAttack(100);
         }
+        StatusPanel.statusPanel.repaint();
     }
 
     private void getAllWeapons() {
@@ -66,6 +69,11 @@ public class GodModeButton extends JButton {
         UIInventory.pickUpItem(crystalFemur);
         for(Weapon w : GlobalVariables.itemTemplatesCollection.getWeapons().values()) {
             UIInventory.pickUpItem(w);
+        }
+        for(Medical m : GlobalVariables.itemTemplatesCollection.getMedicalItem().values()) {
+            for (int i = 0; i < 5; i++) {
+                UIInventory.pickUpItem(m);
+            }
         }
     }
 }

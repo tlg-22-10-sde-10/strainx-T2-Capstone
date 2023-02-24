@@ -1,10 +1,14 @@
 package ui.gui.components.dialogs;
 import gamecontrol.contents.*;
+import ui.gui.components.panels.StatusPanel;
+import ui.gui.GUIEntry;
 import ui.inventory.UIInventory;
 import static gamecontrol.GlobalVariables.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +32,7 @@ public class InventoryDialog extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         add(addScrollPane(), BorderLayout.CENTER);
+        addWindowListener(GUIEntry.disableJFrame(frame));
     }
 
     private JList<String> createJList(){
@@ -51,7 +56,7 @@ public class InventoryDialog extends JDialog {
         if( type.getClass().equals(Weapon.class) ) handleEquipWeapon(selected);
         if( type.getClass().equals(Medical.class) ) handleEquipMedicals(selected);
         if( type.getClass().equals(KeyItem.class) ) handleKeyItems(selected);
-
+        StatusPanel.statusPanel.repaint();
         return 1;
     }
     private Integer handleKeyItems(String selected){
@@ -195,7 +200,6 @@ public class InventoryDialog extends JDialog {
         }
         return weaponsArray;
     }
-
 
     public JList<String> getJList() { return jList; }
 }

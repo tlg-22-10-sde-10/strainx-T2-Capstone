@@ -40,6 +40,7 @@ public class SubareaButton extends JButton {
                 }
                 scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
                 subareaButton.setIcon(new ImageIcon(scaledInstance));
+
             }
         } catch (NullPointerException e) {}
         return subareaButton;
