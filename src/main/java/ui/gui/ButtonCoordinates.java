@@ -29,7 +29,7 @@ public class ButtonCoordinates {
             while(selected.size() < mapIdx.size() ){
                 int r = random.nextInt(coords.size());
                 Point point = coords.get(r);
-                if(point != null && (r != 2)) selected.add(point);
+                if(point != null) selected.add(point);
             }
             points = new ArrayList<>(selected);
 
@@ -63,10 +63,8 @@ public class ButtonCoordinates {
         int width = 1024;
         int height = (int) (768 * .9);
         int cellWidth = (width / inGameMap.getDimensionY());
-        System.out.println(inGameMap.getDimensionY() + " " + cellWidth);
 
         int cellHeight = (height / inGameMap.getDimensionX());
-        System.out.println(inGameMap.getDimensionX() + " " + cellHeight);
         w = (cellWidth / 3);
         h = (cellHeight / 3);
 

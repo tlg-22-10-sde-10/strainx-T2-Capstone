@@ -30,7 +30,7 @@ public class MapPanel extends JPanel{
     }
     private Integer appendAreaPanels(JPanel mainMapPanel) {
         for (Map.Entry<Integer, List<SubArea>> areasMap : GlobalVariables.inGameMap.gameMap.entrySet()) {
-            AreaPanel area = new AreaPanel(areasMap.getKey(),areasMap.getValue());
+            AreaPanel area = new AreaPanel(areasMap.getValue());
                 area.setBackground(new Color(0,0, 0, 30));
             mainMapPanel.add(area);
         }

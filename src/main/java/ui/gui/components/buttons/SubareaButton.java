@@ -18,21 +18,22 @@ import java.awt.event.ActionListener;
 public class SubareaButton extends JButton {
 
     public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
-        setBorder(new LineBorder(Color.BLACK));
+        setBorderPainted(false);
         adjustToolTipText(subArea);
-        setAlignmentY(Component.CENTER_ALIGNMENT);// TODO: needed?
-        setAlignmentX(Component.CENTER_ALIGNMENT);// TODO: needed?
         setButtonIcon(this, subArea);
         setText(subArea.getName());
+        setHorizontalTextPosition(JButton.CENTER);
+        setVerticalTextPosition(JButton.BOTTOM);
         setButtonThreatColor(this, subArea);
         addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
     }
 
     private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
-        String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
         try {
+            String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
             if (subArea.getName() != null) {
-                subareaButton.setIcon(LoadImage.getIcon(imagePath));
+                Image scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
+                subareaButton.setIcon(new ImageIcon(scaledInstance));
             }
         } catch (NullPointerException e) {
         }
@@ -43,13 +44,13 @@ public class SubareaButton extends JButton {
     private JButton setButtonThreatColor(SubareaButton subareaButton, SubArea subArea) {
         if (subArea.getVisited()) {
             if (UIEnterMainMap.displayThreatLvl(subArea).contains("Low")) {
-                subareaButton.setBackground(Color.GREEN);
+                subareaButton.setBackground(new Color(0, 255, 0,50));
             } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Safe")) {
-                subareaButton.setBackground(Color.CYAN);
+                subareaButton.setBackground(new Color(0, 255, 255,50));
             } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Medium")) {
-                subareaButton.setBackground(Color.ORANGE);
+                subareaButton.setBackground(new Color(255, 200, 0,50));
             } else {
-                subareaButton.setBackground(Color.RED);
+                subareaButton.setBackground(new Color(255, 0, 0,50));
             }
             subareaButton.setOpaque(true);
             subareaButton.setBorderPainted(false);

@@ -21,19 +21,14 @@ import static gamecontrol.GlobalVariables.inGameMap;
 
 public class AreaPanel extends JPanel {
 
-    public static String neveChanging;
-
-    public AreaPanel(Integer keyNumber, List<SubArea> subareasList){
-        setBorder(new LineBorder(Color.darkGray));
-        createSubareaPanels(this,subareasList, keyNumber);
-//        setLayout(new BoxLayout( this,BoxLayout.Y_AXIS));
+    public AreaPanel(List<SubArea> subareasList){
+        createSubareaPanels(this,subareasList);
     }
 
-    private Integer createSubareaPanels(JPanel area,List<SubArea> subAreaList,Integer areaNumber){
+    private Integer createSubareaPanels(JPanel area,List<SubArea> subAreaList){
         UIEnterMainMap.threatLvlMapInitialize();
-
-//        area.add(new JLabel(String.format("Area %d",areaNumber)));
         area.setLayout(null);
+
         for (SubArea subArea : subAreaList) {
 
             SubareaPanel subareaPanel = new SubareaPanel(subArea);
@@ -42,12 +37,9 @@ public class AreaPanel extends JPanel {
 
             JButton areaButton = new JButton();
             areaButton.setEnabled(false);
-            JLabel areaLabel = new JLabel(String.format("Area %d", areaNumber));
-            areaButton.add(areaLabel);
-            areaButton.setBounds(ButtonCoordinates.w,0,ButtonCoordinates.w,ButtonCoordinates.h);
-            area.add(areaButton);
 
             JButton toggleSubarea = new SubareaButton(subArea,subareaPanel);
+            toggleSubarea.setOpaque(true);
             Point buttonCoordinates = getButtonCoordinates(subArea);
 
             toggleSubarea.setBounds((int)(buttonCoordinates.getX()),(int)(buttonCoordinates.getY()),ButtonCoordinates.w,ButtonCoordinates.h);
