@@ -38,7 +38,7 @@ public class HelpMapDialog extends JDialog {
         multi.setLineWrap(true);
         multi.setEditable(false);
         multi.setSize(400, 360);
-        multi.setBackground(Color.ORANGE);
+        multi.setBackground(Color.LIGHT_GRAY);
 
         JPanel panel = new JPanel(new FlowLayout());
         panel.add(multi);
