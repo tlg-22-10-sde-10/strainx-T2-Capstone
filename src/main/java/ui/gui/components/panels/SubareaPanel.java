@@ -23,6 +23,7 @@ public class SubareaPanel extends JPanel {
         setBorder(new LineBorder(Color.RED));
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(0,0));
+        setOpaque(true);
         setVisible(false);
         add(goToMapButton(this));
         add(goToLootButton(this));

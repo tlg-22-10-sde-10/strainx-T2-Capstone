@@ -8,15 +8,17 @@ import ui.gui.components.panels.SubareaPanel;
 import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class SubareaButton extends JButton {
 
     public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
+        setBorder(new LineBorder(Color.RED));
         adjustToolTipText(subArea);
-        setAlignmentY(Component.CENTER_ALIGNMENT);
-        setAlignmentX(Component.CENTER_ALIGNMENT);
+//        setAlignmentY(Component.CENTER_ALIGNMENT);
+//        setAlignmentX(Component.CENTER_ALIGNMENT);
         add(new JLabel(subArea.getName()));
         setName(subArea.getName());
         setButtonThreatColor(this, subArea);
