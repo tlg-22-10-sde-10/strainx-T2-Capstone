@@ -1,7 +1,11 @@
 package ui.gui.components.dialogs;
 
+import ui.gui.GUIEntry;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class HelpMapDialog extends JDialog {
 
@@ -16,6 +20,7 @@ public class HelpMapDialog extends JDialog {
         add(label(),BorderLayout.CENTER);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        addWindowListener(GUIEntry.disableJFrame(frame));
     }
 
     String help = "Descriptions of following action buttons: \n\n" +
@@ -39,5 +44,4 @@ public class HelpMapDialog extends JDialog {
         panel.add(multi);
         return panel;
     }
-
 }
