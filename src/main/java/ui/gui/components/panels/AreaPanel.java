@@ -34,13 +34,20 @@ public class AreaPanel extends JPanel {
     private Integer createSubareaPanels(JPanel area,List<SubArea> subAreaList,Integer areaNumber){
         UIEnterMainMap.threatLvlMapInitialize();
 
-        area.add(new JLabel(String.format("Area %d",areaNumber)));
+//        area.add(new JLabel(String.format("Area %d",areaNumber)));
         area.setLayout(null);
         for (SubArea subArea : subAreaList) {
 
             SubareaPanel subareaPanel = new SubareaPanel(subArea);
             subareaPanel.setBorder(new LineBorder(Color.BLUE));
             area.add(subareaPanel);
+
+            JButton areaButton = new JButton();
+            areaButton.setEnabled(false);
+            JLabel areaLabel = new JLabel(String.format("Area %d", areaNumber));
+            areaButton.add(areaLabel);
+            areaButton.setBounds(ButtonCoordinates.w,0,ButtonCoordinates.w,ButtonCoordinates.h);
+            area.add(areaButton);
 
             JButton toggleSubarea = new SubareaButton(subArea,subareaPanel);
             Point buttonCoordinates = getButtonCoordinates(subArea);
