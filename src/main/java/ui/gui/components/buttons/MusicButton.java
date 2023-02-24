@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class MusicButton extends JButton {
     public MusicButton() {
-        setText("Music ON");
+        setText((AudioPlayer.isSoundOn() ? "Music ON" : "Music OFF"));
         setEnabled(true);
         setFocusable(false);
         addActionListener(e -> toggleMusic());
