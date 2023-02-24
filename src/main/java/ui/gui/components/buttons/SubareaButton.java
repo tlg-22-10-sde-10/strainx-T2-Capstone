@@ -38,7 +38,7 @@ public class SubareaButton extends JButton {
                     imagePath = "images/zone 19.png";
                     scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(30,30,Image.SCALE_DEFAULT);
                 }
-                scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
+                scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(30,30,Image.SCALE_DEFAULT);
                 subareaButton.setIcon(new ImageIcon(scaledInstance));
 
             }
