@@ -3,7 +3,7 @@ package ui.gui;
 import gamemodel.mapengine.SubArea;
 import ui.maps.UIEnterMainMap;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class ConstructHTMLString {
 
@@ -82,4 +82,6 @@ public class ConstructHTMLString {
         }
         return data;
     }
+
+
 }

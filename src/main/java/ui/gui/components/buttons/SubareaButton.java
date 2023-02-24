@@ -11,18 +11,19 @@ import ui.gui.components.panels.SubareaPanel;
 import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class SubareaButton extends JButton {
 
     public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
+        setBorderPainted(false);
         adjustToolTipText(subArea);
-        setAlignmentY(Component.CENTER_ALIGNMENT);
-        setAlignmentX(Component.CENTER_ALIGNMENT);
-        if (subArea.getVisited()) {
-            setButtonIcon(this, subArea);
-        }
+        setButtonIcon(this, subArea);
+        setText(subArea.getName());
+        setHorizontalTextPosition(JButton.CENTER);
+        setVerticalTextPosition(JButton.BOTTOM);
         setText("????");
         setButtonThreatColor(this, subArea);
         addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
@@ -31,11 +32,17 @@ public class SubareaButton extends JButton {
     private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
         try {
             String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
-            if (subArea.getName() != null) {
-                subareaButton.setIcon(LoadImage.getIcon(imagePath));
+            Image scaledInstance = null;
+            if ((subArea.getName() != null)) {
+                if( !subArea.getVisited() ){
+                    imagePath = "images/zone 19.png";
+                    scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(30,30,Image.SCALE_DEFAULT);
+                }
+                scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
+                subareaButton.setIcon(new ImageIcon(scaledInstance));
+
             }
-        } catch (NullPointerException e) {
-        }
+        } catch (NullPointerException e) {}
         return subareaButton;
     }
 
@@ -43,13 +50,13 @@ public class SubareaButton extends JButton {
     private JButton setButtonThreatColor(SubareaButton subareaButton, SubArea subArea) {
         if (subArea.getVisited()) {
             if (UIEnterMainMap.displayThreatLvl(subArea).contains("Low")) {
-                subareaButton.setBackground(Color.GREEN);
+                subareaButton.setBackground(new Color(0, 255, 0,50));
             } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Safe")) {
-                subareaButton.setBackground(Color.CYAN);
+                subareaButton.setBackground(new Color(0, 255, 255,50));
             } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Medium")) {
-                subareaButton.setBackground(Color.ORANGE);
+                subareaButton.setBackground(new Color(255, 200, 0,50));
             } else {
-                subareaButton.setBackground(Color.RED);
+                subareaButton.setBackground(new Color(255, 0, 0,50));
             }
             setText(subArea.getName());
             subareaButton.setOpaque(true);
