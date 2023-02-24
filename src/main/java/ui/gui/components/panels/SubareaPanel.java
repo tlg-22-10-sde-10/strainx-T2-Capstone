@@ -40,7 +40,6 @@ public class SubareaPanel extends JPanel {
         };
     }
     private Integer addSubareaContentAreaPanel(SubareaPanel thisPanel){
-        // TODO 1309 add background image/wallpaper, set this containers size relative to main map
 
         int w = thisPanel.getWidth();
         int h = (int) (thisPanel.getHeight()*.90);

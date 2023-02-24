@@ -24,14 +24,7 @@ public class SubareaButton extends JButton {
         setText(subArea.getName());
         setHorizontalTextPosition(JButton.CENTER);
         setVerticalTextPosition(JButton.BOTTOM);
-//=======
-//        setAlignmentY(Component.CENTER_ALIGNMENT);
-//        setAlignmentX(Component.CENTER_ALIGNMENT);
-//        if (subArea.getVisited()) {
-//            setButtonIcon(this, subArea);
-//        }
-//        setText("????");
-//>>>>>>> dev
+        setText("????");
         setButtonThreatColor(this, subArea);
         addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
     }
@@ -39,12 +32,16 @@ public class SubareaButton extends JButton {
     private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
         try {
             String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
-            if (subArea.getName() != null) {
-                Image scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
+            Image scaledInstance = null;
+            if ((subArea.getName() != null)) {
+                if( !subArea.getVisited() ){
+                    imagePath = "images/zone 19.png";
+                    scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(30,30,Image.SCALE_DEFAULT);
+                }
+                scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
                 subareaButton.setIcon(new ImageIcon(scaledInstance));
             }
-        } catch (NullPointerException e) {
-        }
+        } catch (NullPointerException e) {}
         return subareaButton;
     }
 
