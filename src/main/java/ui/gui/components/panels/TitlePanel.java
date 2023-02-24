@@ -1,7 +1,6 @@
 package ui.gui.components.panels;
 
 import gamemusic.AudioPlayer;
-import ui.gui.components.LoadImage;
 import ui.gui.components.buttons.ExitButton;
 import ui.gui.components.buttons.SettingsButton;
 import ui.gui.components.buttons.StartButton;
@@ -22,7 +21,7 @@ public class TitlePanel extends JPanel {
     private static JFrame jFrame;
 
     public TitlePanel(JFrame jFrame) {
-        this.jFrame = jFrame;
+        TitlePanel.jFrame = jFrame;
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setLayout(null);
         this.setBackground(Color.CYAN);
@@ -80,9 +79,7 @@ public class TitlePanel extends JPanel {
         Random rg = new Random();
         TitleText title = new TitleText((SCREEN_WIDTH - 580) / 2, SCREEN_HEIGHT/2-150, 700, 200);
         title.setForeground(new Color(rg.nextInt(256),rg.nextInt(256),rg.nextInt(256)));
-        titleStrobe = new Timer(100, e -> {
-            title.setForeground(new Color(rg.nextInt(256), rg.nextInt(256), rg.nextInt(256)));
-        });
+        titleStrobe = new Timer(100, e -> title.setForeground(new Color(rg.nextInt(256), rg.nextInt(256), rg.nextInt(256))));
 
         titleStrobe.setRepeats(true);
         titleStrobe.setCoalesce(true);
@@ -97,8 +94,7 @@ public class TitlePanel extends JPanel {
     }
 
     private ZombieLabel wanderingZombie() {
-        ZombieLabel zombie = new ZombieLabel(jFrame);
-        return zombie;
+        return new ZombieLabel(jFrame);
     }
 
     public static Timer getTitleStrobe() {
@@ -109,18 +105,4 @@ public class TitlePanel extends JPanel {
         return jFrame;
     }
 
-    @Deprecated
-    public static void main(String[] args) {
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setTitle("Strain X");
-
-        TitlePanel title = new TitlePanel(window);
-        window.add(title);
-
-        window.pack();
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-    }
 }

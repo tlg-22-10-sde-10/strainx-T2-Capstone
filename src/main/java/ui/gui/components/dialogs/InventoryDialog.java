@@ -7,8 +7,6 @@ import static gamecontrol.GlobalVariables.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,12 +16,10 @@ import java.util.stream.Stream;
 
 public class InventoryDialog extends JDialog {
 
-    private final JFrame frame;
     public JList<String> jList;
 
     public InventoryDialog(JFrame frame) {
         super(frame);
-        this.frame = frame;
         this.jList = createJList();
         setLayout(new BorderLayout());
         setBounds(200, 200, 300, 200);
@@ -118,7 +114,7 @@ public class InventoryDialog extends JDialog {
                     weaponFromInv.getWeapon_base_dmg()+
                     "<br>" + weaponFromInv.getDescription();
             JOptionPane.showMessageDialog(this,message);
-        };
+        }
         return 1;
     }
     private Item determineItemType(String itemName){
@@ -161,11 +157,10 @@ public class InventoryDialog extends JDialog {
         return scrollPane;
     }
     private String[] getInventoryList(){
-        String[] allItems = Stream.concat(Arrays.stream(getAllWeapons()),
+        return Stream.concat(Arrays.stream(getAllWeapons()),
                         Stream.concat(Arrays.stream(getAllMedicals()),
                                 Arrays.stream(getAllKeyItems())))
                 .toArray(String[]::new);
-        return allItems;
     }
     private String[] getAllMedicals(){
         var medicals = InventoryMap.values().stream()

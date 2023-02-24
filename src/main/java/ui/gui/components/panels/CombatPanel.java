@@ -15,8 +15,8 @@ import java.util.Random;
 public class CombatPanel extends JPanel {
 
     private JPanel statuses;
-    SubareaPanel subareaPanel;
-    GUICombatEngine combat;
+    final SubareaPanel subareaPanel;
+    final GUICombatEngine combat;
     private JTextArea roundInfo;
     private JTextArea initiativeInfo;
     private JLabel roundStatusInfo;

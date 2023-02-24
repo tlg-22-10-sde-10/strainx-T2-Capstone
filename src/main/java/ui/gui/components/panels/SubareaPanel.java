@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class SubareaPanel extends JPanel {
-    public SubArea subArea;
+    public final SubArea subArea;
     private JButton combatButton;
     private JButton lootButton;
 

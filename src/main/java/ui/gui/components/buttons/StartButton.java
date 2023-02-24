@@ -3,7 +3,6 @@ package ui.gui.components.buttons;
 import ui.gui.components.dialogs.DifficultyDialog;
 
 import javax.swing.*;
-import java.io.IOException;
 
 public class StartButton extends JButton {
     DifficultyDialog d = null;
@@ -12,15 +11,11 @@ public class StartButton extends JButton {
         setEnabled(true);
         setFocusable(false);
         addActionListener(e -> {
-            try {
-                startGame();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            startGame();
         });
         setOpaque(false);
     }
-    private void startGame() throws IOException {
+    private void startGame() {
         if(d == null || !d.isDisplayable()) {
             d = new DifficultyDialog((JFrame) this.getTopLevelAncestor());
         }

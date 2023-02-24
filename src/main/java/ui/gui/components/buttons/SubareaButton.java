@@ -2,7 +2,6 @@ package ui.gui.components.buttons;
 
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
-import gamemusic.AudioPlayer;
 import ui.gui.ConstructHTMLString;
 import ui.gui.components.GUISoundEffects;
 import ui.gui.components.LoadImage;
@@ -11,7 +10,6 @@ import ui.gui.components.panels.SubareaPanel;
 import ui.maps.UIEnterMainMap;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -32,17 +30,16 @@ public class SubareaButton extends JButton {
     private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
         try {
             String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
-            Image scaledInstance = null;
+            Image scaledInstance;
             if ((subArea.getName() != null)) {
                 if( !subArea.getVisited() ){
                     imagePath = "images/zone 19.png";
-                    scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(30,30,Image.SCALE_DEFAULT);
                 }
                 scaledInstance = LoadImage.getImage(imagePath).getScaledInstance(40,40,Image.SCALE_DEFAULT);
                 subareaButton.setIcon(new ImageIcon(scaledInstance));
 
             }
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException ignored) {}
         return subareaButton;
     }
 

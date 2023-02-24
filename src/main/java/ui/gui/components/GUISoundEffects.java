@@ -1,6 +1,5 @@
 package ui.gui.components;
 
-import client.StrainXMain;
 import gamemusic.AudioPlayer;
 import gamemusic.MusicHelper;
 

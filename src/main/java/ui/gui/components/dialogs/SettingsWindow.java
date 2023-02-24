@@ -3,12 +3,10 @@ import ui.gui.GUIEntry;
 import ui.gui.components.buttons.*;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class SettingsWindow extends JDialog {
 
-    JFrame parentFrame;
+    final JFrame parentFrame;
     public SettingsWindow(JFrame frame) {
         super(frame);
         parentFrame = frame;

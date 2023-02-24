@@ -23,13 +23,11 @@ public class MusicButton extends JButton {
                 AudioPlayer.getInstance().playAudio();
             }
             setText("Music ON");
-            repaint();
-            AudioPlayer.setSoundOn(!AudioPlayer.isSoundOn());
         } else {
             AudioPlayer.getInstance().stopAudio();
             setText("Music OFF");
-            repaint();
-            AudioPlayer.setSoundOn(!AudioPlayer.isSoundOn());
         }
+        repaint();
+        AudioPlayer.setSoundOn(!AudioPlayer.isSoundOn());
     }
 }

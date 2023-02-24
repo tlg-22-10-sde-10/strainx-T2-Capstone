@@ -10,9 +10,9 @@ import java.awt.*;
 
 public class PasswordDialog extends JDialog {
 
-    SubareaPanel subareaPanel;
-    JTextArea textAreaComponent;
-    JButton pwButton;
+    final SubareaPanel subareaPanel;
+    final JTextArea textAreaComponent;
+    final JButton pwButton;
 
     JPanel pwPanel;
     JButton submitButton;

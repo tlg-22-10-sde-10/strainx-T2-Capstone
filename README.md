@@ -34,7 +34,7 @@ obtain a particular lost firearm/ammo/bodyarmor
 obtain sample collection kit
 
 If option 2, player must:
-Obtain tranquilizer gun and it’s appropriate high-power tranquilizer darts
+Obtain tranquilizer gun, and it’s appropriate high-power tranquilizer darts
 Obtain sample collection kit
 
 If option 3, player must:
@@ -43,7 +43,7 @@ Obtain containment field flux capacitor
 Reset containment field by placing flux capacitor in power core
 
 4. List of Features
-(1). rogue-like game with a lot random features;
+(1). rogue-like game with a lot of random features;
 (2). matrix map (using an array to represent the map) with random content within each map block;
 (3). combat between main charactor team and random spawned enemy team;
 (4). non-linear game progress (player will not be able to do the exact same thing over and over to accomplish the game);

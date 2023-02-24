@@ -1,12 +1,10 @@
 package client;
 
-import ui.UIEnterGame;
 import ui.gui.GUIEntry;
-import java.io.IOException;
 
 public class StrainXMain {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
 
 //        UIEnterGame.displayEnterGame();
         GUIEntry.start();

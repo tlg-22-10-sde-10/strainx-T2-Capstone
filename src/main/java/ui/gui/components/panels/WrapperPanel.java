@@ -1,16 +1,11 @@
 package ui.gui.components.panels;
 
 import gamecontrol.GlobalVariables;
-import gamemodel.mapengine.SubArea;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.List;
-
-import static gamecontrol.GlobalVariables.inGameMap;
 
 public class WrapperPanel extends JPanel {
 

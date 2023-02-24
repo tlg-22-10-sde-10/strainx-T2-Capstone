@@ -8,8 +8,6 @@ import ui.gui.components.panels.TitlePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class DifficultyDialog extends JDialog implements WindowConstants,RootPaneContainer {
 
