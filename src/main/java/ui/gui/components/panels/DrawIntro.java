@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class DrawIntro {
 
-    public static String[] introText = new String[]{
+    public static final String[] introText = new String[]{
             "You are part of a small strike team covertly inserted onto a military installation where\n",
             "a failed experiment has taken place. The experiment caused a zombie outbreak and it is\n",
             "thought the only way to contain and reverse the spread is to obtain a blood sample from\n",

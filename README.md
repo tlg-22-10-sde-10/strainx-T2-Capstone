@@ -34,7 +34,7 @@ obtain a particular lost firearm/ammo/bodyarmor
 obtain sample collection kit
 
 If option 2, player must:
-Obtain tranquilizer gun and it’s appropriate high-power tranquilizer darts
+Obtain tranquilizer gun, and it’s appropriate high-power tranquilizer darts
 Obtain sample collection kit
 
 If option 3, player must:
@@ -43,7 +43,7 @@ Obtain containment field flux capacitor
 Reset containment field by placing flux capacitor in power core
 
 4. List of Features
-(1). rogue-like game with a lot random features;
+(1). rogue-like game with a lot of random features;
 (2). matrix map (using an array to represent the map) with random content within each map block;
 (3). combat between main charactor team and random spawned enemy team;
 (4). non-linear game progress (player will not be able to do the exact same thing over and over to accomplish the game);
@@ -110,4 +110,32 @@ Game Modules:
 2, music
 3, sound effects
 4, visual effects
+
+Special thanks to the following for sound effects:
+
+Running Sound Effect by <a href="https://pixabay.com/users/km007_-23606303/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=9109">KM007_</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=9109">Pixabay</a>
+
+Title Music by <a href="https://pixabay.com/users/geoffreyburch-5739114/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=22045">GeoffreyBurch</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=22045">Pixabay</a>
+
+Zombie Bite Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=44538">Pixabay</a>
+
+AR-15 Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14443">Pixabay</a>
+
+Game Over Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=38511">Pixabay</a>
+
+Bare Hands Sound Effect by <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=140236">Universfield</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=140236">Pixabay</a>
+
+Victory Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14800">Pixabay</a>
+
+M249 Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=39814">Pixabay</a>
+
+Tire Iron Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=96095">Pixabay</a>
+
+Axe Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=106748">Pixabay</a>
+
+Handgun Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=106671">Pixabay</a>
+
+Big Bertha Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=96223">Pixabay</a>
+
+Crystal Femur Sound Effect by <a href="https://pixabay.com/users/sergequadrado-24990007/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=21464">SergeQuadrado</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=21464">Pixabay</a>
 

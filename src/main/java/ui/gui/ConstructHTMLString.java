@@ -3,7 +3,7 @@ package ui.gui;
 import gamemodel.mapengine.SubArea;
 import ui.maps.UIEnterMainMap;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class ConstructHTMLString {
 
@@ -24,17 +24,13 @@ public class ConstructHTMLString {
     }
 
     public static String parseCombatTextString(String string) {
-        StringBuilder returnString = new StringBuilder("<html>");
-        returnString.append(string.replaceAll("\\[0m","</span>")
-                .replaceAll("\\[31m","<span style='color: red;'>")
-                .replaceAll("\\[32m","<span style='color: green;'>")
-                .replaceAll("\\[33m","<span style='color: orange;'>")
-                .replaceAll("\\[35m","<span style='color: purple;'>")
-                .replaceAll("\n","<br/>")
-
-        );
-        returnString.append("</html>");
-        return returnString.toString();
+        return "<html>" + string.replaceAll("\\[0m", "</span>")
+                .replaceAll("\\[31m", "<span style='color: red;'>")
+                .replaceAll("\\[32m", "<span style='color: green;'>")
+                .replaceAll("\\[33m", "<span style='color: orange;'>")
+                .replaceAll("\\[35m", "<span style='color: purple;'>")
+                .replaceAll("\n", "<br/>") +
+                "</html>";
     }
     private static String numberOfItemsInSubarea(SubArea subArea){
         String items = "";
@@ -82,4 +78,6 @@ public class ConstructHTMLString {
         }
         return data;
     }
+
+
 }

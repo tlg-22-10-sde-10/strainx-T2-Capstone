@@ -1,6 +1,7 @@
 package ui.gui.components.buttons;
 
-import gamemusic.AudioPlayer;
+import ui.gui.components.GUISoundEffects;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +9,7 @@ public class SoundButton extends JButton {
 
 
     public SoundButton() {
-        setText("Toggle Sound");
+        setText(GUISoundEffects.isSoundOn() ? "SoundFX ON" : "SoundFX OFF");
         setEnabled(true);
         setFocusable(false);
         addActionListener(e -> toggleSound());
@@ -16,11 +17,14 @@ public class SoundButton extends JButton {
     }
 
     private void toggleSound() {
-        if(AudioPlayer.getClip() == null) {
-            AudioPlayer.getInstance().playAudio();
+        if(!GUISoundEffects.isSoundOn()) {
+            GUISoundEffects.setSoundOn(!GUISoundEffects.isSoundOn());
+            setText("SoundFX ON");
+            repaint();
         } else {
-            AudioPlayer.getInstance().stopAudio();
-            AudioPlayer.setClip(null);
+            GUISoundEffects.setSoundOn(!GUISoundEffects.isSoundOn());
+            setText("SoundFX OFF");
+            repaint();
         }
     }
 }

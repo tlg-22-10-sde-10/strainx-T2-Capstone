@@ -1,19 +1,20 @@
 package gamemodel.combatengine;
 
+import static gamecontrol.GlobalVariables.*;
+import static gamemodel.combatengine.UICombat.*;
 import gamecontrol.contents.Enemy;
 import gamecontrol.contents.CrewMember;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import ui.UICommandHelper;
+import ui.gui.components.GUISoundEffects;
 import ui.inventory.UIInventory;
+import ui.maps.UIEnterSubarea;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import ui.maps.UIEnterSubarea;
-
-import static gamecontrol.GlobalVariables.*;
-import static gamemodel.combatengine.UICombat.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EngageEnemy {
     private static final Random rg = new Random();
@@ -213,6 +214,10 @@ public class EngageEnemy {
             enemyKIAList.add(enemy);
             UIEnemyKIAList.add(enemy);
         }
+        if (GUISoundEffects.isSoundOn()) {
+            String fileName = "sound/" + mySquad.get(0).getWeapon().getName().toLowerCase() + ".wav";
+            GUISoundEffects.playSound(fileName);
+        }
     }
 
     public static void restOfMySquadMove() {
@@ -263,7 +268,7 @@ public class EngageEnemy {
                 }
             }
         }
-
+        if (GUISoundEffects.isSoundOn()) GUISoundEffects.playSound("sound/zombie_bite.wav");
         reanimateDead();
     }
 

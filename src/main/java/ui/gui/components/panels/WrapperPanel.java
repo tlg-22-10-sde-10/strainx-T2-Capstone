@@ -3,7 +3,6 @@ package ui.gui.components.panels;
 import gamecontrol.GlobalVariables;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -24,9 +23,8 @@ public class WrapperPanel extends JPanel {
             public void componentResized(ComponentEvent e) {
                 int thisHeight = parent.getHeight();
                 int thisWidth = parent.getWidth();
-                System.out.println("LISTEN 1");
                 parent.getComponent(0).setPreferredSize(new Dimension(thisWidth-2, (int) ((thisHeight)*.10)));
-                parent.getComponent(1).setPreferredSize(new Dimension(thisWidth, (int) (thisHeight*.90)));
+                parent.getComponent(1).setPreferredSize(new Dimension(thisWidth-2, (int) (thisHeight*.90)));
                 parent.revalidate();
                 parent.repaint();
             }

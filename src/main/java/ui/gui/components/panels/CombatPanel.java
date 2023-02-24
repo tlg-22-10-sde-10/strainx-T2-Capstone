@@ -4,21 +4,19 @@ import gamecontrol.GlobalVariables;
 import gamemodel.combatengine.EngageEnemy;
 import gamemodel.combatengine.GUICombatEngine;
 import gamemodel.combatengine.UICombat;
-import ui.gui.components.InventoryDialog;
-import ui.gui.components.buttons.SettingsButton;
+import ui.gui.components.dialogs.InventoryDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import java.util.Random;
 
 
 public class CombatPanel extends JPanel {
 
     private JPanel statuses;
-    SubareaPanel subareaPanel;
-    GUICombatEngine combat;
+    final SubareaPanel subareaPanel;
+    final GUICombatEngine combat;
     private JTextArea roundInfo;
     private JTextArea initiativeInfo;
     private JLabel roundStatusInfo;
@@ -102,7 +100,6 @@ public class CombatPanel extends JPanel {
         panel.add(autoCombatButton());
         panel.add(targetEnemyAttackButton());
         panel.add(useItemsButton());
-        panel.add(new SettingsButton());
         panel.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,(int) (TitlePanel.SCREEN_HEIGHT*.20)));
         return panel;
     }
@@ -114,8 +111,9 @@ public class CombatPanel extends JPanel {
             btn.setEnabled(false);
             if(GlobalVariables.enemySquad.size() >0) {
                 combat.autoCombat();
-                refreshStatuses();
+
                 advanceRound();
+                refreshStatuses();
                 btn.setEnabled(true);
             } else {
                 retreatButton();
@@ -135,8 +133,9 @@ public class CombatPanel extends JPanel {
                 if (target > -1) {
                     combat.targetedCombat(target);
 
-                    refreshStatuses();
+
                     advanceRound();
+                    refreshStatuses();
                 } else {
                     JOptionPane.showMessageDialog(this,"You canceled your attack.","Attack Canceled",JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -152,7 +151,11 @@ public class CombatPanel extends JPanel {
     private JButton useItemsButton() {
         // TODO: auto refresh stats panel after complete
         JButton btn = new JButton("Use Items");
-        btn.addActionListener(e -> new InventoryDialog((JFrame) getTopLevelAncestor()));
+        btn.addActionListener(e -> {
+            if (StatusPanel.getInventoryDialog() == null || !StatusPanel.getInventoryDialog().isDisplayable()) {
+                StatusPanel.setInventoryDialog(new InventoryDialog((JFrame) getTopLevelAncestor()));
+            }
+        });
         return btn;
     }
 
@@ -168,6 +171,8 @@ public class CombatPanel extends JPanel {
                 backToMap();
             } else {
                 JOptionPane.showMessageDialog(this, UICombat.reportRetreatResults(false),"Retreat Failed!",JOptionPane.INFORMATION_MESSAGE);
+                EngageEnemy.enemySquadMove();
+                refreshStatuses();
                 advanceRound();
             }
         });
@@ -179,7 +184,10 @@ public class CombatPanel extends JPanel {
         ancestor.getContentPane().removeAll();
         if(GlobalVariables.enemySquad.isEmpty()) {
             getSubareaPanel().getCombatButton().setEnabled(false);
-            getSubareaPanel().getLootButton().setEnabled(true);
+            if (!getSubareaPanel().getSubArea().getContents().items.isEmpty()) {
+                getSubareaPanel().getLootButton().setEnabled(true);
+                getSubareaPanel().loot();
+            }
         }
         ancestor.add(subareaPanel);
         ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);

@@ -21,6 +21,8 @@ public class AudioPlayer {
   private static final Float VOLUME_ADJUST_VALUE = 10.0f;
   private static Float volume = DEFAULT_VOLUME;
 
+  private static boolean soundOn = true;
+
   public static AudioPlayer getInstance() {
     if (audioPlayer == null) {
       audioPlayer = new AudioPlayer();
@@ -31,6 +33,29 @@ public class AudioPlayer {
   public void playAudio() {
 
     try (InputStream input = MusicHelper.openMusic("sound/Horror-Game-Intro.wav")) {
+      if (clip != null) {
+        clip.stop();
+        clip.flush();
+      }
+      BufferedInputStream bufferedIn = new BufferedInputStream(input);
+      AudioInputStream stream = AudioSystem.getAudioInputStream(bufferedIn);
+      AudioFormat format = stream.getFormat();
+      Info info = new Info(Clip.class, format);
+      clip = (Clip) AudioSystem.getLine(info);
+      clip.open(stream);
+      FloatControl gain = (FloatControl) clip.getControl(Type.MASTER_GAIN);
+      gain.setValue(volume);
+      clip.setFramePosition(0);
+      clip.start();
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+    } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void playAudio(String fileName) {
+    try (InputStream input = MusicHelper.openMusic(fileName)) {
       if (clip != null) {
         clip.stop();
         clip.flush();
@@ -85,11 +110,7 @@ public class AudioPlayer {
     }
   }
 
-  public static Clip getClip() {
-    return clip;
-  }
 
-  public static void setClip(Clip clip) {
-    AudioPlayer.clip = clip;
-  }
+  public static boolean isSoundOn() { return soundOn; }
+  public static void setSoundOn(boolean soundOn) { AudioPlayer.soundOn = soundOn; }
 }

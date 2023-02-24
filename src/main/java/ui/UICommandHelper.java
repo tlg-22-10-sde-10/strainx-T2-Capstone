@@ -6,7 +6,7 @@ public class UICommandHelper {
 
   private static final StringBuilder outputString = new StringBuilder();
   private static final int x_axis_map = 95;
-  private static Scanner scan = new Scanner(System.in);
+  private static final Scanner scan = new Scanner(System.in);
 
   private static void drawFooter() {
     outputString.setLength(0);

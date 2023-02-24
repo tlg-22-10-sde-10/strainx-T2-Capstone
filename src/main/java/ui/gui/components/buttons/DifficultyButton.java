@@ -3,7 +3,6 @@ package ui.gui.components.buttons;
 import gamecontrol.GameDifficulty;
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.MainMap;
-import ui.gui.CheckHealth;
 import ui.gui.components.dialogs.DifficultyDialog;
 import ui.gui.components.panels.DrawIntro;
 
@@ -27,11 +26,7 @@ public class DifficultyButton extends JButton implements ActionListener {
         if (GlobalVariables.inGameMap == null) {
             GlobalVariables.inGameMap = new MainMap(s);
             GlobalVariables.gameInitialization();
-            DifficultyDialog d = (DifficultyDialog) this.getTopLevelAncestor();
-            //CheckHealth.healthTimer(d.getFrame());
         }
-        System.out.println(GlobalVariables.getPassWord());
-        System.out.println(GlobalVariables.InventoryMap);
     }
 
     public void actionPerformed(ActionEvent e) {
