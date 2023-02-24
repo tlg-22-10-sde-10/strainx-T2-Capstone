@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.panels.StatusPanel;
 import ui.maps.UIEnterSubarea;
 
 
@@ -308,6 +309,8 @@ public class GlobalVariables {
 
         // ui.gui
         ConstructHTMLString.HAS_PASSWORD = false;
+        StatusPanel.statusPanel = null;
+        StatusPanel.setCrewLabels(new HashMap<>());
 
         // gamemodel.combatengine
         EngageEnemy.setKIAList(new ArrayList<>());
