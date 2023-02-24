@@ -6,6 +6,7 @@ import ui.gui.components.panels.TitlePanel;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import static java.lang.System.exit;
 
@@ -34,5 +35,19 @@ public class GUIEntry {
                 }
             }
         });
+    }
+
+    public static WindowListener disableJFrame(JFrame frame) {
+        WindowListener windowListener = new WindowAdapter() {
+            public void windowOpened(WindowEvent e) {
+                frame.setEnabled(false);
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                frame.setEnabled(true);
+            }
+        };
+        return windowListener;
     }
 }

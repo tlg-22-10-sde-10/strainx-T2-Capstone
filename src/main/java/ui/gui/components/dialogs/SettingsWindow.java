@@ -1,7 +1,10 @@
 package ui.gui.components.dialogs;
+import ui.gui.GUIEntry;
 import ui.gui.components.buttons.*;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class SettingsWindow extends JDialog {
 
@@ -13,7 +16,6 @@ public class SettingsWindow extends JDialog {
         setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
         setBounds(200,200,150,260);
-//        setSize(new Dimension(300,150));
         setResizable(false);
         setLocationRelativeTo(frame);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -26,6 +28,7 @@ public class SettingsWindow extends JDialog {
         add(new ExitToMainMenuButton());
         add(new ExitButton());
         setVisible(true);
+        addWindowListener(GUIEntry.disableJFrame(frame));
     }
 
     public JFrame getParentFrame() {
