@@ -1,23 +1,15 @@
 package ui.gui.components.panels;
 
-import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ButtonCoordinates;
-import ui.gui.ConstructHTMLString;
 import ui.gui.components.buttons.SubareaButton;
 import ui.maps.UIEnterMainMap;
-import ui.gui.components.buttons.SubareaButton;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.*;
 import java.util.List;
-
-import static gamecontrol.GlobalVariables.inGameMap;
 
 public class AreaPanel extends JPanel {
 

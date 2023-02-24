@@ -64,6 +64,6 @@ public class SubareaContentPanel extends JPanel {
         new PasswordDialog(subareaPanel,textAreaComponent,pwButton);
 
         return ConstructHTMLString.HAS_PASSWORD;
-    };
+    }
 
 }

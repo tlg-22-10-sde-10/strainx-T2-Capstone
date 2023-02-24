@@ -1,6 +1,5 @@
 package gamecontrol.contents;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gamecontrol.GlobalVariables;
 import java.util.Random;
 
 public class Weapon extends Item {

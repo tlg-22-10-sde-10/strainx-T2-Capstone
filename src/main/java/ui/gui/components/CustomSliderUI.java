@@ -13,7 +13,7 @@ public class CustomSliderUI extends BasicSliderUI {
     private static final Dimension THUMB_SIZE = new Dimension(20, 20);
     private final RoundRectangle2D.Float trackShape = new RoundRectangle2D.Float();
 
-    private HealthBar healthBar;
+    private final HealthBar healthBar;
 
     public CustomSliderUI(final HealthBar b) {
         super(b);

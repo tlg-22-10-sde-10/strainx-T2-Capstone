@@ -27,8 +27,7 @@ public class LoadImage {
 
     public static Image getImage(String fileName) {
         try {
-            Image image = ImageIO.read(Objects.requireNonNull(StrainXMain.class.getClassLoader().getResourceAsStream(fileName)));
-            return image;
+            return ImageIO.read(Objects.requireNonNull(StrainXMain.class.getClassLoader().getResourceAsStream(fileName)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

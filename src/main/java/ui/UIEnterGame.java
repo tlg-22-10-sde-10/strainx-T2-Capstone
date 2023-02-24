@@ -16,7 +16,7 @@ import ui.maps.UIEnterMainMap;
 
 public class UIEnterGame {
 
-    private static int x_axis = 96;
+    private static final int x_axis = 96;
     private static final Scanner s = new Scanner(System.in);
     private static final Map<String, String> enterGameControl = new HashMap<>();
     private static final StringBuilder sb= new StringBuilder();
@@ -71,9 +71,7 @@ public class UIEnterGame {
   }
 
   public static void displayGameControl() {
-    int space;
     enterGameControlInitialize();
-    space = (x_axis - "1. New Game".length())/2;
 
     for (var k : enterGameControl.keySet()) {
       sb.setLength(0);

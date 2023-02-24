@@ -38,7 +38,7 @@ public class GUIEntry {
     }
 
     public static WindowListener disableJFrame(JFrame frame) {
-        WindowListener windowListener = new WindowAdapter() {
+        return new WindowAdapter() {
             public void windowOpened(WindowEvent e) {
                 frame.setEnabled(false);
             }
@@ -48,6 +48,5 @@ public class GUIEntry {
                 frame.setEnabled(true);
             }
         };
-        return windowListener;
     }
 }

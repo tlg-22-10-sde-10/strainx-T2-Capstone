@@ -16,9 +16,6 @@ import java.util.Map;
 
 public class StatusPanel extends JPanel{
 
-    private JPanel playerContainer;
-    private JPanel buttonContainer;
-
     public static StatusPanel statusPanel;
 
     private static InventoryDialog inventoryDialog;
@@ -75,12 +72,9 @@ public class StatusPanel extends JPanel{
         helpButton.setText("Help");
         helpButton.setVisible(true);
         add(helpButton);
-        helpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (helpMapDialog == null || !helpMapDialog.isDisplayable()) {
-                    helpMapDialog = new HelpMapDialog((JFrame) statusPanel.getTopLevelAncestor());
-                }
+        helpButton.addActionListener(e -> {
+            if (helpMapDialog == null || !helpMapDialog.isDisplayable()) {
+                helpMapDialog = new HelpMapDialog((JFrame) statusPanel.getTopLevelAncestor());
             }
         });
         return helpButton;
@@ -91,12 +85,9 @@ public class StatusPanel extends JPanel{
         invButton.setText("Inventory");
         invButton.setVisible(true);
         add(invButton);
-        invButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (getInventoryDialog() == null || !getInventoryDialog().isDisplayable()) {
-                    setInventoryDialog(new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor()));
-                }
+        invButton.addActionListener(e -> {
+            if (getInventoryDialog() == null || !getInventoryDialog().isDisplayable()) {
+                setInventoryDialog(new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor()));
             }
         });
         return invButton;
@@ -122,8 +113,10 @@ public class StatusPanel extends JPanel{
         return container;
     }
 
-    public void setPlayerContainer(JPanel playerContainer) {this.playerContainer = playerContainer;}
-    public void setButtonContainer(JPanel buttonContainer) {this.buttonContainer = buttonContainer;}
+    public void setPlayerContainer(JPanel playerContainer) {
+    }
+    public void setButtonContainer(JPanel buttonContainer) {
+    }
     public static InventoryDialog getInventoryDialog() { return inventoryDialog; }
     public static void setInventoryDialog(InventoryDialog inventoryDialog) { StatusPanel.inventoryDialog = inventoryDialog; }
     public static HashMap<CrewMember, JPanel> getCrewLabels() {return crewLabels;}

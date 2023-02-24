@@ -4,15 +4,11 @@ import ui.gui.GUIEntry;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class HelpMapDialog extends JDialog {
 
-    private final JFrame frame;
     public HelpMapDialog(JFrame frame) {
         super(frame);
-        this.frame = frame;
         setLayout(new BorderLayout());
         setBounds(200,200,400,360);
         setResizable(false);
@@ -23,7 +19,7 @@ public class HelpMapDialog extends JDialog {
         addWindowListener(GUIEntry.disableJFrame(frame));
     }
 
-    String help = "Descriptions of following action buttons: \n\n" +
+    final String help = "Descriptions of following action buttons: \n\n" +
             "Map: Display the main map\n\n" +
             "Loot: Loot the items from the area which can be useful to survive and fight\n\n" +
             "Enter combat: Display combat area where player has options to fight with\n\n" +

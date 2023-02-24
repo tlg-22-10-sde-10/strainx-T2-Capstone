@@ -62,9 +62,8 @@ public class JOptionPanes {
     }
 
     public static int confirmExit(JFrame frame) {
-        int a = JOptionPane.showConfirmDialog(frame,"Are you sure you want to exit?");
 
-        return a;
+        return JOptionPane.showConfirmDialog(frame,"Are you sure you want to exit?");
     }
 
     // inventory message option msg

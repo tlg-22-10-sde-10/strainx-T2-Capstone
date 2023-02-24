@@ -110,12 +110,7 @@ public class AudioPlayer {
     }
   }
 
-  public static Clip getClip() {
-    return clip;
-  }
-  public static void setClip(Clip clip) {
-    AudioPlayer.clip = clip;
-  }
+
   public static boolean isSoundOn() { return soundOn; }
   public static void setSoundOn(boolean soundOn) { AudioPlayer.soundOn = soundOn; }
 }

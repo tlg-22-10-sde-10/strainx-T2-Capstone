@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class UIDisplayGameStatus {
 
-  private static int x_axis = 96;
+  private static final int x_axis = 96;
 
   public static String displayInfo(String title) {
     Random rg = new Random();
