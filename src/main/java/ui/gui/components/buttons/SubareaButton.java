@@ -24,6 +24,14 @@ public class SubareaButton extends JButton {
         setText(subArea.getName());
         setHorizontalTextPosition(JButton.CENTER);
         setVerticalTextPosition(JButton.BOTTOM);
+//=======
+//        setAlignmentY(Component.CENTER_ALIGNMENT);
+//        setAlignmentX(Component.CENTER_ALIGNMENT);
+//        if (subArea.getVisited()) {
+//            setButtonIcon(this, subArea);
+//        }
+//        setText("????");
+//>>>>>>> dev
         setButtonThreatColor(this, subArea);
         addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
     }
@@ -52,6 +60,7 @@ public class SubareaButton extends JButton {
             } else {
                 subareaButton.setBackground(new Color(255, 0, 0,50));
             }
+            setText(subArea.getName());
             subareaButton.setOpaque(true);
             subareaButton.setBorderPainted(false);
         }
