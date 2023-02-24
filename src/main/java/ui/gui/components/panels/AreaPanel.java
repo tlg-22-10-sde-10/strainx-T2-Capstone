@@ -33,27 +33,19 @@ public class AreaPanel extends JPanel {
 
     private Integer createSubareaPanels(JPanel area,List<SubArea> subAreaList,Integer areaNumber){
         UIEnterMainMap.threatLvlMapInitialize();
-        // change color
+
         area.add(new JLabel(String.format("Area %d",areaNumber)));
         area.setLayout(null);
-
-        int width = 1024;
-        int height = (int) (768*.9);
-        int cellWidth = (width/inGameMap.getDimensionY());
-        int cellHeight = (height/inGameMap.getDimensionX());
-        int btnWidth = (cellWidth/3);
-        int btnHeight = (cellHeight/3);
-
         for (SubArea subArea : subAreaList) {
 
-            SubareaPanel subareaPanel = new SubareaPanel(subArea);// pass subarea obj to subarea panel
+            SubareaPanel subareaPanel = new SubareaPanel(subArea);
             subareaPanel.setBorder(new LineBorder(Color.BLUE));
             area.add(subareaPanel);
 
-            JButton toggleSubarea = new SubareaButton(subArea,subareaPanel); // btn to toggle show/hide subarea panel
-            ArrayList<Integer> buttonCoordinates = getButtonCoordinates(subArea);
+            JButton toggleSubarea = new SubareaButton(subArea,subareaPanel);
+            Point buttonCoordinates = getButtonCoordinates(subArea);
 
-            toggleSubarea.setBounds(buttonCoordinates.get(0),buttonCoordinates.get(1),btnWidth,btnHeight);
+            toggleSubarea.setBounds((int)(buttonCoordinates.getX()),(int)(buttonCoordinates.getY()),ButtonCoordinates.w,ButtonCoordinates.h);
             subareaPanel.add(toggleSubarea);
 
             area.add(toggleSubarea);
@@ -62,9 +54,8 @@ public class AreaPanel extends JPanel {
         return 1;
     }
 
-    private ArrayList<Integer> getButtonCoordinates(SubArea subArea){
-        HashMap<SubArea, ArrayList<Integer>> randomAreaLocations = ButtonCoordinates.buttonLocations;
-//        return ((randomAreaLocations.containsKey(subArea))? randomAreaLocations.get(subArea):zeroedDefault);
+    private Point getButtonCoordinates(SubArea subArea){
+        HashMap<SubArea, Point> randomAreaLocations = ButtonCoordinates.buttonLocations;
         return randomAreaLocations.get(subArea);
     }
 }

@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class SubareaButton extends JButton {
 
     public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
-        setBorder(new LineBorder(Color.RED));
+        setBorder(new LineBorder(Color.BLACK));
         adjustToolTipText(subArea);
 //        setAlignmentY(Component.CENTER_ALIGNMENT);
 //        setAlignmentX(Component.CENTER_ALIGNMENT);

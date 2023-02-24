@@ -12,11 +12,12 @@ import static gamecontrol.GlobalVariables.inGameMap;
 
 public class ButtonCoordinates {
 
-    public static HashMap<SubArea, ArrayList<Integer>> buttonLocations = getRandomAreaLocations();
+    public static int w = (int)(buttonDimension().getWidth());
+    public static int h = (int)(buttonDimension().getHeight());
+    public static HashMap<SubArea, Point> buttonLocations = getRandomAreaLocations();
 
-    public static HashMap<SubArea, ArrayList<Integer>> getRandomAreaLocations() {
-        HashMap<SubArea, ArrayList<Integer>> randomAreaLocations = new HashMap<>();
-        ArrayList<Integer> buttonCoordinates;
+    public static HashMap<SubArea, Point> getRandomAreaLocations() {
+        HashMap<SubArea, Point> randomAreaLocations = new HashMap<>();
         HashMap<Integer, Point> coords = generateFixedCoordinates();
         HashSet<Point> selected = new HashSet<>();
         ArrayList<Point> points;
@@ -33,29 +34,19 @@ public class ButtonCoordinates {
 
             // Give each Subarea a Unique Point
             for (SubArea subArea : mapIdx) {
-                buttonCoordinates = new ArrayList<>();
                 Point point = points.remove(0);
-
-                buttonCoordinates.add(point.x);
-                buttonCoordinates.add(point.y);
-                randomAreaLocations.put(subArea, buttonCoordinates);
+                randomAreaLocations.put(subArea, point);
             }
             // Clear Current Selected Points for Next List
             selected.clear();
         }
-
         return randomAreaLocations;
     }
     private static HashMap<Integer, Point> generateFixedCoordinates(){
         HashMap<Integer, Point> coordinates = new HashMap<>();
-        int width = 1024;
-        int height = (int) (768 * .9);
-        int cellWidth = (width / inGameMap.getDimensionY());
-        int cellHeight = (height / inGameMap.getDimensionX());
-        int w = (cellWidth / 3);
-        int h = (cellHeight / 3);
-        System.out.println(w);
-        System.out.println(h);
+        int w = ButtonCoordinates.w;
+        int h = ButtonCoordinates.h;
+
         coordinates.put(1,new Point(0,0));
         coordinates.put(2,new Point(w,0));
         coordinates.put(3,new Point(2*w,0));
@@ -67,31 +58,14 @@ public class ButtonCoordinates {
         coordinates.put(9,new Point(2*w,2*h));
         return coordinates;
     }
+    private static Dimension buttonDimension(){
+        int width = 1024;
+        int height = (int) (768 * .9);
+        int cellWidth = (width / inGameMap.getDimensionY());
+        int cellHeight = (height / inGameMap.getDimensionX());
+        int w = (cellWidth / 3);
+        int h = (cellHeight / 3);
 
+       return new Dimension(w,h);
+    }
 }
-
-//        int randomX = random.nextInt(cellWidth/3);
-//        int randomY = random.nextInt(cellHeight/3);
-//        while(!uniqueLocation){
-//            ranges.put(randomX,randomY);
-//            for (Map.Entry<Double,Double> set : ranges.entrySet()) {
-//                boolean x =(randomX >= set.getKey()) && (randomX <= set.getKey()+itemWidth);
-//                boolean y =(randomY >= set.getValue()) && (randomY <= set.getValue()+itemHeight);
-//                if(!x && !y){
-//                    randomX = random.nextInt(cellWidth/3)+itemWidth;
-//                    randomY = random.nextInt(cellHeight/3)+itemHeight;
-//                    ranges.put(randomX,randomY);
-//                    uniqueLocation = !uniqueLocation;
-//                }
-//            }
-//        }
-////        Rectangle area;
-//
-////        int width = 1024;
-////        int height = (int) (768 * .9);
-////        int cellWidth = (width / inGameMap.getDimensionY());
-////        int cellHeight = (height / inGameMap.getDimensionX());
-////        int btnW = (cellWidth / 3);
-////        int btnH = (cellHeight / 3);
-////        int randomX = 0;
-////        int randomY = 0;
