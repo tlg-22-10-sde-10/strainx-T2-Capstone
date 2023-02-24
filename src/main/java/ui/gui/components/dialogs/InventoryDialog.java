@@ -38,6 +38,7 @@ public class InventoryDialog extends JDialog {
     private JList<String> createJList(){
         // TODO Figure out why the tooltip isn't showing
         jList = new JList<>(getInventoryList());
+        jList.setBackground(Color.LIGHT_GRAY);
         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jList.addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()) {
