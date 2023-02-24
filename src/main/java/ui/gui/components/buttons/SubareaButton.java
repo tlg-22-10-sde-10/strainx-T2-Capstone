@@ -2,7 +2,10 @@ package ui.gui.components.buttons;
 
 import gamecontrol.GlobalVariables;
 import gamemodel.mapengine.SubArea;
+import gamemusic.AudioPlayer;
 import ui.gui.ConstructHTMLString;
+import ui.gui.components.GUISoundEffects;
+import ui.gui.components.LoadImage;
 import ui.gui.components.panels.StatusPanel;
 import ui.gui.components.panels.SubareaPanel;
 import ui.maps.UIEnterMainMap;
@@ -17,19 +20,28 @@ public class SubareaButton extends JButton {
     public SubareaButton(SubArea subArea, SubareaPanel subareaPanel) {
         setBorder(new LineBorder(Color.BLACK));
         adjustToolTipText(subArea);
-//        setAlignmentY(Component.CENTER_ALIGNMENT);
-//        setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(new JLabel(subArea.getName()));
-        setName(subArea.getName());
+        setAlignmentY(Component.CENTER_ALIGNMENT);// TODO: needed?
+        setAlignmentX(Component.CENTER_ALIGNMENT);// TODO: needed?
+        setButtonIcon(this, subArea);
+        setText(subArea.getName());
         setButtonThreatColor(this, subArea);
         addActionListener(toggleShowSubareaPanel(subareaPanel, subArea));
+    }
+
+    private JButton setButtonIcon(SubareaButton subareaButton, SubArea subArea) {
+        String imagePath = "images/" + subArea.getName().toLowerCase() + ".png";
+        try {
+            if (subArea.getName() != null) {
+                subareaButton.setIcon(LoadImage.getIcon(imagePath));
+            }
+        } catch (NullPointerException e) {
+        }
+        return subareaButton;
     }
 
     /* Sub area button color changes based on threat level */
     private JButton setButtonThreatColor(SubareaButton subareaButton, SubArea subArea) {
         if (subArea.getVisited()) {
-            System.out.println(UIEnterMainMap.displayThreatLvl(subArea));
-            System.out.println("Contains Low: " + UIEnterMainMap.displayThreatLvl(subArea).contains("Low"));
             if (UIEnterMainMap.displayThreatLvl(subArea).contains("Low")) {
                 subareaButton.setBackground(Color.GREEN);
             } else if (UIEnterMainMap.displayThreatLvl(subArea).contains("Safe")) {
@@ -64,6 +76,7 @@ public class SubareaButton extends JButton {
     private ActionListener toggleShowSubareaPanel(JPanel subarea, SubArea currArea) {
         // toggle show/hide subarea panel
         return e -> {
+            if (GUISoundEffects.isSoundOn()) GUISoundEffects.playSound("sound/running.wav");
             // toggle visibility
             subarea.setVisible(!subarea.isVisible());
             // expand subarea/this panel

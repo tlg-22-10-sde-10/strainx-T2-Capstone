@@ -24,9 +24,7 @@ public class AreaPanel extends JPanel {
     public static String neveChanging;
 
     public AreaPanel(Integer keyNumber, List<SubArea> subareasList){
-        setBorder(new LineBorder(Color.BLUE.darker()));
-//        setBackground(Color.GRAY);
-//        setOpaque(true);
+        setBorder(new LineBorder(Color.darkGray));
         createSubareaPanels(this,subareasList, keyNumber);
 //        setLayout(new BoxLayout( this,BoxLayout.Y_AXIS));
     }

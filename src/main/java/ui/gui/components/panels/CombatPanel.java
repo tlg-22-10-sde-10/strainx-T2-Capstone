@@ -4,13 +4,11 @@ import gamecontrol.GlobalVariables;
 import gamemodel.combatengine.EngageEnemy;
 import gamemodel.combatengine.GUICombatEngine;
 import gamemodel.combatengine.UICombat;
-import ui.gui.components.InventoryDialog;
-import ui.gui.components.buttons.SettingsButton;
+import ui.gui.components.dialogs.InventoryDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -102,7 +100,6 @@ public class CombatPanel extends JPanel {
         panel.add(autoCombatButton());
         panel.add(targetEnemyAttackButton());
         panel.add(useItemsButton());
-        panel.add(new SettingsButton());
         panel.setPreferredSize(new Dimension(TitlePanel.SCREEN_WIDTH,(int) (TitlePanel.SCREEN_HEIGHT*.20)));
         return panel;
     }
@@ -154,7 +151,11 @@ public class CombatPanel extends JPanel {
     private JButton useItemsButton() {
         // TODO: auto refresh stats panel after complete
         JButton btn = new JButton("Use Items");
-        btn.addActionListener(e -> new InventoryDialog((JFrame) getTopLevelAncestor()));
+        btn.addActionListener(e -> {
+            if (StatusPanel.getInventoryDialog() == null || !StatusPanel.getInventoryDialog().isDisplayable()) {
+                StatusPanel.setInventoryDialog(new InventoryDialog((JFrame) getTopLevelAncestor()));
+            }
+        });
         return btn;
     }
 
@@ -183,8 +184,10 @@ public class CombatPanel extends JPanel {
         ancestor.getContentPane().removeAll();
         if(GlobalVariables.enemySquad.isEmpty()) {
             getSubareaPanel().getCombatButton().setEnabled(false);
-            getSubareaPanel().getLootButton().setEnabled(true);
-            getSubareaPanel().loot();
+            if (!getSubareaPanel().getSubArea().getContents().items.isEmpty()) {
+                getSubareaPanel().getLootButton().setEnabled(true);
+                getSubareaPanel().loot();
+            }
         }
         ancestor.add(subareaPanel);
         ancestor.add(new StatusPanel(GlobalVariables.mySquad),BorderLayout.NORTH);

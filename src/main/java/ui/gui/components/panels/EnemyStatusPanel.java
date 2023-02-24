@@ -23,7 +23,7 @@ public class EnemyStatusPanel extends JPanel {
             JLabel eLabel = new JLabel(String.format("%d. %s %s | Attack: %d | HP:", enemyNumber,
                     e.getEnemyType(),e.getName(),e.getAttack()
             ));
-            eLabel.setIcon(LoadImage.getIcon("images/zombie.png",ePanel.getHeight()));
+            eLabel.setIcon(LoadImage.getIcon("images/zombie.png"));
             ePanel.add(eLabel);
             ePanel.add(new HealthBar(e));
             enemyNumber++;

@@ -1,12 +1,8 @@
 package ui.gui.components.labels;
+import ui.gui.components.LoadImage;
 
-import client.StrainXMain;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 
 public class BackgroundImageLabel extends JLabel {
     private final int width;
@@ -16,14 +12,10 @@ public class BackgroundImageLabel extends JLabel {
         this.width = width;
         this.height = height;
         try {
-//            URL imgURL = StrainXMain.class.getClassLoader().getResource(fileName);
-            //noinspection DataFlowIssue
-            BufferedImage image = ImageIO.read(StrainXMain.class.getClassLoader().getResource(fileName));
-            Image img = image.getScaledInstance(width,height,Image.SCALE_DEFAULT);
-            JLabel temp = new JLabel(new ImageIcon(img));
-            this.setIcon(temp.getIcon());
+            Image image = LoadImage.getImage(fileName).getScaledInstance(width,height,Image.SCALE_DEFAULT);
+            setIcon(new ImageIcon(image));
         } catch (Exception e) {
-            this.setIcon(null);
+            setIcon(null);
         }
     }
 

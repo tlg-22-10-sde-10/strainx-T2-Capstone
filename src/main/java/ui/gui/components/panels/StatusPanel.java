@@ -2,14 +2,12 @@ package ui.gui.components.panels;
 
 import gamecontrol.contents.CrewMember;
 import ui.gui.components.HealthBar;
-import ui.gui.components.HelpMapDialog;
-import ui.gui.components.InventoryDialog;
+import ui.gui.components.dialogs.HelpMapDialog;
+import ui.gui.components.dialogs.InventoryDialog;
 import ui.gui.components.LoadImage;
 import ui.gui.components.buttons.SettingsButton;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -18,6 +16,10 @@ public class StatusPanel extends JPanel{
 
     private JPanel playerContainer;
     private JPanel buttonContainer;
+
+    private static InventoryDialog inventoryDialog;
+
+    private HelpMapDialog helpMapDialog;
 
     public StatusPanel(List<CrewMember> players ){
         setLayout(new BorderLayout());
@@ -51,7 +53,9 @@ public class StatusPanel extends JPanel{
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new HelpMapDialog((JFrame) statusPanel.getTopLevelAncestor());
+                if (helpMapDialog == null || !helpMapDialog.isDisplayable()) {
+                    helpMapDialog = new HelpMapDialog((JFrame) statusPanel.getTopLevelAncestor());
+                }
             }
         });
         return helpButton;
@@ -65,7 +69,9 @@ public class StatusPanel extends JPanel{
         invButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor());
+                if (getInventoryDialog() == null || !getInventoryDialog().isDisplayable()) {
+                    setInventoryDialog(new InventoryDialog((JFrame) statusPanel.getTopLevelAncestor()));
+                }
             }
         });
         return invButton;
@@ -80,7 +86,7 @@ public class StatusPanel extends JPanel{
             JLabel nameLabel = new JLabel(String.format(playerNum + ". %s %s | Attack : %d | HP: ",
                     crewMember.getRank(),crewMember.getName(),
                     (crewMember.getAttack() + crewMember.getWeapon().getWeapon_base_dmg())));
-            nameLabel.setIcon(LoadImage.getIcon("images/soldier.png",p.getHeight()));
+            nameLabel.setIcon(LoadImage.getIcon("images/soldier.png"));
             p.add(nameLabel);
             if(crewMember.getHP() < 0) { crewMember.setHP(0);}
             p.add(new HealthBar(crewMember));
@@ -92,4 +98,6 @@ public class StatusPanel extends JPanel{
 
     public void setPlayerContainer(JPanel playerContainer) {this.playerContainer = playerContainer;}
     public void setButtonContainer(JPanel buttonContainer) {this.buttonContainer = buttonContainer;}
+    public static InventoryDialog getInventoryDialog() { return inventoryDialog; }
+    public static void setInventoryDialog(InventoryDialog inventoryDialog) { StatusPanel.inventoryDialog = inventoryDialog; }
 }

@@ -5,7 +5,6 @@ import gamecontrol.contents.Item;
 import gamemodel.mapengine.Content;
 import gamemodel.mapengine.SubArea;
 import ui.gui.ConstructHTMLString;
-import ui.gui.components.buttons.SettingsButton;
 import ui.inventory.UIInventory;
 
 import javax.swing.*;
@@ -28,7 +27,6 @@ public class SubareaPanel extends JPanel {
         add(goToMapButton(this));
         add(goToLootButton(this));
         add(goToCombatButton(this));
-        add(new SettingsButton());
         addComponentListener( onSubareaExpand(this) );
     }
 
@@ -110,9 +108,9 @@ public class SubareaPanel extends JPanel {
         if(getSubArea().getContents().enemies.isEmpty()) {
             outputMessage.append(addItemsToInventory(getSubArea().getContents()));
         }
-        JOptionPane.showMessageDialog(this,outputMessage);
+        JOptionPane.showMessageDialog(TitlePanel.getjFrame(),outputMessage);
 
-        this.remove(this.getComponent(4));
+        this.remove(this.getComponent(3));
         this.add( new SubareaContentPanel(this, new Dimension(this.getWidth(),(int) (this.getHeight()*.90))));
         this.revalidate();
         this.repaint();
