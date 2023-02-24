@@ -9,7 +9,7 @@ public class SoundButton extends JButton {
 
 
     public SoundButton() {
-        setText("Toggle Sound");
+        setText("SoundFX ON");
         setEnabled(true);
         setFocusable(false);
         addActionListener(e -> toggleSound());
@@ -19,8 +19,12 @@ public class SoundButton extends JButton {
     private void toggleSound() {
         if(!GUISoundEffects.isSoundOn()) {
             GUISoundEffects.setSoundOn(!GUISoundEffects.isSoundOn());
+            setText("SoundFX ON");
+            repaint();
         } else {
             GUISoundEffects.setSoundOn(!GUISoundEffects.isSoundOn());
+            setText("SoundFX OFF");
+            repaint();
         }
     }
 }
