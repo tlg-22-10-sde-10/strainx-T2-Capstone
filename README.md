@@ -1,14 +1,52 @@
-StrainX
+![Strain X Title](/src/main/resources/images/strainX-title.jpg)
 
-GUI Implementation by:
+# TLG Team 2 Capstone Project
 
-Lorenzo Ortega
+## Objective
 
-Lok Tamang
+1. Review another team's pre-capstone project
+   - Team 4's Strain X console text-based zombie survival rogue-like
+     - Consisted of randomly generated stats, enemies, map layout, and items
+     - Random turn-based combat
+     - Objective is to search areas, fight zombies, find items to find a passcode to a lab, and get a sample from Patient Zero (by killing it)
+   - Code was highly modular and implemented great OOP concepts
+2. Use their existing code to creat a graphical user interface (GUI) version of the game using [Java Swing](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
 
-Joseph Racke
+## Team Members
+
+- Lorenzo Ortega | [GitHub](https://github.com/antoni909) | [LinkedIn](https://www.linkedin.com/in/lorenzo-ortega-antoni/)
+- Lok Tamang | [GitHub](https://github.com/loktama21) | [LinkedIn](https://www.linkedin.com/in/loktam/)
+- Joseph Racke | [GitHub](https://github.com/JMRacke) | [LinkedIn](https://www.linkedin.com/in/joe-racke/)
+
+## Design Philosophy (Team Tenets)
+
+- Keep as much of the original code as possible
+- Only change code if a bug existed that affects the game in some way or the performance of the game
+- Implement Java Swing components individually to keep code modular
+- Make tickets for each item worked on (even if you started working on it without an existing ticket in place)
+- Small commits often!
+- Dive deep into how Java Swing actually works
+
+## Technologies / Skills Utilized
+
+- Java
+- Maven
+- IntelliJ
+- JUnit 4
+- Git
+- Production and Development protected branches (using unique branches per tickets)
+- Pull request peer code reviews
+- GitHub
+- Azure DevOps Kanban Boards
+- Agile development philosophy
+- Three-day Sprints
+- Daily Stand-ups with other teams and between each other
+- Peer-programming
 
 
+***
+
+# Team 4 Pre-Capstone README.md
 mavern project
 
 1. team members:
