@@ -10,7 +10,7 @@
      - Random turn-based combat
      - Objective is to search areas, fight zombies, find items to find a passcode to a lab, and get a sample from Patient Zero (by killing it)
    - Code was highly modular and implemented great OOP concepts
-2. Use their existing code to creat a graphical user interface (GUI) version of the game using [Java Swing](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
+2. Use their existing code to create a graphical user interface (GUI) version of the game using [Java Swing](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
 
 ## Team Members
 
@@ -24,12 +24,84 @@
 - Only change code if a bug existed that affects the game in some way or the performance of the game
 - Implement Java Swing components individually to keep code modular
 - Make tickets for each item worked on (even if you started working on it without an existing ticket in place)
+- Working With Protected Branches, PR Review before merging to Dev, Naming Branches and Locally associating commits with TicketItem 
 - Small commits often!
 - Dive deep into how Java Swing actually works
+
+## Install and Play StrainX
+
+1. Ensure your have JDK v11 or higher
+1. For Windows users, git bash command tool is highly recommended
+1. For Mac users, terminal will work
+1. Go to the GitHub Repository and download the latest version of [StrainX](https://github.com/tlg-22-10-sde-10/strainx-T2-Capstone/releases)
+1. Open your teminal/command line and navigate to StrainX jar file
+1. Type `java -jar <strainx-*.*-all.jar>` to start the game
+1. Enjoy the game!
+ 
+## Project Timeline
+ 
+- Sprint 0 (1 Day)
+  - Major Challenges/Milestones as a Team
+    - Vote on a game that all were interested in
+    - Learning Curve to learn how to play the game
+    - Determine the difficulty of adapting to GUI
+  - As A team voted for StrainX
+    -[ ] Played the game: 
+      - to understand the intent/goal, 
+      - player experience, 
+      - difficulties, wins/loss scenarios
+    -[ ] Review the Backlog
+      - verifying own access
+      - begin managing the backlog
+    -[ ] Review Existing Code Base
+      - project directory/folder structure
+      - learning to read/interpret their code
+    -[ ] Research Swing as UI Library
+      - understand how to create basic GUI
+      - hierarchy of Java Swing Classes
+      - commonly used Classes (JFrame,JPanel,JLabel,JButton,JDialogue..)
+      - commonly used methods (add,setSize,setLayout,setListener...)
+
+- Sprint 1 (3 Days)
+    - Major Challenges/Milestones
+      - Becoming familiar with the code base
+      - Concurrently learning the basics of Swing and trying to implement the desired outcome
+    -[ ] Implement Major GUI features
+      - Title Screen
+      - Status Panel
+      - Game Map 
+        - Grid Size reflects Game Difficulty
+      - Sound
+    - [ ] Continue to Understand the Code
+      - Use Intellij Debugger Tool
+        - step through complex/monolithic code
+        
+- Sprint 2 (3 Days)
+    - Major Challenges/Milestones
+      - moving beyond basic Swing GUI
+        - repainting components as needed
+    -[ ] Implement Major Player Interactivity Features
+      - Player can click a button 
+        - help
+        - adjust settings
+        - see inventory list
+        - looting and adding items to inventory
+        - enter combat
+      - Player can hover over a button and receive game information 
+      - Player can view own/team stats (health,attack)
+      - Using Icons/Images to enhance Visuals of the game
+      
+- Sprint 3 (3 Days)
+  - Major Challenges/Milestones
+    - enhancing game visuals/experience
+      - adding sound,images
+    - finding bugs/potential problems
+    - finalizing/stabilizing project
 
 ## Technologies / Skills Utilized
 
 - Java
+- Java Swing
 - Maven
 - IntelliJ
 - JUnit 4
@@ -165,5 +237,3 @@ Game Modules:
 2, music
 3, sound effects
 4, visual effects
-
-
