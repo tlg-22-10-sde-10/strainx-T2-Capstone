@@ -11,7 +11,7 @@ public class ExitToMainMenuButton extends JButton {
 
     public ExitToMainMenuButton() {
         setText("Exit to Main");
-        setEnabled(true);
+        if(TitlePanel.getjFrame().getContentPane().getComponent(0).getClass().equals(TitlePanel.class)) setEnabled(false);
         setFocusable(false);
         addActionListener(e -> showConfirm());
         setOpaque(false);
@@ -19,8 +19,9 @@ public class ExitToMainMenuButton extends JButton {
     }
 
     private void showConfirm() {
+        System.out.println(TitlePanel.getjFrame().getContentPane().getComponent(0).getClass().equals(TitlePanel.class));
         int a = JOptionPane.showConfirmDialog(this.getTopLevelAncestor(),"Are you sure you want to exit to main menu?");
-
+        //System.out.println(this.getTopLevelAncestor().getClass());
         if(a==JOptionPane.YES_OPTION) {
             SettingsWindow window = (SettingsWindow) this.getTopLevelAncestor();
             JFrame parentFrame = window.getParentFrame();
