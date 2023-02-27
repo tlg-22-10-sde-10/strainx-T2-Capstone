@@ -1,14 +1,141 @@
-StrainX
+![Strain X Title](/src/main/resources/images/strainX-title.jpg)
 
-GUI Implementation by:
+# TLG Team 2 Capstone Project
 
-Lorenzo Ortega
+## Objective
 
-Lok Tamang
+1. Review another team's pre-capstone project
+   - Team 4's Strain X console text-based zombie survival rogue-like
+     - Consisted of randomly generated stats, enemies, map layout, and items
+     - Random turn-based combat
+     - Objective is to search areas, fight zombies, find items to find a passcode to a lab, and get a sample from Patient Zero (by killing it)
+   - Code was highly modular and implemented great OOP concepts
+2. Use their existing code to create a graphical user interface (GUI) version of the game using [Java Swing](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
 
-Joseph Racke
+## Team Members
+
+- Lorenzo Ortega | [GitHub](https://github.com/antoni909) | [LinkedIn](https://www.linkedin.com/in/lorenzo-ortega-antoni/)
+- Lok Tamang | [GitHub](https://github.com/loktama21) | [LinkedIn](https://www.linkedin.com/in/loktam/)
+- Joseph Racke | [GitHub](https://github.com/JMRacke) | [LinkedIn](https://www.linkedin.com/in/joe-racke/)
+
+## Design Philosophy (Team Tenets)
+
+- Keep as much of the original code as possible
+- Only change code if a bug existed that affects the game in some way or the performance of the game
+- Implement Java Swing components individually to keep code modular
+- Make tickets for each item worked on (even if you started working on it without an existing ticket in place)
+- Working With Protected Branches, PR Review before merging to Dev, Naming Branches and Locally associating commits with TicketItem 
+- Small commits often!
+- Dive deep into how Java Swing actually works
+
+## Install and Play StrainX
+
+1. Ensure your have JDK v11 or higher
+1. For Windows users, git bash command tool is highly recommended
+1. For Mac users, terminal will work
+1. Go to the GitHub Repository and download the latest version of [StrainX](https://github.com/tlg-22-10-sde-10/strainx-T2-Capstone/releases)
+1. Open your teminal/command line and navigate to StrainX jar file
+1. Type `java -jar <strainx-*.*-all.jar>` to start the game
+1. Enjoy the game!
+ 
+## Project Timeline
+ 
+- Sprint 0 (1 Day)
+  - Major Challenges/Milestones as a Team
+    - Vote on a game that all were interested in
+    - Learning Curve to learn how to play the game
+    - Determine the difficulty of adapting to GUI
+  - As A team voted for StrainX
+    -[ ] Played the game: 
+      - to understand the intent/goal, 
+      - player experience, 
+      - difficulties, wins/loss scenarios
+    -[ ] Review the Backlog
+      - verifying own access
+      - begin managing the backlog
+    -[ ] Review Existing Code Base
+      - project directory/folder structure
+      - learning to read/interpret their code
+    -[ ] Research Swing as UI Library
+      - understand how to create basic GUI
+      - hierarchy of Java Swing Classes
+      - commonly used Classes (JFrame,JPanel,JLabel,JButton,JDialogue..)
+      - commonly used methods (add,setSize,setLayout,setListener...)
+
+- Sprint 1 (3 Days)
+    - Major Challenges/Milestones
+      - Becoming familiar with the code base
+      - Concurrently learning the basics of Swing and trying to implement the desired outcome
+    -[ ] Implement Major GUI features
+      - Title Screen
+      - Status Panel
+      - Game Map 
+        - Grid Size reflects Game Difficulty
+      - Sound
+    - [ ] Continue to Understand the Code
+      - Use Intellij Debugger Tool
+        - step through complex/monolithic code
+        
+- Sprint 2 (3 Days)
+    - Major Challenges/Milestones
+      - moving beyond basic Swing GUI
+        - repainting components as needed
+    -[ ] Implement Major Player Interactivity Features
+      - Player can click a button 
+        - help
+        - adjust settings
+        - see inventory list
+        - looting and adding items to inventory
+        - enter combat
+      - Player can hover over a button and receive game information 
+      - Player can view own/team stats (health,attack)
+      - Using Icons/Images to enhance Visuals of the game
+      
+- Sprint 3 (3 Days)
+  - Major Challenges/Milestones
+    - enhancing game visuals/experience
+      - adding sound,images
+    - finding bugs/potential problems
+    - finalizing/stabilizing project
+
+## Technologies / Skills Utilized
+
+- Java
+- Java Swing
+- Maven
+- IntelliJ
+- JUnit 4
+- Git
+- Production and Development protected branches (using unique branches per tickets)
+- Pull request peer code reviews
+- GitHub
+- Azure DevOps Kanban Boards
+- Agile development philosophy
+- Three-day Sprints
+- Daily Stand-ups with other teams and between each other
+- Peer-programming
+
+## Asset Credit
+
+- Special thanks to the following for sound effects:
+- Running Sound Effect by <a href="https://pixabay.com/users/km007_-23606303/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=9109">KM007_</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=9109">Pixabay</a>
+- Title Music by <a href="https://pixabay.com/users/geoffreyburch-5739114/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=22045">GeoffreyBurch</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=22045">Pixabay</a>
+- Zombie Bite Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=44538">Pixabay</a>
+- AR-15 Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14443">Pixabay</a>
+- Game Over Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=38511">Pixabay</a>
+- Bare Hands Sound Effect by <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=140236">Universfield</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=140236">Pixabay</a>
+- Victory Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14800">Pixabay</a>
+- M249 Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=39814">Pixabay</a>
+- Tire Iron Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=96095">Pixabay</a>
+- Axe Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=106748">Pixabay</a>
+- Handgun Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=106671">Pixabay</a>
+- Big Bertha Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=96223">Pixabay</a>
+- Crystal Femur Sound Effect by <a href="https://pixabay.com/users/sergequadrado-24990007/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=21464">SergeQuadrado</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=21464">Pixabay</a>
 
 
+***
+
+# Team 4 Pre-Capstone README.md
 mavern project
 
 1. team members:
@@ -110,32 +237,3 @@ Game Modules:
 2, music
 3, sound effects
 4, visual effects
-
-Special thanks to the following for sound effects:
-
-Running Sound Effect by <a href="https://pixabay.com/users/km007_-23606303/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=9109">KM007_</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=9109">Pixabay</a>
-
-Title Music by <a href="https://pixabay.com/users/geoffreyburch-5739114/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=22045">GeoffreyBurch</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=22045">Pixabay</a>
-
-Zombie Bite Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=44538">Pixabay</a>
-
-AR-15 Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14443">Pixabay</a>
-
-Game Over Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=38511">Pixabay</a>
-
-Bare Hands Sound Effect by <a href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=140236">Universfield</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=140236">Pixabay</a>
-
-Victory Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14800">Pixabay</a>
-
-M249 Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=39814">Pixabay</a>
-
-Tire Iron Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=96095">Pixabay</a>
-
-Axe Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=106748">Pixabay</a>
-
-Handgun Sound Effect from <a href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=106671">Pixabay</a>
-
-Big Bertha Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=96223">Pixabay</a>
-
-Crystal Femur Sound Effect by <a href="https://pixabay.com/users/sergequadrado-24990007/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=21464">SergeQuadrado</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=21464">Pixabay</a>
-
