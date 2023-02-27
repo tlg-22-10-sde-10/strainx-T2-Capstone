@@ -19,31 +19,38 @@ public class ButtonCoordinates {
 
     public static HashMap<SubArea, Point> getRandomAreaLocations() {
         HashMap<SubArea, Point> randomAreaLocations = new HashMap<>();
-        HashMap<Integer, Point> coords = generateFixedCoordinates();
-        HashSet<Point> selected = new HashSet<>();
         ArrayList<Point> points;
-        Random random = new Random();
 
         for (List<SubArea> mapIdx : inGameMap.gameMap.values()) {
-            // Get Unique N Points base on Current List of Size N
-            while(selected.size() < mapIdx.size() ){
-                int r = random.nextInt(coords.size());
-                Point point = coords.get(r);
-                if(point != null) selected.add(point);
-            }
-            points = new ArrayList<>(selected);
-
-            // Give each Subarea a Unique Point
-            for (SubArea subArea : mapIdx) {
-                Point point = points.remove(0);
-                randomAreaLocations.put(subArea, point);
-            }
-            // Clear Current Selected Points for Next List
-            selected.clear();
+            points = getUniquePoints(mapIdx); //match size
+            assignPointToSubarea(mapIdx,points,randomAreaLocations); // assign Point
+            if(!points.isEmpty()) points.clear(); // refresh list
         }
         return randomAreaLocations;
     }
-    private static HashMap<Integer, Point> generateFixedCoordinates(){
+    public static Integer assignPointToSubarea(List<SubArea> mapIdx, ArrayList<Point> points,HashMap<SubArea, Point> randomAreaLocations){
+        // Give each Subarea a Unique Point
+        for (SubArea subArea : mapIdx) {
+            Point point = points.remove(0);
+            randomAreaLocations.put(subArea, point);
+        }
+        return 1;
+    }
+    public static ArrayList<Point> getUniquePoints(List<SubArea> mapIdx){
+        // Get Unique N Points based on Current List of Size N
+        HashSet<Point> selected = new HashSet<>();
+        HashMap<Integer, Point> coords = generateFixedCoordinates();
+
+        while(selected.size() < mapIdx.size() ){
+            Random random = new Random();
+            int r = random.nextInt(coords.size());
+            Point point = coords.get(r);
+            if(point != null) selected.add(point);
+        }
+
+        return new ArrayList<>(selected);
+    }
+    public static HashMap<Integer, Point> generateFixedCoordinates(){
         HashMap<Integer, Point> coordinates = new HashMap<>();
         int w = ButtonCoordinates.w;
         int h = ButtonCoordinates.h;
@@ -63,11 +70,9 @@ public class ButtonCoordinates {
         int width = 1024;
         int height = (int) (768 * .9);
         int cellWidth = (width / inGameMap.getDimensionY());
-
         int cellHeight = (height / inGameMap.getDimensionX());
         w = (cellWidth / 3);
         h = (cellHeight / 3);
-
        return new Dimension(w,h);
     }
 }
